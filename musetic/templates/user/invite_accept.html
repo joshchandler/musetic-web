@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load i18n static humanize crispy_forms_tags %}
+
+{% block title %}Accept Invite | Musetic{% endblock %}
+
+{% block header %}{% endblock %}
+{% block content %}
+    <div class="register">
+        <a href="{% url 'index' %}"><img class="musetic-logo" src="{% static 'musetic/img/hexagon-black-logo-100.png' %}"/></a>
+        <div class="invite-email">{{ invite.invitee }}</div>
+        <form id="invite_accept_form" action="{% url 'accept_invitation' activation_key=invite.activation_key %}" method="post">
+            {% csrf_token %}
+                <input id="id_username" maxlength="20" name="username" placeholder="Username" type="text" />
+                <input id="id_password1" name="password1" placeholder="Password" type="password" />
+                <input id="id_password2" name="password2" placeholder="Password (again)" type="password" />
+                <input type="submit" name="submit" value="Accept Invitation" class="button success" id="id_submit" />
+
+        </form>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#id_username').focus();
+            $('#id_submit').one('click', function () {
+                $('#invite_accept_form').validate({
+                    rules: {
+                        username: {
+                            required: true,
+                            customvalidation: true
+                        },
+                        password1: {
+                            required: true,
+                            minlength: 6
+                        },
+                        password2: {
+                            required: true,
+                            minlength: 6,
+                            equalTo: '#id_password1'
+                        }
+                    }
+                });
+                $.validator.addMethod("customvalidation",
+                        function (value, element) {
+                            return /^[A-Za-z\d=.+-]+$/.test(value);
+                        },
+                        "Only numbers letters . _ + - allowed"
+                );
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,5 @@
+<form action="{% url 'discussion_delete' slug=submission.submission_type uuid=submission.uuid pk=discussion.pk %}" method="post">
+    {% csrf_token %}
+    <p>Are you sure you want to delete <strong>{{ discussion.comment }}</strong>?</p>
+    <input type="submit" class=" button cancel-submit" value="Confirm" />
+</form>

@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}Login | Musetic{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'musetic/css/auth.css' %}?id=1">
+{% endblock %}
+{% block body %}
+    <body class="auth-page">
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '290635347808167',
+          xfbml      : true,
+          version    : 'v2.2'
+        });
+      };
+
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "//connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+    </script>
+{% endblock %}
+{% block header %}{% endblock %}
+
+{% block content %}
+<div class="login">
+    <a href="{% url 'index' %}"><img class="musetic-logo" src="{% static 'musetic/img/hexagon-black-logo-100.png' %}" /></a>
+    <a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}" class="button button-facebook"><i class="fa fa-lg fa-facebook-square"></i>&nbsp;Login with Facebook</a>
+{#    <a href="{% url 'social:begin' 'google-oauth2' %}?next={{ next }}" class="button button-google"><i class="fa fa-lg fa-google-plus-square"></i>&nbsp;Login with Google</a>#}
+    <div class="or-login">OR</div>
+    <div class="login-wrap">
+        <form id="login_form" method="post" action="{% url 'auth_login' %}">
+            {% csrf_token %}
+            <div class="login-fields">
+
+                <!-- fake field is a workaround so that chrome autofill will get the wrong fields -->
+                <!-- That yellow looks awful on this design -->
+{#                <input style="display:none" type="password" name="fakepasswordremembered" />#}
+
+                <input id="id_username" maxlength="30" name="username" type="text" placeholder="Username" />
+                <div class="password-login-wrap">
+					<input id="id_password" name="password" type="password" placeholder="Password" />
+					<a href="{% url 'auth_password_reset' %}" class="password-reset">{% trans "Reset" %}</a>
+                </div>
+            </div>
+
+			<input id="submit" type="submit" class="button success" value="{% trans 'Log in' %}" />
+            <input type="hidden" name="next" value="{{ next }}" />
+        </form>
+
+        <p class="register-link">{% trans "or" %} <a href="{% url 'registration_register' %}?next={{ next }}">{% trans "Register" %}</a></p>
+
+    </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}{% endblock %}
+
+{% block js %}
+    <script type="text/javascript">
+		$(document).ready(function () {
+            $('#id_username').focus();
+			$('#submit').one('click', function() {
+				$('#login_form').validate({
+					rules: {
+						username: {
+							required: true,
+							customvalidation: true
+						},
+						password: {
+							required: true,
+							minlength: 6
+						}
+					}
+				});
+				$.validator.addMethod("customvalidation",
+						function (value, element) {
+							return /^[A-Za-z\d=#$%@_ -]+$/.test(value);
+						},
+						"Sorry, no special characters allowed"
+				);
+			});
+		});
+	</script>
+{% endblock %}

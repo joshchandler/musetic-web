@@ -1,0 +1,5 @@
+{% load i18n %}
+{{ new_user.email }} ({{ new_user.username }}) {% trans " has accepted your invitation" %}:
+
+View their Profile:
+http://{{ site.domain }}/muser/{{ new_user.username }}

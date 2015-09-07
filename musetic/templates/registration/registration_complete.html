@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load i18n static %}
+{% block title %}Registration Complete | Musetic{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'musetic/css/auth.css' %}">
+{% endblock %}
+{% block body %}<body class="auth-page">{% endblock %}
+{#{% block header %}{% endblock %}#}
+
+{% block content %}
+<div class="login password-reset-form">
+	<h4>{% trans "You are now registered. Activation email sent.  You must activate your account before being able to log in" %}</h4>
+	<p>{% trans "The email shouldn't be sent to spam, but if you haven't received an email in 10 minutes, you should check it" %}</p>
+
+</div>
+{% endblock %}

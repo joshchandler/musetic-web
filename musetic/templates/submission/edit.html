@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static i18n humanize submission_tags avatar_tags crispy_forms_tags %}
+
+{% block title %}{{ submission.title }} | Musetic{% endblock %}
+{% block content %}
+<div class="submissions-single">
+    <div class="single-wrapper">
+        <div class="submissions-single-item">
+
+            <div class="submissions-th">
+                {% if submission.thumbnail %}
+                    {% submission_image submission.url 500 %}
+                {% endif %}
+            </div>
+            <div class="submissions-overlay"></div>
+            <a class="submissions-title-area" rel="follow" href="{{ submission.url }}" target=_blank></a>
+
+        </div>
+
+        <a class="submission-edit button success" href="{% url 'submission_edit_thumbnail' slug=submission.submission_type uuid=submission.uuid %}">Edit Thumbnail</a>
+    </div>
+
+
+    <div class="submission-content-wrap">
+    <form action="." method="post">
+        {% csrf_token %}
+
+        <label for="id_submission_type" class="required">Submission Type<span class="asterisk">*</span></label>
+        <select class="select" id="id_submission_type" name="submission_type">
+            <option value="art">Art</option>
+            <option value="design">Design</option>
+            <option value="imagery">Imagery</option>
+            <option value="sound">Sound</option>
+            <option value="video">Video</option>
+            <option value="writing">Writing</option>
+        </select>
+
+        <label for="id_title" class="required">Title<span class="asterisk">*</span></label>
+        <input class="textinput textInput" id="id_title" maxlength="100" name="title" type="text" value="{{ submission.title }}" />
+
+        <label for="id_description" class="required"> Description<span class="asterisk">*</span></label>
+        <textarea class="textarea" cols="40" id="id_description" name="description" rows="10">{{ submission.description }}</textarea>
+
+        <label for="id_url" class="required">Link<span class="asterisk">*</span></label>
+        <input class="urlinput" id="id_url" maxlength="200" name="url" type="url" value="{{ submission.url }}"/>
+
+        <input type="submit" name="submit" value="Submit" class="btn btn-primary button" id="submit-id-submit" />
+    </form>
+
+    <button id="submission_delete" class="submission-delete m-trigger" data-modal="submission-delete">Delete Submission</button>
+
+    <div class="m-modal" id="submission-delete">
+        <div class="m-content">
+            <h3>Delete this Submission?</h3>
+            <div>
+                {# The contents of delete.html is loaded into this div #}
+                <div class="delete-form-container"></div>
+                <button class="m-close"><i class="fa fa-close"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="m-overlay"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'musetic/js/vendor/modalEffects.js' %}"></script>
+    <script type="text/javascript">
+
+    // Automatically select which submission type the submission is
+    $('.select option[value={{ submission.submission_type }}]').attr('selected', 'selected');
+
+    // Ajax loading of the SubmissionDelete form
+    $('.delete-form-container').load("{% url 'submission_delete' slug=submission.submission_type uuid=submission.uuid %}");
+
+    </script>
+{% endblock %}

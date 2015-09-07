@@ -1,0 +1,16 @@
+{% load i18n static %}
+<html>
+<head>
+    <style type="text/css">
+
+    </style>
+</head>
+<body>
+
+    <a href="{% url 'index' %}"><img class="musetic-logo" src="{% static 'musetic/img/hexagon-black-logo-100.png' %}"/></a>
+    <h4>{{ invitee.email }} ({{ new_user.username }}) {% trans " has accepted your invitation" %}:</h4>
+
+    <a class="button success" href="http://{{ site.domain }}/muser/{{ invitee.username }}">View their Profile</a>
+
+</body>
+</html>

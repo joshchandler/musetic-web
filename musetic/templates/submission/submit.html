@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load i18n crispy_forms_tags static %}
+
+{% block title %}Submit | Musetic{% endblock %}
+{% block content %}
+
+<div class="submission-form-wrap">
+    <h3>Submit to Musetic</h3>
+	<div class="rules">Please read the <a href="{% url 'rules' %}">Rules for Submitting</a></div>
+    {% if form.errors %}
+        {% for field in form %}
+            {% for error in field.errors %}
+                <div class="alert alert-error">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+            <div class="alert alert-error">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <form class="submit-form" action="." method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="top-form-wrap">
+            <div id="div_id_submission_type" class="selection-wrap">
+                <label for="selection" class="select-label">PROJECT TYPE</label>
+                <select class="submit-select" id="selection" name="submission_type">
+                    <option value="art">Art</option>
+                    <option value="design">Design</option>
+                    <option value="imagery">Imagery</option>
+                    <option value="sound">Sound</option>
+                    <option value="video">Video</option>
+                    <option value="writing">Writing</option>
+                </select>
+            </div>
+            <div id="div_id_title" class="submit-title"><label for="id_title" class="required">TITLE</label>
+                <input class="textinput textInput" id="id_title" maxlength="75" name="title" type="text" placeholder="" />
+            </div>
+            <div class="submit-url"><label for="id_url" class="required">URL (</label>
+                <input class="urlinput" id="id_url" maxlength="200" name="url" type="url" value="http://" />
+            </div>
+            <div class="submit-thumbnail"><label for="id_thumbnail" class="left">THUMBNAIL</label>
+	            <p class="right submit-thumbnail-formats">Only Accepted Formats: jpg, png</p>
+                <input class="clearablefileinput" id="id_thumbnail" name="thumbnail" type="file" />
+            </div>
+        </div>
+        <div class="submit-description"><label for="id_description" class="required">DESCRIPTION</label>
+            <textarea class="textarea" cols="40" id="id_description" name="description" rows="10"></textarea>
+        </div>
+
+            <input type="submit" name="submit" value="Submit" class="button success" id="id-submit" />
+    </form>
+</div>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+			$('#id-submit').one('click', function() {
+				$('.submit-form').validate({
+					rules: {
+						'title': {
+							required: true
+						},
+						'url': {
+							required: true
+						},
+						'description': {
+							required: true
+						}
+					}
+				});
+			});
+        });
+    </script>
+{% endblock %}

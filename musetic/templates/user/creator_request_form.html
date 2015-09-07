@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load i18n crispy_forms_tags %}
+
+{% block content %}
+<div class="creator-request">
+    <h4>Request an Invitation to Submit your Work</h4>
+    <p>If you’ve ever felt like the things you create are lost in the shuffle of news articles, videos of people sneezing, and lists of ten things you never knew about introverts, then we invite you to start sharing to Musetic. We’re a community/sharing platform specifically for creatives and artists alike.  If you’re looking for a place that welcomes its users to submit self-made content, then you belong here. Become a Creator!</p>
+	<p>You may be wondering why we have created this process for people to go through before being able to submit their work.  We don't want just anyone to submit, so we decided that it's best to moderate and make sure that creations are being submitted by the original creator, and not by spammers.  Getting future creators to show us a bit of their work, before they are allowed to submit is the best way for us to do that.</p>
+	<hr />
+	<p>Provide a link that has your work below.  Such as from a personal website, Facebook artist page, YouTube channel, etc.</p>
+    <form method="post">
+        {% csrf_token %}
+
+        <label for="id_url" class="required">Website Displaying Your Work</label>
+        <input class="urlinput" id="id_url" name="url" placeholder="URL" type="url" value="http://" />
+        <input type="submit" name="submit" value="Request Invitation" class="btn btn-primary button" id="submit-id-submit" />
+
+    </form>
+
+</div>
+{% endblock %}

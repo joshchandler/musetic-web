@@ -1,0 +1,34 @@
+# Main libraries
+
+Django==1.7.1
+Jinja2==2.7.3
+Pillow==2.6.0
+Werkzeug==0.9.1
+
+beautifulsoup4==4.3.2
+celery==3.1.16
+crispy-forms-foundation==0.3.5
+django-appconf==0.6
+django-braces==1.4.0
+django-celery==3.1.16
+django-contrib-comments==1.5
+django-crispy-forms==1.4.0
+django-debug-toolbar==1.2.2
+django-dynamic-fixture==1.7.0
+django-extensions==1.4.0
+django-manager-utils==0.6.2
+django-markdown-deux==1.0.5
+django-registration-redux==1.1
+django-suit==0.2.11
+djangorestframework==2.4.3
+ipython==2.3.0
+psycopg2==2.5.1
+python-social-auth==0.2.1
+python3-memcached==1.51
+pytz==2014.7
+pyzmq==14.3.0
+redis==2.10.3
+requests==2.3.0
+tornado==4.0.2
+
+-e git://github.com/musetic/django-uuidfield.git#egg=django-uuidfield

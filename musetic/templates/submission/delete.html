@@ -1,0 +1,5 @@
+<form action="{% url 'submission_delete' slug=submission.submission_type uuid=submission.uuid %}" method="post">
+    {% csrf_token %}
+    <p>Are you sure you want to delete <strong>{{ submission.title }}</strong>?</p>
+    <input type="submit" class=" button cancel-submit" value="Confirm" />
+</form>

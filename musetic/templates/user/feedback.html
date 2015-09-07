@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}Feedback | Musetic{% endblock %}
+{% block content %}
+<div class="feedback-page">
+
+    <h2>We'd love your Feedback!!</h2>
+    <br>
+
+    <form class="feedback-form" action="{% url 'user_feedback' %}" method="post">
+        {% csrf_token %}
+
+        <label for="id_email"><strong>Email address: *</strong></label> <input id="id_email" maxlength="75" name="email" type="email" />
+        <label for="id_subject"><strong>Subject: *</strong></label>
+            <input id="id_subject" maxlength="300" name="subject" type="text" />
+        <label for="id_body"><strong>Body: *</strong></label>
+            <textarea cols="40" id="id_body" maxlength="2000" name="body" rows="10">
+</textarea>
+        <input type="submit" name="submit" value="Submit" class="button" id="id-submit" />
+    </form>
+
+</div>
+
+{% endblock %}
+
+{% block feedback %}{% endblock %}

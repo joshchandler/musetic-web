@@ -1,0 +1,8 @@
+{% load i18n %}
+{% trans "Creator Request for" %} {{ user.email }}:
+
+Muser {{ user.username }}'s Work:
+{{ url }}
+
+Accept this muser's request:
+http://{{ site.domain }}/creator/{{ user.username }}/accept/

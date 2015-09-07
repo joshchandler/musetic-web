@@ -1,0 +1,1 @@
+{% load i18n %}{{ invitee }}{% trans " has accepted your invitation to join Musetic" %}

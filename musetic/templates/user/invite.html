@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load i18n static humanize avatar_tags submission_tags active %}
+
+{% block title %}Invite a Friend | Musetic{% endblock %}
+
+{% block content %}
+    <div class="invite-page">
+        <div class="page-header">Invite a Friend</div>
+        <form class="invite-form" action="{% url 'user_invite' %}" method="post">
+            {% csrf_token %}
+            <input id="invitee" maxlength="75" name="invitee" type="email" placeholder="Friend's Email Address" />
+            <input type="submit" name="submit" value="Invite" class="button" id="id-submit" />
+        </form>
+        <div class="not-accepted">
+        <div class="title">Invitations Sent</div>
+        {% for sent_invite in sent_invites %}
+            <div class="invitee-email">
+                {{ sent_invite.invitee }}
+            </div>
+        {% endfor %}
+        </div>
+        <div class="accepted">
+        <div class="title">Invitations Accepted</div>
+        {% for accepted_invite in accepted_invites %}
+            <div class="invitee-email">
+                {{ accepted_invite.invitee }}
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

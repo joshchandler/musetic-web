@@ -1,0 +1,12 @@
+-r base.txt
+
+# Code analysis
+flake8==2.2.3
+
+# Testing libraries
+coverage==3.7.1
+ipdb==0.8
+ipdbplugin==1.4
+mock==1.0.1
+freezegun==0.1.17
+django-nose==1.2

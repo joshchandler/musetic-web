@@ -1,0 +1,4 @@
+{% load i18n %}
+{% trans "You may now submit your work at" %}:
+
+http://{{ site.domain }}/submit

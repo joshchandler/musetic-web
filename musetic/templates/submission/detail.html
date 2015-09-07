@@ -1,0 +1,229 @@
+{% extends "base.html" %}
+{% load static i18n humanize submission_tags avatar_tags crispy_forms_tags %}
+
+{% block title %}{{ submission.title }} | Musetic{% endblock %}
+
+{% block content %}
+<div class="submissions-single">
+    <div class="single-wrapper">
+        <div class="submissions-single-item">
+
+            <div class="submissions-th">
+                {% if submission.thumbnail %}
+                    {% submission_image submission.url 500 %}
+                {% endif %}
+            </div>
+            <div class="submissions-overlay"></div>
+            <a class="submissions-title-area" rel="follow" href="{{ submission.url }}" target=_blank></a>
+            {% if submission.submission_type == 'art' %}
+                <a class="submissions-category"
+                   href="{% url 'category' slug=submission.submission_type %}" title="Art"><i
+                        class="fa fa-paint-brush"></i></a>
+            {% elif submission.submission_type == 'design' %}
+                <a class="submissions-category"
+                   href="{% url 'category' slug=submission.submission_type %}" title="Design"><i
+                        class="fa fa-desktop"></i></a>
+            {% elif submission.submission_type == 'imagery' %}
+                <a class="submissions-category"
+                   href="{% url 'category' slug=submission.submission_type %}" title="Imagery"><i
+                        class="fa fa-camera"></i></a>
+            {% elif submission.submission_type == 'sound' %}
+                <a class="submissions-category"
+                   href="{% url 'category' slug=submission.submission_type %}" title="Sound"><i
+                        class="fa fa-headphones"></i></a>
+            {% elif submission.submission_type == 'video' %}
+                <a class="submissions-category"
+                   href="{% url 'category' slug=submission.submission_type %}" title="Video"><i
+                        class="fa fa-video-camera"></i></a>
+            {% elif submission.submission_type == 'writing' %}
+                <a class="submissions-category"
+                   href="{% url 'category' slug=submission.submission_type %}" title="Writing"><i
+                        class="fa fa-pencil"></i></a>
+            {% endif %}
+
+            <form method="post" action="{% url 'vote' %}" class="vote-form">
+                {% csrf_token %}
+                <input type="hidden" id="id_submission" name="submission" class="hidden_id"
+                       value="{{ submission.id }}"/>
+                <input type="hidden" id="id_voter" name="voter" class="hidden_id"
+                       value="{{ user.id }}"/>
+                {% if not user.is_authenticated %}
+                    <button class="upvote-button vote-disabled" title="Login/Register to vote"><i
+                            class="fa fa-2x fa-angle-up"></i></button>
+                    <div class="num-votes vote-disabled">
+                        {{ submission.votes }}
+                    </div>
+                {% elif submission.id not in voted %}
+                    <button class="upvote-button unvoted"><i class="fa fa-2x fa-angle-up"></i></button>
+                    <div class="num-votes unvoted">
+                        {{ submission.votes }}
+                    </div>
+                {% else %}
+                    <button class="upvote-button voted"><i class="fa fa-2x fa-angle-up"></i></button>
+                    <div class="num-votes voted">
+                        {{ submission.votes }}
+                    </div>
+                {% endif %}
+            </form>
+        </div>
+
+        <div class="profile-info">
+            <div class="profile-pic-wrapper">
+                <a href="{% url 'user_profile' username=submission.user.username %}"><img src="{% avatar_url submission.user.username 200 %}"/></a>
+            </div>
+
+            <div class="profile-score-wrap"><div class="submission-score">{{ submission.profile.score }}</div><div class="discussion-score">{{ submission.profile.discussion_score }}</div></div>
+
+            <a class="profile-username" href="{% url 'user_profile' username=submission.user.username %}">{{ submission.user.username }}</a>
+            <br/>
+        </div>
+    </div>
+
+
+    <div class="submission-content-wrap">
+        <a class="submissions-title" href="{{ submission.url }}" target=_blank><h1>{{ submission.title }}</h1></a>
+        <div class="submissions-time">{{ submission.date_submitted|naturalday }}</div>
+
+        <div class="description-wrapper">
+            <div class="description">{{ submission.description }}</div>
+
+            <div class="submissions-meta">
+                {% if user.is_authenticated %}
+                    <a id="submission_report" class="submission-report-button m-trigger" data-modal="submission-report">Report&nbsp;</a>
+                {% endif %}
+                {% if user.username == submission.user.username or user.is_staff %}
+                    <a class="submission-edit" href="{% url 'submission_edit' slug=submission.submission_type uuid=submission.uuid %}">Edit&nbsp;</a>
+                    <a class="submission-delete" href="{% url 'submission_delete' slug=submission.submission_type uuid=submission.uuid %}">Delete</a>
+                {% endif %}
+            </div>
+
+
+            <div class="m-modal" id="submission-report">
+                <div class="m-content">
+                    <h3>Report this Submission?</h3>
+                    <div>
+                        <div class="submission-report-container"></div>
+                        <button class="m-close"><i class="fa fa-close"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="m-overlay"></div>
+
+
+            {% if not user.is_authenticated %}
+                <a class="login-required button secondary" href="{% url 'auth_login' %}?next={{ request.path }}"><h4>Login/Register to Join the Discussion</h4></a>
+            {% else %}
+            <div class="discussion-container"></div>
+            {% endif %}
+            <div class="discussion-count">{% if discussions.count == 1 %}{{ discussions.count }} Comment{% else %}{{ discussions.count }} Comments{% endif %}</div>
+
+        </div>
+
+
+
+
+
+        <ol class="discussion">
+        {% for discussion in discussions %}
+            <li class="discussion-wrap">
+                <div class="discussion-content">
+                    <div class="disc-user-meta">
+                        <form method="post" action="{% url 'discussion_vote' %}" class="discussion-vote-form">
+                            {% csrf_token %}
+                            <input type="hidden" id="id_discussion" name="discussion" class="hidden_id"
+                                   value="{{ discussion.id }}"/>
+                            <input type="hidden" id="id_voter" name="voter" class="hidden_id"
+                                   value="{{ user.id }}"/>
+                            {% if not user.is_authenticated %}
+                                <button class="disc-upvote-button vote-disabled" title="Login/Register to vote"><i class="fa fa-lg fa-angle-up"></i></button>
+                            {% elif discussion.id not in discussion_voted %}
+                                <button class="disc-upvote-button unvoted"><i class="fa fa-lg fa-angle-up"></i></button>
+                            {% else %}
+                                <button class="disc-upvote-button voted"><i class="fa fa-lg fa-angle-up"></i></button>
+                            {% endif %}
+                        </form>
+                        <a class="disc-user {% if discussion.user.username == submission.user.username %}disc-user-creator{% endif %}" href={% url 'user_profile' username=discussion.user.username %}>{{ discussion.user.username }}</a>
+                        {% if discussion.user.is_staff %}<i class="admin">A</i>
+                        {% elif discussion.user.creator.is_creator %}<i class="creator">C</i>
+                            {% else %}
+                        {% endif %}
+                        &nbsp;<span class="disc-score">{{ discussion.votes }} {% if discussion.votes == 1 %}Point{% else %}Points{% endif %}</span>
+                        &nbsp;<span class="disc-submitted"><i class="fa fa-clock-o"></i>&nbsp;{{ discussion.date_submitted|naturaltime }}</span>
+                    </div>
+                </div>
+                <div class="comment-meta">
+                    <div class="disc-comment">
+                        {{ discussion.comment }}
+                    </div>
+
+                    <div class="comment-actions">
+                        {% if user.is_authenticated %}
+                            <a id="discussion_report" href="{% url 'discussion_flag' slug=submission.submission_type uuid=submission.uuid pk=discussion.pk %}" class="disc-report">Report</a>
+                        {% endif %}
+                        {% if discussion.user.username == user.username or user.is_staff %}
+                            <a id="discussion_edit" href="{% url 'discussion_edit' slug=submission.submission_type uuid=submission.uuid pk=discussion.pk %}" class="disc-edit">Edit</a>
+
+                            <a id="discussion_delete" href="{% url 'discussion_delete' slug=submission.submission_type uuid=submission.uuid pk=discussion.pk %}" class="disc-delete">Delete</a>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </li>
+        {% endfor %}
+        </ol>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'musetic/js/vendor/modalEffects.js' %}"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+
+        $('#submit').one('click', function() {
+            $('.discussion-form').validate({
+                rules: {
+                    comment: {
+                        required: true
+                    }
+                }
+            });
+        });
+
+        /** Ajax Loading */
+        $('.submission-report-container').load("{% url 'flag' slug=submission.submission_type uuid=submission.uuid %}");
+        $('.discussion-container').load("{% url 'discussion_form' slug=submission.submission_type uuid=submission.uuid %}");
+
+
+        $('.vote-form').submit(function (e) {
+            e.preventDefault();
+            var btn = $("button", this);
+            btn.attr('disabled', true);
+            $.post("{% url 'vote' %}", $(this).serializeArray(),
+                function (data) {
+                    if (data["voteobj"]) {
+                        btn.removeClass('unvoted');
+                        btn.addClass('voted');
+                    }
+                });
+            btn.attr('disabled', false);
+        });
+
+        $('.discussion-vote-form').submit(function (e) {
+            e.preventDefault();
+            var btn = $("button", this);
+            btn.attr('disabled', true);
+            $.post("{% url 'discussion_vote' %}", $(this).serializeArray(),
+                function (data) {
+                    if (data["voteobj"]) {
+                        btn.removeClass('unvoted');
+                        btn.addClass('voted');
+                    }
+                });
+            btn.attr('disabled', false);
+        });
+
+
+    });
+    </script>
+{% endblock %}

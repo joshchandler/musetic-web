@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static i18n humanize submission_tags crispy_forms_tags %}
+
+{% block title %}{{ submission.title }} | Musetic{% endblock %}
+{% block content %}
+    <div class="submission-info-wrapper">
+        <div class="submissions-th">
+            {% if submission.thumbnail %}
+                {% submission_image submission.url 500 %}
+            {% endif %}
+        </div>
+        <div class="submissions-th-overlay"></div>
+
+        {% crispy submission_edit_thumbnail_form %}
+
+    </div>
+
+
+{% endblock %}

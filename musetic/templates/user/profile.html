@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% load i18n static humanize avatar_tags submission_tags active %}
+
+{% block title %}{{ profile.user.username }} | Musetic{% endblock %}
+
+{% block content %}
+    <div class="profile-page">
+        <div class="profile-info-wrapper">
+            <div class="profile-info">
+
+                <div class="profile-date-joined">
+                    <div class="profile-joined">Joined</div>
+                    <div class="profile-date">{{ profile.user.date_joined|naturaltime }}</div>
+                </div>
+
+                <div class="profile-pic-wrapper">
+                    <img src="{% avatar_url profile.user.username 200 %}"/>
+                </div>
+
+
+
+                <div class="profile-score-wrap">
+                    <div class="submission-score" title="{% if profile.score == 1 %}{{ profile.score }} Creator point{% else %}{{ profile.score }} Creator points{% endif %}">{{ profile.score }}</div>
+                    <div class="discussion-score" title="{% if profile.discussion_score == 1 %}{{ profile.discussion_score }} Comment point{% else %}{{ profile.discussion_score }} Comment points{% endif %}">{{ profile.discussion_score }}</div>
+                </div>
+
+                <div class="profile-username">
+                    {{ profile.user.username }}
+                    {% if profile.user.is_staff %}
+                        <i class="admin">A</i>
+                    {% elif profile.user.creator.is_creator %}
+                        <i class="creator">C</i>
+                    {% else %}
+                    {% endif %}
+                </div>
+
+            {% if profile.description %}
+                    <div class="profile-description">{{ profile.description }}</div>
+        {% endif %}
+
+            {% if profile.user.username == user.username %}
+                <a class="profile-edit button success" href="{% url 'edit_profile' username=user.username %}">Edit Profile</a>
+            {% endif %}
+            </div>
+
+
+
+        </div>
+
+		<div class="submissions-list submissions-profile">
+		<ul class="submission-filter-group">
+            <span class="filter-type">Submissions</span>
+			<li><a class="filter-button {% ifactive 'user_profile' username=profile.user.username %}active{% endifactive %}" href="{% url 'user_profile' username=profile.user.username %}">New</a></li>
+			<li><a class="filter-button {% ifactive 'user_profile_top' username=profile.user.username %}active{% endifactive %}" href="{% url 'user_profile_top' username=profile.user.username %}">Top</a></li>
+{#            <div class="filter-type">Comments</div>#}
+{#            <li><a class="filter-button" href="">New</a></li>#}
+{#            <li><a class="filter-button" href="">Top</a></li>#}
+		</ul>
+		<ul class="hexagon clearfix">
+			{% for submission in submissions %}
+				<li class="submissions-item">
+
+					<div class="submissions-th">
+						{% if submission.thumbnail %}
+							{% submission_image submission.url 500 %}
+						{% endif %}
+					</div>
+					<div class="submissions-overlay"></div>
+					<a class="submissions-title-area" rel="follow" href="{{ submission.url }}" target=_blank>
+						{{ submission.title }}
+					</a>
+					{% if submission.submission_type == 'art' %}
+						<a class="submissions-category art"
+						   href="{% url 'category' slug=submission.submission_type %}" title="Art"><i
+								class="fa fa-paint-brush"></i></a>
+					{% elif submission.submission_type == 'design' %}
+						<a class="submissions-category art"
+						   href="{% url 'category' slug=submission.submission_type %}"><i
+								class="fa fa-desktop"></i></a>
+					{% elif submission.submission_type == 'imagery' %}
+						<a class="submissions-category art"
+						   href="{% url 'category' slug=submission.submission_type %}"><i
+								class="fa fa-camera"></i></a>
+					{% elif submission.submission_type == 'sound' %}
+						<a class="submissions-category sound"
+						   href="{% url 'category' slug=submission.submission_type %}"><i
+								class="fa fa-headphones"></i></a>
+					{% elif submission.submission_type == 'video' %}
+						<a class="submissions-category art"
+						   href="{% url 'category' slug=submission.submission_type %}"><i
+								class="fa fa-video-camera"></i></a>
+					{% elif submission.submission_type == 'writing' %}
+						<a class="submissions-category art"
+						   href="{% url 'category' slug=submission.submission_type %}"><i
+								class="fa fa-pencil"></i></a>
+					{% endif %}
+
+					<form method="post" action="{% url 'vote' %}" class="vote-form">
+                        {% csrf_token %}
+                        <input type="hidden" id="id_submission" name="submission" class="hidden_id"
+                               value="{{ submission.id }}"/>
+                        <input type="hidden" id="id_voter" name="voter" class="hidden_id"
+                               value="{{ user.id }}"/>
+                        {% if not user.is_authenticated %}
+                            <button disabled class="upvote-button vote-disabled" title="Login/Register to vote"><i
+                                    class="fa fa-2x fa-angle-up"></i></button>
+                            <div class="num-votes vote-disabled">
+                                {{ submission.votes }}
+                            </div>
+                        {% elif submission.id not in voted %}
+                            <button class="upvote-button unvoted"><i class="fa fa-2x fa-angle-up"></i></button>
+                            <div class="num-votes unvoted">
+                                {{ submission.votes }}
+                            </div>
+                        {% else %}
+                            <button class="upvote-button voted"><i class="fa fa-2x fa-angle-up"></i></button>
+                            <div class="num-votes voted">
+                                {{ submission.votes }}
+                            </div>
+                        {% endif %}
+                    </form>
+
+					<div class="submissions-content">
+
+                            <div class="submissions-time submissions-time-profile">{{ submission.date_submitted|naturalday }}</div>
+
+                            <a class="submissions-more submissions-more-profile" href="{% url 'submission_detail' slug=submission.submission_type uuid=submission.uuid %}"><i class="fa fa-lg fa-comments-o"></i>&nbsp;&nbsp;{{ submission.comment_count }}</a>
+						</div>
+				</li>
+			{% empty %}
+				{# @todo Create something better than this here #}
+				<div class="nothing-here">
+					{% if user.username == profile.user.username %}
+						<p>Submit your first work</p>
+					{% elif profile.user.creator.is_creator %}
+                        <p>{{ profile.user.username }} hasn't submitted anything... yet</p>
+                    {% else %}
+						<p>{{ profile.user.username }} is not a Creator... yet</p>
+					{% endif %}
+				</div>
+			{% endfor %}
+		</ul>
+		</div>
+		{% if pagination %}
+		<div class="pagination">
+			{% if pagination.previous %}
+			<a class="prev" href="{{ pagination.previous }}">&laquo; Previous</a>
+			{% endif %}
+			{% if pagination.next %}
+			<a class="next" href="{{ pagination.next }}">Next &raquo;</a>
+			{% endif %}
+		</div>
+		{% endif %}
+    </div>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'musetic/js/submissions.js' %}"></script>
+{% endblock %}

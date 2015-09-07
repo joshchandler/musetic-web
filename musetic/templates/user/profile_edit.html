@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load i18n crispy_forms_tags humanize static avatar_tags %}
+
+{% block title %}{{ user.username }} | Musetic{% endblock %}
+{% block content %}
+
+    <div class="profile-info-wrapper">
+            <div class="profile-info">
+
+                <div class="profile-date-joined">
+                    <div class="profile-joined">Joined</div>
+                    <div class="profile-date">{{ profile.user.date_joined|naturaltime }}</div>
+                </div>
+
+                <div class="profile-pic-wrapper">
+                    <img src="{% avatar_url profile.user.username 200 %}"/>
+                </div>
+
+                <div class="profile-score-wrap">
+                    <div class="submission-score" title="{% if profile.score == 1 %}{{ profile.score }} Creator point{% else %}{{ profile.score }} Creator points{% endif %}">{{ profile.score }}</div>
+                    <div class="discussion-score" title="{% if profile.discussion_score == 1 %}{{ profile.discussion_score }} Comment point{% else %}{{ profile.discussion_score }} Comment points{% endif %}">{{ profile.discussion_score }}</div>
+                </div>
+
+                <div class="profile-username">
+                    {{ profile.user.username }}
+                    {% if profile.user.is_staff %}
+                        <i class="admin">A</i>
+                    {% elif profile.user.creator.is_creator %}
+                        <i class="creator">C</i>
+                    {% else %}
+                    {% endif %}
+                </div>
+
+{#            {% if profile.description %}#}
+{#                    <div class="profile-description">{{ profile.description }}</div>#}
+{#        {% endif %}#}
+
+            {% if profile.user.username == user.username %}
+                <a class="profile-edit button success" href="{% url 'avatar_change' %}">Change Avatar</a>
+            {% endif %}
+            </div>
+
+
+
+        </div>
+
+
+<div class="submissions-profile">
+
+    <form class="profile-edit-form" method="post">
+    {% csrf_token %}
+            <label for="id_first_name" >First name</label>
+            <input class="textinput textInput" id="id_first_name" maxlength="30" name="first_name" type="text" value="{{ user.first_name }}"/>
+
+            <label for="id_last_name">Last name</label>
+            <input class="textinput textInput" id="id_last_name" maxlength="30" name="last_name" type="text" value="{{ user.last_name }}"/>
+
+		    <label for="id_description" >Write something about yourself!</label>
+		    <textarea class="textarea" cols="40" maxlength=300 id="id_description" name="description" rows="10">{{ user.profile.description }}</textarea>
+
+        <input type="submit" name="submit" value="Save" class="button" id="submit-id-submit" />
+    </form>
+
+    <button class="button secondary m-trigger" data-modal="change_password">Change Password</button>
+
+        <div class="m-modal" id="change_password">
+            <div class="m-content">
+                <h3>Change your Password?</h3>
+                <div>
+                    <div class="change-password-container"></div>
+                    <button class="m-close"><i class="fa fa-lg fa-close"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="m-overlay"></div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'musetic/js/vendor/modalEffects.js' %}"></script>
+    <script type="text/javascript">
+
+    // Ajax loading of the SubmissionDelete form
+    $('.change-password-container').load("{% url 'auth_password_change' %}");
+
+    </script>
+{% endblock %}

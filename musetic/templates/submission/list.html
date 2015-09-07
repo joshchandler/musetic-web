@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load i18n static humanize crispy_forms_tags submission_tags %}
+
+{% block title %}Musetic{% endblock %}
+{% block content %}
+
+
+    <div class="submissions-list">
+        <ul class="hexagon clearfix">
+            {% for submission in submissions %}
+                <li class="submissions-item">
+
+                    <div class="submissions-th">
+                        {% if submission.thumbnail %}
+                            {% submission_image submission.url 500 %}
+                        {% endif %}
+                    </div>
+                    <div class="submissions-overlay"></div>
+                    <a class="submissions-title-area" rel="follow" href="{{ submission.url }}" target=_blank>
+                        {{ submission.title }}
+                    </a>
+                    {% if submission.submission_type == 'art' %}
+                        <a class="submissions-category art"
+                           href="{% url 'category' slug=submission.submission_type %}" title="Art"><i
+                                class="fa fa-paint-brush"></i></a>
+                    {% elif submission.submission_type == 'design' %}
+                        <a class="submissions-category art"
+                           href="{% url 'category' slug=submission.submission_type %}"><i
+                                class="fa fa-desktop"></i></a>
+                    {% elif submission.submission_type == 'imagery' %}
+                        <a class="submissions-category art"
+                           href="{% url 'category' slug=submission.submission_type %}"><i
+                                class="fa fa-camera"></i></a>
+                    {% elif submission.submission_type == 'sound' %}
+                        <a class="submissions-category sound"
+                           href="{% url 'category' slug=submission.submission_type %}"><i
+                                class="fa fa-headphones"></i></a>
+                    {% elif submission.submission_type == 'video' %}
+                        <a class="submissions-category art"
+                           href="{% url 'category' slug=submission.submission_type %}"><i
+                                class="fa fa-video-camera"></i></a>
+                    {% elif submission.submission_type == 'writing' %}
+                        <a class="submissions-category art"
+                           href="{% url 'category' slug=submission.submission_type %}"><i
+                                class="fa fa-pencil"></i></a>
+                    {% endif %}
+
+                    <form method="post" action="{% url 'vote' %}" class="vote-form">
+                        {% csrf_token %}
+                        <input type="hidden" id="id_submission" name="submission" class="hidden_id"
+                               value="{{ submission.id }}"/>
+                        <input type="hidden" id="id_voter" name="voter" class="hidden_id"
+                               value="{{ user.id }}"/>
+                        {% if not user.is_authenticated %}
+                            <button class="upvote-button vote-disabled" title="Login/Register to vote"><i
+                                    class="fa fa-2x fa-angle-up"></i></button>
+                            <div class="num-votes vote-disabled">
+                                {{ submission.votes }}
+                            </div>
+                        {% elif submission.id not in voted %}
+                            <button class="upvote-button unvoted"><i class="fa fa-2x fa-angle-up"></i></button>
+                            <div class="num-votes unvoted">
+                                {{ submission.votes }}
+                            </div>
+                        {% else %}
+                            <button class="upvote-button voted"><i class="fa fa-2x fa-angle-up"></i></button>
+                            <div class="num-votes voted">
+                                {{ submission.votes }}
+                            </div>
+                        {% endif %}
+                    </form>
+
+                    <div class="submissions-content">
+
+                            <a class="submissions-user {% if submission.user.is_staff %}submissions-user-admin{% endif %}" href="{% url 'user_profile' username=submission.user.username %}">{{ submission.user.username }}</a>
+
+                            <div class="submissions-time">{{ submission.date_submitted|naturalday }}</div>
+
+                            <a class="submissions-more" href="{% url 'submission_detail' slug=submission.submission_type uuid=submission.uuid %}"><i class="fa fa-lg fa-comments-o"></i>&nbsp;&nbsp;{{ submission.comment_count }}</a>
+                        </div>
+                </li>
+            {% empty %}
+                {# @todo Create something better than this here #}
+                <div class="nothing-here">
+                    <p>Be the first to submit here!</p>
+                </div>
+            {% endfor %}
+        </ul>
+    </div>
+    {% if pagination %}
+        <div class="pagination">
+            {% if pagination.previous %}
+            <a class="prev button" href="{{ pagination.previous }}">&laquo; Previous</a>
+            {% endif %}
+            {% if pagination.next %}
+            <a class="next button" href="{{ pagination.next }}">Next &raquo;</a>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'musetic/js/vendor/modalEffects.js' %}"></script>
+    <script src="{% static 'musetic/js/submissions.js' %}"></script>
+{% endblock %}
+

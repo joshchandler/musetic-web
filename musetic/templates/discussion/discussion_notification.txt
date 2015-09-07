@@ -1,0 +1,9 @@
+{% load i18n %}
+{{ user }} {% trans 'said' %}:
+
+"{{ comment }}"
+
+on {{ date_submitted }}
+
+Check it out here:
+http://{{ site.domain }}/{{ submission.submission_type }}/{{ submission.uuid }}/

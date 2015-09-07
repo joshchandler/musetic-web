@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load i18n crispy_forms_tags humanize static avatar_tags %}
+
+{% block title %}{{ user.username }} | Musetic{% endblock %}
+{% block content %}
+
+    <div class="profile-info-wrapper">
+            <div class="profile-info">
+
+                <div class="profile-date-joined">
+                    <div class="profile-joined">Joined</div>
+                    <div class="profile-date">{{ profile.user.date_joined|naturaltime }}</div>
+                </div>
+
+                <div class="profile-pic-wrapper">
+                    <img src="{% avatar_url profile.user.username 200 %}"/>
+                </div>
+
+                <div class="profile-score-wrap">
+                    <div class="submission-score" title="{% if profile.score == 1 %}{{ profile.score }} Creator point{% else %}{{ profile.score }} Creator points{% endif %}">{{ profile.score }}</div>
+                    <div class="discussion-score" title="{% if profile.discussion_score == 1 %}{{ profile.discussion_score }} Comment point{% else %}{{ profile.discussion_score }} Comment points{% endif %}">{{ profile.discussion_score }}</div>
+                </div>
+
+                <div class="profile-username">
+                    {{ profile.user.username }}
+                    {% if profile.user.is_staff %}
+                        <i class="admin">A</i>
+                    {% elif profile.user.creator.is_creator %}
+                        <i class="creator">C</i>
+                    {% else %}
+                    {% endif %}
+                </div>
+
+{#            {% if profile.description %}#}
+{#                    <div class="profile-description">{{ profile.description }}</div>#}
+{#        {% endif %}#}
+
+            {% if profile.user.username == user.username %}
+                <a class="profile-edit button success" href="{% url 'avatar_change' %}">Change Avatar</a>
+            {% endif %}
+            </div>
+
+
+
+        </div>
+
+
+<div class="submissions-profile">
+
+    <form class="user-settings-form" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <input type="submit" name="submit" value="Save" class="button" id="submit-id-submit" />
+    </form>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'musetic/js/vendor/modalEffects.js' %}"></script>
+    <script type="text/javascript">
+
+    // Ajax loading of the SubmissionDelete form
+    $('.change-password-container').load("{% url 'auth_password_change' %}");
+
+    </script>
+{% endblock %}

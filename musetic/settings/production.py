@@ -11,11 +11,11 @@ SITE_ID = 1
 
 ALLOWED_HOSTS = ['*']
 
-# # Production Apps
-# INSTALLED_APPS += (
-#     'storages',
-#     's3_folder_storage',
-# )
+# Production Apps
+INSTALLED_APPS += (
+    'storages',
+    's3_folder_storage',
+)
 
 # Email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

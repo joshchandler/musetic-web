@@ -42,6 +42,7 @@ REST_FRAMEWORK = {
 }
 
 # Databases
+DATABASES = {}
 DATABASES['default'] = dj_database_url.config()
 
 # Enable Connection Pooling

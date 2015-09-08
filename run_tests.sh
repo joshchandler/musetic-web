@@ -1,6 +1,6 @@
 #!/bin/bash
 
-pip install -r requirements/test.txt
+pip install -r reqs/test.txt
 
 flake8 .
 

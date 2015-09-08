@@ -1,0 +1,62 @@
+# sqlite db
+*.db
+
+# Celery stuff
+celery.pid
+celerybeat-schedule
+
+media/
+static/
+!musetic/static/
+
+# Heroku
+requirements.txt
+
+# Compiled python files
+*.pyc
+__pycache__
+
+# Vim files
+*.swp
+*.swo
+
+# Coverage files
+.coverage
+htmlcov/
+
+# Setuptools distribution folder.
+/dist/
+/build/
+
+# Python egg metadata, regenerated from source files by setuptools.
+/*.egg-info
+/*.egg
+
+# iPython Notebooks
+/.ipynb_checkpoints
+*.ipynb
+
+# Virtualenv
+env/
+venv/
+
+# OSX
+.DS_Store
+
+# Pycharm
+.idea/
+
+# PyDev/Eclipse
+.metadata/
+.project
+.pydevproject
+
+# tmp directory
+tmp/
+*.out
+
+# Fabfile
+fabfile/
+
+# Bower
+bower_components/

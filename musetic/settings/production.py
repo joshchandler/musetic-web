@@ -54,25 +54,25 @@ REST_FRAMEWORK = {
 # }
 DATABASES['default'] = dj_database_url.config()
 
-# Queues
-BROKER_TRANSPORT = 'redis'
-BROKER_URL = get_env_variable('BROKER_URL', 'redis://localhost:6379/0')
+# # Queues
+# BROKER_TRANSPORT = 'redis'
+# BROKER_URL = get_env_variable('BROKER_URL', 'redis://localhost:6379/0')
 
-CELERY_DEFAULT_QUEUE = 'musetic-prod'
-CELERY_ALWAYS_EAGER = False
+# CELERY_DEFAULT_QUEUE = 'musetic-prod'
+# CELERY_ALWAYS_EAGER = False
 
-# Static and Media
+# # Static and Media
 
-DEFAULT_FILE_STORAGE = 's3_folder_storage.s3.DefaultStorage'
-DEFAULT_S3_PATH = 'media'
-STATICFILES_STORAGE = 's3_folder_storage.s3.StaticStorage'
-STATIC_S3_PATH = 'static'
-AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
-AWS_SECRET_ACCESS_KEY  = os.environ['AWS_SECRET_ACCESS_KEY']
-AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
+# DEFAULT_FILE_STORAGE = 's3_folder_storage.s3.DefaultStorage'
+# DEFAULT_S3_PATH = 'media'
+# STATICFILES_STORAGE = 's3_folder_storage.s3.StaticStorage'
+# STATIC_S3_PATH = 'static'
+# AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+# AWS_SECRET_ACCESS_KEY  = os.environ['AWS_SECRET_ACCESS_KEY']
+# AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
 
-MEDIA_ROOT = '/%s/' % DEFAULT_S3_PATH
-MEDIA_URL = '//s3.amazonaws.com/%s/media/' % AWS_STORAGE_BUCKET_NAME
-STATIC_ROOT = '/%s/' % STATIC_S3_PATH
-STATIC_URL = '//s3.amazonaws.com/%s/static/' % AWS_STORAGE_BUCKET_NAME
-ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
+# MEDIA_ROOT = '/%s/' % DEFAULT_S3_PATH
+# MEDIA_URL = '//s3.amazonaws.com/%s/media/' % AWS_STORAGE_BUCKET_NAME
+# STATIC_ROOT = '/%s/' % STATIC_S3_PATH
+# STATIC_URL = '//s3.amazonaws.com/%s/static/' % AWS_STORAGE_BUCKET_NAME
+# ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'

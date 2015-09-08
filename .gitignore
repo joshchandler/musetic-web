@@ -9,9 +9,6 @@ media/
 static/
 !musetic/static/
 
-# Heroku
-requirements.txt
-
 # Compiled python files
 *.pyc
 __pycache__

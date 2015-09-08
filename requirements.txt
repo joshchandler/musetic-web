@@ -9,4 +9,4 @@ whitenoise==1.0.6
 newrelic==2.54.0.41
 django-s3-folder-storage==0.2
 
-git+git://gitub.com/coagulant/django-storages-py3.git
+git+git://github.com/coagulant/django-storages-py3.git

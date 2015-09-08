@@ -1,5 +1,6 @@
 from .base import *
 from musetic.settings.utils import get_env_variable
+import dj_database_url
 
 SECRET_KEY = get_env_variable('SECRET_KEY')
 
@@ -41,16 +42,17 @@ REST_FRAMEWORK = {
 }
 
 # Databases
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': get_env_variable('DB_NAME'),
-        'USER': get_env_variable('DB_USER'),
-        'PASSWORD': get_env_variable('DB_PASSWORD'),
-        'HOST': get_env_variable('DB_HOST'),
-        'PORT': '5432',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': get_env_variable('DB_NAME'),
+#         'USER': get_env_variable('DB_USER'),
+#         'PASSWORD': get_env_variable('DB_PASSWORD'),
+#         'HOST': get_env_variable('DB_HOST'),
+#         'PORT': '5432',
+#     }
+# }
+DATABASES['default'] = dj_database_url.config()
 
 # Queues
 BROKER_TRANSPORT = 'redis'

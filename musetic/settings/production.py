@@ -44,10 +44,10 @@ REST_FRAMEWORK = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'musetic1234',
-        'USER': 'musetic',
-        'PASSWORD': 'musetic_prod',
-        'HOST': 'musetic.cj0fxohcbtme.us-east-1.rds.amazonaws.com',
+        'NAME': get_env_variable('DB_NAME'),
+        'USER': get_env_variable('DB_USER'),
+        'PASSWORD': get_env_variable('DB_PASSWORD'),
+        'HOST': get_env_variable('DB_HOST'),
         'PORT': '5432',
     }
 }

@@ -15,7 +15,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", get_env_variable('DJANGO_SETTING
 
 from django.core.wsgi import get_wsgi_application
 
-if get_env_variable('DJANGO_SETTINGS_MODULE') === 'musetic.settings.production':
+if get_env_variable('DJANGO_SETTINGS_MODULE') == 'musetic.settings.production':
   from dj_static import Cling
   application = Cling(get_wsgi_application())
 else:

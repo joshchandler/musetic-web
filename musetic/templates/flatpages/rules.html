@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% load i18n static %}
 
+{% block sidebar %}
+    {% include 'flatpages/sidebar_menu.html' %}
+{% endblock %}
 {% block content %}
     <div class="about">
         <h3>Rules for Submitting</h3>
@@ -11,13 +14,15 @@
 
 		<p>We aren’t really the place for cute stories about cats, opinion/review videos,  political updates, news articles, memes, or the like. We’re are, however, the place for creative content: videos, songs, comics, funny/well-written blog posts, novels. You get the picture.</p>
 
-		<ul><h4>Do's</h4>
+        <h3>Do's</h3>
+		<ul>
 			<li>Do not worry about self-promotion ratios. All content submitted here can be something you made. It’s okay. Live a little.</li>
 			<li>Make sure the title you choose is vindictive of the content submitted, but don’t go overboard with gimmicks to make titles more interesting. Do not type them in all caps, add thousands of exclamation points, or give a parenthetical statement on about how awesome something is. For Example: GAH, THIS IS THE THING (THIS THING IS AWESOME!!!!!!)</li>
 			<li>Report comments and submissions that break the rules.</li>
 		</ul>
 
-		<ul><h4>Don’ts:</h4>
+        <h3>Don'ts:</h3>
+		<ul>
 			<li>Post personal information (email addresses, contact info, etc.)</li>
 			<li>Post a question or a comment via submission. Do that by sending us an email to join@musetic.com.</li>
 			<li>Submit anything pornographic, crude, illegal or offensive content, or use any of the above for ticker thumbnails. If you’re not sure, please don't submit. If you break any of these rules, we will break your heart and delete it.  If we find ourselves deleting multiple submissions, we will have to ban you from the site. Do not give us a reason to break your heart.</li>
@@ -25,35 +30,35 @@
 		</ul>
 
 
-		<h3>Rules for Types of Submissions</h3>
+		<h2>Rules for Types of Submissions</h2>
 
-		<h4>Art</h4>
+		<h3>Art</h3>
 		<p>We understand that there’s beautiful art that involves a naked human. We’re sorry to say that until we can get safety filters and other such measures in place, Musetic is not the place for it. Anything that is submitted that can be considered NSFW will be flagged and deleted.
 We do want pictures of functional/craft art (ie: pottery, video game inspired cross stitching, beautiful handmade furniture)
 In your description field, consider including something special about the piece, if it’s part of a series, and how long it took you to make it.</p>
 
-		<h4>Design</h4>
+		<h3>Design</h3>
 		<p>Design encompasses digital artwork, and product design. We want you to display a website you built, some css technique you've been working on, and any images (logos, etc).</p>
 
 
-		<h4>Imagery</h4>
+		<h3>Imagery</h3>
 		<p><strong>Photography:</strong> In your description, tell us where it was taken and anything special about the photo you want the masses to know.
 <strong>Comics:</strong> Bring it.
 <strong>Everything Else:</strong> Please don’t submit iPhone photos unless they are taken with the intent of taking a good picture. We want your created/artistic images, leave the memes, screenshots, pictures of funny/ironic things at Imgur.  If your submission is erotic or pornographic in nature, please do not sumbit it.  We know that artists have a good grasp on when things cross the line between art and eroticism, so please consider this before making a submission.</p>
 
-		<h4>Sound</h4>
+		<h3>Sound</h3>
 		<p><strong>Music:</strong> If you're submitting a full album, you must specify that by putting (Album) at the end of the title. Otherwise, just put the title of the song in the title.  Please do nut submit a full album by uploading each track seperately.
 <strong>Audio Books:</strong> In your description, please post a brief book summary.
 <strong>Spoken Word Poetry:</strong> Bring it on.
 <strong>Podcasts:</strong> In your description, please post a quick summary of what you discuss in your podcast.</p>
 
 
-		<h4>Video</h4>
+		<h3>Video</h3>
 		<p>What we’re not looking for: cat videos, video response videos, news videos, videos from your iPhone unless created with artistic intent, realisim videos (ie: you chopping things in half with swords, a surprise party for your sister). If your submission is erotic or pornographic in nature, please do not submit it.  We know that artists have a good grasp on when things cross the line between art and eroticism, so please consider this before making a submission.
 
 What we are looking for: shorts, animation, travel videos, music videos, films, etc. If the fine folks at Vimeo host it, we probably want it.</p>
 
-		<h4>Writing</h4>
+		<h3>Writing</h3>
 <p>For <strong>novels/novellas or short stories</strong>, in your description, please post a brief book summary. No Erotica please.
 <strong>Blog posts:</strong> In your description, please post a brief post summary.. Please do not submit controversial opinion pieces, or anything current issue related. In your description, please post a brief book summary and three of your favorite quotes from the work. Here are some blog post topics/genres we’d like to see: A History of Blue Jeans (interesting history), How to Be Happy When Things Suck (self-help), An Open Letter to Open Letters (funny), The Morose Ballad of My Failed Pinterest Cake (funny/encouraging life story), An Encouraging Word to Creators (creative resource), How I Made a Song Using Only Free iPad Apps (creative resource).
 Poetry: Bring it.</p>

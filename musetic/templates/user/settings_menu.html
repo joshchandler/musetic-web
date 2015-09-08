@@ -1,0 +1,36 @@
+{% load active %}
+<div class="sidebar settings-menu pushy-left">
+    <ul class="categories">
+        <li><a class="{% ifactive 'category' slug='art' %}active{% endifactive %}" href="{% url 'category' slug='art' %}" data-toggle="tooltip" data-placement="bottom" title="Art"><i class="fa fa-paint-brush"></i></a></li>
+        <li><a class="{% ifactive 'category' slug='design' %}active{% endifactive %}" href="{% url 'category' slug='design' %}" data-toggle="tooltip" data-placement="bottom" title="Design"><i class="fa fa-desktop"></i></a></li>
+        <li><a class="{% ifactive 'category' slug='imagery' %}active{% endifactive %}" href="{% url 'category' slug='imagery' %}" data-toggle="tooltip" data-placement="bottom" title="Imagery"><i class="fa fa-camera"></i></a></li>
+        <li><a class="{% ifactive 'category' slug='sound' %}active{% endifactive %}" href="{% url 'category' slug='sound' %}" data-toggle="tooltip" data-placement="bottom" title="Sound"><i class="fa fa-headphones"></i></a></li>
+        <li><a class="{% ifactive 'category' slug='video' %}active{% endifactive %}" href="{% url 'category' slug='video' %}" data-toggle="tooltip" data-placement="bottom" title="Video"><i class="fa fa-video-camera"></i></a></li>
+        <li><a class="{% ifactive 'category' slug='writing' %}active{% endifactive %}" href="{% url 'category' slug='writing' %}" data-toggle="tooltip" data-placement="bottom" title="Writing"><i class="fa fa-pencil"></i></a></li>
+
+    </ul>
+    <div class="settings-category">Profile Settings</div>
+    <a class="settings-option {% ifactive 'settings_profile' %}active{% endifactive %}" href="{% url 'settings_profile' %}">Profile Info</a>
+    <a class="settings-option {% ifactive 'settings_avatar' %}active{% endifactive %}" href="{% url 'settings_avatar' %}">Change Avatar</a>
+{#    <a class="settings-option {% ifactive 'settings_email' %}active{% endifactive %}" href="{% url 'settings_email' %}">Email Address</a>#}
+    <a class="settings-option {% ifactive 'settings_username' %}active{% endifactive %}" href="{% url 'settings_username' %}">Change Username</a>
+    <a class="settings-option {% ifactive 'settings_password_change' %}active{% endifactive %}" href="{% url 'settings_password_change' %}">Update Password</a>
+{#    <a class="settings-option" href="">Social Media</a>#}
+    <a class="settings-option {% ifactive 'settings_delete' username=user.username %}active{% endifactive %}" href="{% url 'settings_delete' username=user.username %}">Delete Account</a>
+
+    <div class="settings-category">General Settings</div>
+    <a class="settings-option {% ifactive 'settings_general' %}active{% endifactive %}" href="{% url 'settings_general' %}">General</a>
+{#    <a class="settings-option"  href="">Notifications</a>#}
+
+    <div class="footer">
+    	<div class="footer-links">
+			<a href="{% url 'about' %}">About&nbsp;</a>
+            <a href="http://blog.musetic.com">Blog&nbsp;</a>
+			<a href="{% url 'terms_of_use' %}">Terms&nbsp;</a>
+			<a href="{% url 'privacy_policy' %}">Privacy&nbsp;</a>
+		</div>
+    	<div class="copy left">
+			&copy; 2015 Musetic
+		</div>
+    </div>
+</div>

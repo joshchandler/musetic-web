@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load i18n crispy_forms_tags humanize static avatar_tags %}
+
+{% block title %}{{ user.username }} - Change Username | Musetic{% endblock %}
+
+{% block sidebar %}{% include 'user/settings_menu.html' %}{% endblock %}
+{% block content %}
+
+<div class="settings-wrapper">
+
+    <div class="settings-content">
+        <h3>Change Username</h3>
+        <p class="warning">Warning: We don't provide redirects for this, if someone has provided a link to your profile page if will show as a 404</p>
+        <form class="settings-change-username-form" action="{% url 'settings_username' %}" method="post">
+            {% csrf_token %}
+
+            <label for="id_username">Username</label>
+            <input class="textinput textInput" id="id_username" maxlength="20" value="{{ user.username }}" name="username" type="text" />
+
+            <input type="submit" name="submit" value="Change Username" class="button success" id="submit-id-submit" />
+        </form>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+{% endblock %}

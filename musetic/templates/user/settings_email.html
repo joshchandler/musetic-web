@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load i18n crispy_forms_tags humanize static avatar_tags %}
+
+{% block title %}{{ user.username }} - Email Settings | Musetic{% endblock %}
+
+{% block sidebar %}{% include 'user/settings_menu.html' %}{% endblock %}
+{% block content %}
+
+<div class="settings-wrapper">
+
+    <div class="settings-content">
+        <h3>{% blocktrans %}Update your Email Address{% endblocktrans %}</h3>
+
+        <form class="settings-change-email-form" action="{% url 'settings_email' %}" method="post">
+            {% csrf_token %}
+
+            <label for="id_email">Email Address</label>
+            <input class="emailinput" id="id_email" name="email" type="email" value="{{ user.email }}"/>
+
+            <input type="submit" name="submit" value="Update Email Address" class="button success" id="submit-id-submit" />
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+{% endblock %}

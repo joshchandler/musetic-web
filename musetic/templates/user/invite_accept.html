@@ -1,7 +1,13 @@
-{% extends "base.html" %}
+{% extends "base_full_width.html" %}
 {% load i18n static humanize crispy_forms_tags %}
 
 {% block title %}Accept Invite | Musetic{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'musetic/css/auth.css' %}">
+{% endblock %}
+
+{% block body %}<body class="auth-page">{% endblock %}
 
 {% block header %}{% endblock %}
 {% block content %}
@@ -13,7 +19,7 @@
                 <input id="id_username" maxlength="20" name="username" placeholder="Username" type="text" />
                 <input id="id_password1" name="password1" placeholder="Password" type="password" />
                 <input id="id_password2" name="password2" placeholder="Password (again)" type="password" />
-                <input type="submit" name="submit" value="Accept Invitation" class="button success" id="id_submit" />
+                <input type="submit" name="submit" value="Accept Invite" class="button success" id="id_submit" />
 
         </form>
     </div>

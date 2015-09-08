@@ -1,4 +1,4 @@
-{% extends "base.html" %}{% load static i18n crispy_forms_tags %}
+{% extends "base_full_width.html" %}{% load static i18n crispy_forms_tags %}
 
 {% block title %}Register | Musetic{% endblock %}
 {% block css %}
@@ -31,7 +31,7 @@
                            type="password"/>
                 </div>
                 <p class="terms">By registering you agree to the <a href="{% url 'terms_of_use' %}">Terms of Use</a></p>
-                <input type="submit" name="submit" value="Register" class="button success"
+                <input type="submit" name="submit" value="Register" class="register-submit button success"
                        id="submit"/>
 
             </form>

@@ -1,7 +1,7 @@
 
 
 $(function() {
-	var pushy = $('.main-menu'), //menu css class
+	var pushy = $('.sidebar'), //menu css class
 		body = $('body'),
 		container = $('.wrapper'), //container css class
 		push = $('.push'), //css class to add pushy capability
@@ -10,7 +10,7 @@ $(function() {
 		pushyActiveClass = "pushy-active", //css class to toggle site overlay
 		containerClass = "container-push", //container open class
 		pushClass = "push-push", //css class to add pushy capability
-		menuBtn = $('.main-menu-button, .main-menu a'), //css classes to toggle the menu
+		menuBtn = $('.sidebar-button'), //css classes to toggle the menu
 		menuSpeed = 200, //jQuery fallback menu speed
 		menuWidth = pushy.width() + "px"; //jQuery fallback menu width
 

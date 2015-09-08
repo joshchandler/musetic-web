@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load i18n crispy_forms_tags humanize static avatar_tags %}
+
+{% block title %}{{ user.username }} - General Settings | Musetic{% endblock %}
+
+{% block sidebar %}{% include 'user/settings_menu.html' %}{% endblock %}
+{% block content %}
+
+    <div class="settings-wrapper">
+
+        <div class="settings-content">
+            <h3>General Settings</h3>
+
+            <form class="user-settings-form" method="post">
+                {% csrf_token %}
+                <input {% if user.user_settings.show_feedback_tab %}checked="checked"{% endif %} id="id_show_feedback_tab" name="show_feedback_tab" type="checkbox" /> Show Feedback Tab
+
+                <br />
+                <br />
+                <input type="submit" name="submit" value="Save" class="button left" id="submit-id-submit"/>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'musetic/js/vendor/modalEffects.js' %}"></script>
+    <script type="text/javascript">
+
+        // Ajax loading of the SubmissionDelete form
+        $('.change-password-container').load("{% url 'auth_password_change' %}");
+
+    </script>
+{% endblock %}

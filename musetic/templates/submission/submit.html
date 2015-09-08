@@ -1,12 +1,54 @@
 {% extends "base.html" %}
-{% load i18n crispy_forms_tags static %}
+{% load i18n crispy_forms_tags static avatar_tags %}
 
 {% block title %}Submit | Musetic{% endblock %}
+
+{% block sidebar %}
+<div class="sidebar pushy-left">
+    <ul class="categories">
+        <li><a href="{% url 'category' slug='art' %}" data-toggle="tooltip" data-placement="bottom" title="Art"><i class="fa fa-paint-brush"></i></a></li>
+        <li><a href="{% url 'category' slug='design' %}" data-toggle="tooltip" data-placement="bottom" title="Design"><i class="fa fa-desktop"></i></a></li>
+        <li><a href="{% url 'category' slug='imagery' %}" data-toggle="tooltip" data-placement="bottom" title="Imagery"><i class="fa fa-camera"></i></a></li>
+        <li><a href="{% url 'category' slug='sound' %}" data-toggle="tooltip" data-placement="bottom" title="Sound"><i class="fa fa-headphones"></i></a></li>
+        <li><a href="{% url 'category' slug='video' %}" data-toggle="tooltip" data-placement="bottom" title="Video"><i class="fa fa-video-camera"></i></a></li>
+        <li><a href="{% url 'category' slug='writing' %}" data-toggle="tooltip" data-placement="bottom" title="Writing"><i class="fa fa-pencil"></i></a></li>
+    </ul>
+
+    {% if user.is_authenticated %}
+    <div class="profile-info">
+        <div class="profile-pic-wrapper">
+            <a href="{% url 'user_profile' user.username %}"><img src="{% avatar_url user.username 200 %}"/></a>
+        </div>
+
+        <div class="profile-score-wrap">
+            <div class="submission-score" title="{% if user.profile.score == 1 %}{{ user.profile.score }} Creator point{% else %}{{ user.profile.score }} Creator points{% endif %}">{{ user.profile.score }}
+                <div class="submission-score-desc">Creator {% if user.profile.score == 1 %}point{% else %}points{% endif %}</div></div>
+            <div class="discussion-score" title="{% if user.profile.discussion_score == 1 %}{{ user.profile.discussion_score }} Comment point{% else %}{{ user.profile.discussion_score }} Comment points{% endif %}">{{ user.profile.discussion_score }}
+                <div class="discussion-score-desc">Comment {% if user.profile.discussion_score == 1 %}point{% else %}points{% endif %}</div></div>
+        </div>
+
+    </div>
+    {% endif %}
+    <a href="{% url 'rules' %}" class="rules">Rules</a>
+
+    <div class="footer">
+    	<div class="footer-links">
+			<a href="{% url 'about' %}">About&nbsp;</a>
+            <a href="http://blog.musetic.com">Blog&nbsp;</a>
+			<a href="{% url 'terms_of_use' %}">Terms&nbsp;</a>
+			<a href="{% url 'privacy_policy' %}">Privacy&nbsp;</a>
+		</div>
+    	<div class="copy left">
+			&copy; 2015 Musetic
+		</div>
+    </div>
+</div>
+{% endblock %}
 {% block content %}
 
-<div class="submission-form-wrap">
+<div>
     <h3>Submit to Musetic</h3>
-	<div class="rules">Please read the <a href="{% url 'rules' %}">Rules for Submitting</a></div>
+	<div class="rules">Please read the <a href="{% url 'rules' %}">Rules before Submitting</a></div>
     {% if form.errors %}
         {% for field in form %}
             {% for error in field.errors %}
@@ -21,7 +63,7 @@
             </div>
         {% endfor %}
     {% endif %}
-    <form class="submit-form" action="." method="post" enctype="multipart/form-data">
+    <form class="submit-form" action="{% url 'submit' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="top-form-wrap">
             <div id="div_id_submission_type" class="selection-wrap">
@@ -38,7 +80,7 @@
             <div id="div_id_title" class="submit-title"><label for="id_title" class="required">TITLE</label>
                 <input class="textinput textInput" id="id_title" maxlength="75" name="title" type="text" placeholder="" />
             </div>
-            <div class="submit-url"><label for="id_url" class="required">URL (</label>
+            <div class="submit-url"><label for="id_url" class="required">URL</label>
                 <input class="urlinput" id="id_url" maxlength="200" name="url" type="url" value="http://" />
             </div>
             <div class="submit-thumbnail"><label for="id_thumbnail" class="left">THUMBNAIL</label>

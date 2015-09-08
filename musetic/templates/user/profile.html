@@ -3,59 +3,64 @@
 
 {% block title %}{{ profile.user.username }} | Musetic{% endblock %}
 
-{% block content %}
-    <div class="profile-page">
-        <div class="profile-info-wrapper">
-            <div class="profile-info">
-
-                <div class="profile-date-joined">
-                    <div class="profile-joined">Joined</div>
-                    <div class="profile-date">{{ profile.user.date_joined|naturaltime }}</div>
-                </div>
-
-                <div class="profile-pic-wrapper">
-                    <img src="{% avatar_url profile.user.username 200 %}"/>
-                </div>
-
-
-
-                <div class="profile-score-wrap">
-                    <div class="submission-score" title="{% if profile.score == 1 %}{{ profile.score }} Creator point{% else %}{{ profile.score }} Creator points{% endif %}">{{ profile.score }}</div>
-                    <div class="discussion-score" title="{% if profile.discussion_score == 1 %}{{ profile.discussion_score }} Comment point{% else %}{{ profile.discussion_score }} Comment points{% endif %}">{{ profile.discussion_score }}</div>
-                </div>
-
-                <div class="profile-username">
-                    {{ profile.user.username }}
-                    {% if profile.user.is_staff %}
-                        <i class="admin">A</i>
-                    {% elif profile.user.creator.is_creator %}
-                        <i class="creator">C</i>
-                    {% else %}
-                    {% endif %}
-                </div>
-
-            {% if profile.description %}
-                    <div class="profile-description">{{ profile.description }}</div>
-        {% endif %}
-
-            {% if profile.user.username == user.username %}
-                <a class="profile-edit button success" href="{% url 'edit_profile' username=user.username %}">Edit Profile</a>
-            {% endif %}
-            </div>
-
-
-
-        </div>
-
-		<div class="submissions-list submissions-profile">
-		<ul class="submission-filter-group">
-            <span class="filter-type">Submissions</span>
+{% block headersecondary %}
+    <div class="header-secondary fixed">
+        <span class="category-text">Submissions</span>
+        <ul class="submission-filter-group">
 			<li><a class="filter-button {% ifactive 'user_profile' username=profile.user.username %}active{% endifactive %}" href="{% url 'user_profile' username=profile.user.username %}">New</a></li>
 			<li><a class="filter-button {% ifactive 'user_profile_top' username=profile.user.username %}active{% endifactive %}" href="{% url 'user_profile_top' username=profile.user.username %}">Top</a></li>
-{#            <div class="filter-type">Comments</div>#}
-{#            <li><a class="filter-button" href="">New</a></li>#}
-{#            <li><a class="filter-button" href="">Top</a></li>#}
 		</ul>
+    </div>
+{% endblock %}
+
+{% block sidebar %}
+<div class="sidebar pushy-left">
+    <ul class="categories">
+        <li><a href="{% url 'category' slug='art' %}" data-toggle="tooltip" data-placement="bottom" title="Art"><i class="fa fa-paint-brush"></i></a></li>
+        <li><a href="{% url 'category' slug='design' %}" data-toggle="tooltip" data-placement="bottom" title="Design"><i class="fa fa-desktop"></i></a></li>
+        <li><a href="{% url 'category' slug='imagery' %}" data-toggle="tooltip" data-placement="bottom" title="Imagery"><i class="fa fa-camera"></i></a></li>
+        <li><a href="{% url 'category' slug='sound' %}" data-toggle="tooltip" data-placement="bottom" title="Sound"><i class="fa fa-headphones"></i></a></li>
+        <li><a href="{% url 'category' slug='video' %}" data-toggle="tooltip" data-placement="bottom" title="Video"><i class="fa fa-video-camera"></i></a></li>
+        <li><a href="{% url 'category' slug='writing' %}" data-toggle="tooltip" data-placement="bottom" title="Writing"><i class="fa fa-pencil"></i></a></li>
+    </ul>
+
+    <div class="profile-info">
+        <div class="profile-pic-wrapper">
+            <img src="{% avatar_url profile.user.username 200 %}"/>
+        </div>
+
+        <div class="profile-score-wrap">
+            <div class="submission-score" title="{% if profile.score == 1 %}{{ profile.score }} Creator point{% else %}{{ profile.score }} Creator points{% endif %}">{{ profile.score }}
+                <div class="submission-score-desc">Creator {% if profile.score == 1 %}point{% else %}points{% endif %}</div></div>
+            <div class="discussion-score" title="{% if profile.discussion_score == 1 %}{{ profile.discussion_score }} Comment point{% else %}{{ profile.discussion_score }} Comment points{% endif %}">{{ profile.discussion_score }}
+                <div class="discussion-score-desc">Comment {% if profile.discussion_score == 1 %}point{% else %}points{% endif %}</div></div>
+        </div>
+
+        <div class="profile-username">{{ profile.user.username }}</div>
+        <div class="profile-name">{{ profile.user.first_name }} {{ profile.user.last_name }}</div>
+        {% if profile.description %}
+        <div class="profile-description">{{ profile.description }}</div>
+        {% endif %}
+
+    </div>
+
+    <div class="footer">
+    	<div class="footer-links">
+			<a href="{% url 'about' %}">About&nbsp;</a>
+            <a href="http://blog.musetic.com">Blog&nbsp;</a>
+			<a href="{% url 'terms_of_use' %}">Terms&nbsp;</a>
+			<a href="{% url 'privacy_policy' %}">Privacy&nbsp;</a>
+		</div>
+    	<div class="copy left">
+			&copy; 2015 Musetic
+		</div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block content %}
+	<div class="submissions-list submissions-profile">
 		<ul class="hexagon clearfix">
 			{% for submission in submissions %}
 				<li class="submissions-item">
@@ -102,7 +107,7 @@
                         <input type="hidden" id="id_voter" name="voter" class="hidden_id"
                                value="{{ user.id }}"/>
                         {% if not user.is_authenticated %}
-                            <button disabled class="upvote-button vote-disabled" title="Login/Register to vote"><i
+                            <button class="upvote-button vote-disabled" title="Login/Register to vote"><i
                                     class="fa fa-2x fa-angle-up"></i></button>
                             <div class="num-votes vote-disabled">
                                 {{ submission.votes }}
@@ -124,7 +129,7 @@
 
                             <div class="submissions-time submissions-time-profile">{{ submission.date_submitted|naturalday }}</div>
 
-                            <a class="submissions-more submissions-more-profile" href="{% url 'submission_detail' slug=submission.submission_type uuid=submission.uuid %}"><i class="fa fa-lg fa-comments-o"></i>&nbsp;&nbsp;{{ submission.comment_count }}</a>
+                            <a class="submissions-more submissions-more-profile" href="{% url 'submission_detail' slug=submission.submission_type uuid=submission.uuid %}"><i class="fa fa-lg fa-comments-o"></i>&nbsp;&nbsp;{{ submission.get_comment_count }}</a>
 						</div>
 				</li>
 			{% empty %}
@@ -140,17 +145,23 @@
 				</div>
 			{% endfor %}
 		</ul>
-		</div>
-		{% if pagination %}
+        {% if submissions.paginator.num_pages > 1 %}
 		<div class="pagination">
-			{% if pagination.previous %}
-			<a class="prev" href="{{ pagination.previous }}">&laquo; Previous</a>
-			{% endif %}
-			{% if pagination.next %}
-			<a class="next" href="{{ pagination.next }}">Next &raquo;</a>
-			{% endif %}
-		</div>
-		{% endif %}
+            <span class="step-links">
+                {% if submissions.has_previous %}
+                    <a class="prev button" href="?page={{ submissions.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    {{ submissions.number }}
+                </span>
+
+                {% if submissions.has_next %}
+                    <a class="next button" href="?page={{ submissions.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+        </div>
+        {% endif %}
     </div>
 {% endblock %}
 

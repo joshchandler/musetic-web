@@ -1,12 +1,32 @@
 {% extends "base.html" %}
-{% load static i18n humanize submission_tags avatar_tags crispy_forms_tags %}
+{% load static i18n humanize submission_tags avatar_tags crispy_forms_tags markdown_deux_tags %}
 
 {% block title %}{{ submission.title }} | Musetic{% endblock %}
 
-{% block content %}
-<div class="submissions-single">
-    <div class="single-wrapper">
-        <div class="submissions-single-item">
+{% block headersecondary %}
+    <div class="header-secondary fixed">
+        <div class="category-text">{{ submission.submission_type|capfirst }}</div>
+        <a class="submission-title" href="{{ submission.url }}" target=_blank>{{ submission.title }}</a>
+        {% if user.username == submission.user.username or user.is_staff %}
+            <a class="submission-edit" href="{% url 'submission_edit' slug=submission.submission_type uuid=submission.uuid %}">Edit</a>
+        {% elif user.is_authenticated %}
+            <a href="{% url 'flag' slug=submission.submission_type uuid=submission.uuid %}" class="submission-report">Report</a>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block sidebar %}
+    <div class="sidebar pushy-left">
+        <ul class="categories">
+            <li><a class="{% if '/art/' in request.path %}active{% endif %}" href="{% url 'category' slug='art' %}" data-toggle="tooltip" data-placement="bottom" title="Art"><i class="fa fa-paint-brush"></i></a></li>
+            <li><a class="{% if '/design/' in request.path %}active{% endif %}" href="{% url 'category' slug='design' %}" data-toggle="tooltip" data-placement="bottom" title="Design"><i class="fa fa-desktop"></i></a></li>
+            <li><a class="{% if '/imagery/' in request.path %}active{% endif %}" href="{% url 'category' slug='imagery' %}" data-toggle="tooltip" data-placement="bottom" title="Imagery"><i class="fa fa-camera"></i></a></li>
+            <li><a class="{% if '/sound/' in request.path %}active{% endif %}" href="{% url 'category' slug='sound' %}" data-toggle="tooltip" data-placement="bottom" title="Sound"><i class="fa fa-headphones"></i></a></li>
+            <li><a class="{% if '/video/' in request.path %}active{% endif %}" href="{% url 'category' slug='video' %}" data-toggle="tooltip" data-placement="bottom" title="Video"><i class="fa fa-video-camera"></i></a></li>
+            <li><a class="{% if '/writing/' in request.path %}active{% endif %}" href="{% url 'category' slug='writing' %}" data-toggle="tooltip" data-placement="bottom" title="Writing"><i class="fa fa-pencil"></i></a></li>
+        </ul>
+
+    <div class="submissions-single-item">
 
             <div class="submissions-th">
                 {% if submission.thumbnail %}
@@ -15,31 +35,6 @@
             </div>
             <div class="submissions-overlay"></div>
             <a class="submissions-title-area" rel="follow" href="{{ submission.url }}" target=_blank></a>
-            {% if submission.submission_type == 'art' %}
-                <a class="submissions-category"
-                   href="{% url 'category' slug=submission.submission_type %}" title="Art"><i
-                        class="fa fa-paint-brush"></i></a>
-            {% elif submission.submission_type == 'design' %}
-                <a class="submissions-category"
-                   href="{% url 'category' slug=submission.submission_type %}" title="Design"><i
-                        class="fa fa-desktop"></i></a>
-            {% elif submission.submission_type == 'imagery' %}
-                <a class="submissions-category"
-                   href="{% url 'category' slug=submission.submission_type %}" title="Imagery"><i
-                        class="fa fa-camera"></i></a>
-            {% elif submission.submission_type == 'sound' %}
-                <a class="submissions-category"
-                   href="{% url 'category' slug=submission.submission_type %}" title="Sound"><i
-                        class="fa fa-headphones"></i></a>
-            {% elif submission.submission_type == 'video' %}
-                <a class="submissions-category"
-                   href="{% url 'category' slug=submission.submission_type %}" title="Video"><i
-                        class="fa fa-video-camera"></i></a>
-            {% elif submission.submission_type == 'writing' %}
-                <a class="submissions-category"
-                   href="{% url 'category' slug=submission.submission_type %}" title="Writing"><i
-                        class="fa fa-pencil"></i></a>
-            {% endif %}
 
             <form method="post" action="{% url 'vote' %}" class="vote-form">
                 {% csrf_token %}
@@ -67,47 +62,45 @@
             </form>
         </div>
 
+        <div class="submission-time">Submitted: {{ submission.date_submitted|naturalday }}</div>
+
         <div class="profile-info">
             <div class="profile-pic-wrapper">
                 <a href="{% url 'user_profile' username=submission.user.username %}"><img src="{% avatar_url submission.user.username 200 %}"/></a>
             </div>
 
-            <div class="profile-score-wrap"><div class="submission-score">{{ submission.profile.score }}</div><div class="discussion-score">{{ submission.profile.discussion_score }}</div></div>
+            <div class="profile-score-wrap">
+            <div class="submission-score" title="{% if user.profile.score == 1 %}{{ submission.profile_score }} Creator point{% else %}{{ submission.profile_score }} Creator points{% endif %}">{{ submission.profile_score }}
+                <div class="submission-score-desc">Creator {% if submission.profile_score == 1 %}point{% else %}points{% endif %}</div></div>
+            <div class="discussion-score" title="{% if submission.profile_discussion_score == 1 %}{{ submission.profile_discussion_score }} Comment point{% else %}{{ submission.profile_discussion_score }} Comment points{% endif %}">{{ submission.profile_discussion_score }}
+                <div class="discussion-score-desc">Comment {% if submission.profile_discussion_score == 1 %}point{% else %}points{% endif %}</div></div>
+        </div>
 
             <a class="profile-username" href="{% url 'user_profile' username=submission.user.username %}">{{ submission.user.username }}</a>
-            <br/>
+            <div class="profile-name">{{ submission.user.first_name }} {{ submission.user.last_name }}</div>
         </div>
     </div>
 
+    <div class="footer">
+    	<div class="footer-links">
+			<a href="{% url 'about' %}">About&nbsp;</a>
+            <a href="http://blog.musetic.com">Blog&nbsp;</a>
+			<a href="{% url 'terms_of_use' %}">Terms&nbsp;</a>
+			<a href="{% url 'privacy_policy' %}">Privacy&nbsp;</a>
+		</div>
+    	<div class="copy left">
+			&copy; 2015 Musetic
+		</div>
+    </div>
+{% endblock %}
+
+{% block content %}
+<div class="submissions-single">
 
     <div class="submission-content-wrap">
-        <a class="submissions-title" href="{{ submission.url }}" target=_blank><h1>{{ submission.title }}</h1></a>
-        <div class="submissions-time">{{ submission.date_submitted|naturalday }}</div>
 
-        <div class="description-wrapper">
-            <div class="description">{{ submission.description }}</div>
-
-            <div class="submissions-meta">
-                {% if user.is_authenticated %}
-                    <a id="submission_report" class="submission-report-button m-trigger" data-modal="submission-report">Report&nbsp;</a>
-                {% endif %}
-                {% if user.username == submission.user.username or user.is_staff %}
-                    <a class="submission-edit" href="{% url 'submission_edit' slug=submission.submission_type uuid=submission.uuid %}">Edit&nbsp;</a>
-                    <a class="submission-delete" href="{% url 'submission_delete' slug=submission.submission_type uuid=submission.uuid %}">Delete</a>
-                {% endif %}
-            </div>
-
-
-            <div class="m-modal" id="submission-report">
-                <div class="m-content">
-                    <h3>Report this Submission?</h3>
-                    <div>
-                        <div class="submission-report-container"></div>
-                        <button class="m-close"><i class="fa fa-close"></i></button>
-                    </div>
-                </div>
-            </div>
-            <div class="m-overlay"></div>
+        <div class="description-wrapper clearfix">
+            <div class="description">{{ submission.description|markdown }}</div>
 
 
             {% if not user.is_authenticated %}
@@ -115,12 +108,9 @@
             {% else %}
             <div class="discussion-container"></div>
             {% endif %}
-            <div class="discussion-count">{% if discussions.count == 1 %}{{ discussions.count }} Comment{% else %}{{ discussions.count }} Comments{% endif %}</div>
 
         </div>
-
-
-
+        <div class="discussion-count">{% if discussions.count == 1 %}{{ discussions.count }} Comment{% else %}{{ discussions.count }} Comments{% endif %}</div>
 
 
         <ol class="discussion">
@@ -153,7 +143,7 @@
                 </div>
                 <div class="comment-meta">
                     <div class="disc-comment">
-                        {{ discussion.comment }}
+                        {{ discussion.comment|markdown }}
                     </div>
 
                     <div class="comment-actions">
@@ -171,7 +161,6 @@
             </li>
         {% endfor %}
         </ol>
-    </div>
 </div>
 {% endblock %}
 

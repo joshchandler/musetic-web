@@ -261,37 +261,71 @@ a::-moz-selection,
  ****************************************************************/
 .wrapper {
 	min-height: 100% !important;
-	margin: 0 auto -50px; /* the bottom margin is the negative value of the footer's height */
+	margin: 0 auto; /* the bottom margin is the negative value of the footer's height */
 
 }
 .container {
     display: block;
     margin: 0 auto;
-    padding-top: 70px;
-    padding-bottom: 70px;
+    padding-top: 50px;
 }
+.container_full_width {
+    display: block;
+    margin: 0 auto;
 
+}
+.sidebar {
+    position: fixed;
+    left: -250px;
+    background: #ffffff;
+    width: 250px;
+    z-index: 750;
+    height: 100% !important;
+    display: block;
+    padding: 50px 0 0;
+    border-right: 1px solid #dddddd;
+    overflow-y: scroll;
+}
 @media only screen and (min-width: 525px) {
     .container {
         width: 500px;
     }
 }
 
-@media only screen and (min-width: 800px) {
+@media only screen and (min-width: 775px) {
     .container {
-        width: 750px;
+        width: 1px;
+        margin: auto;
+        overflow: visible;
+    }
+    .alpha {
+        width: 500px;
+        margin-left: -125px;
+    }
+    .sidebar {
+        left: 0;
+        overflow: hidden;
     }
 }
 
-@media only screen and (min-width: 1050px) {
-    .container {
+@media only screen and (min-width: 1025px) {
+    .alpha {
+        width: 750px;
+        margin-left: -250px;
+    }
+}
+
+@media only screen and (min-width: 1275px) {
+    .alpha {
         width: 1000px;
+        margin-left: -375px;
     }
 }
 
 @media only screen and (min-width: 1500px) {
-    .container {
+    .alpha {
         width: 1200px;
+        margin-left: -475px;
     }
 }
 
@@ -361,6 +395,8 @@ button.alert,
     background-color: #f04124;
     border-color: #cf2a0e;
     color: white;
+    line-height: 30px !important;
+    padding: 0 10px;
 }
 button.alert:hover,
 button.alert:focus,
@@ -1077,7 +1113,7 @@ img.musetic-logo {
     height: 50px;
     background: #ffffff;
     z-index: 800;
-    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    border-bottom: 1px solid #dddddd;
 }
 
 /** Logo Dropdown */
@@ -1087,15 +1123,15 @@ img.musetic-logo {
     padding: 0;
 }
 
-.main-menu-button {
+.sidebar-button {
     position: relative;
     background: #2bad67;
     float: left;
     display: block;
     color: #f3f3f3;
     border-radius: 4px;
-    border: 1px solid #089b45;
-    box-shadow: 0 1px 1px rgba(0,0,0,0.2);
+    border: none;
+    box-shadow: none;
     padding: 0;
     margin: 0 0 0 -5px;
     height: 30px;
@@ -1104,10 +1140,11 @@ img.musetic-logo {
     top: 10px;
     z-index: 1500;
 }
-.main-menu-button:hover,
-.main-menu-button:focus {
+.sidebar-button:hover,
+.sidebar-button:focus {
     background: #089b45;
-    border: 1px solid #067923;
+    border: none;
+    box-shadow: none;
 }
 .header-logo-wrapper li {
     position: relative;
@@ -1158,61 +1195,12 @@ img.musetic-logo {
     transition: all 0.3s;
 }
 
-.header .filter-button.active {
-    border: 1px solid rgba(0,0,0,0.1);
-    background: #eeeeee;
-    box-shadow: 0 1px 1px rgba(0,0,0,0.2);
-}
+.header .filter-button.active,
 .header .filter-button:hover,
 .header .filter-button:focus {
-    border: 1px solid rgba(0,0,0,0.1);
-    background: #dddddd;
+    background: #222222;
+    color: #ffffff;
     box-shadow: 0 1px 1px rgba(0,0,0,0.2);
-}
-
-.category-icon {
-    position: relative;
-    float: left;
-    z-index: 800;
-    color: #222222;
-    left: 0;
-    top: 0;
-    width: 40px;
-    height: 30px;
-    line-height: 50px;
-    font-size: 23px;
-    text-align: center;
-
-    -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    transition: all 0.3s;
-}
-/** Categories */
-.categories {
-    margin: 0 0 75px 0;
-    padding: 0;
-    position: relative;
-    list-style-type: none;
-    z-index: 500;
-}
-.categories li a {
-    list-style-type: none;
-    display: block;
-    width: 100%;
-    margin: 0;
-    padding: 0 20px;
-    height: 40px;
-    line-height: 40px;
-    font-size: 16px;
-    color: #222222;
-
-    -webkit-transition: background 0.3s, color 0.3s, border 0.3s;
-    -moz-transition: background 0.3s, color 0.3s, border 0.3s;
-    transition: background 0.3s, color 0.3s, border 0.3s;
-}
-.categories li a:hover,
-.categories li a:focus {
-    background: #f7f7f7;
 }
 
 /** Right side of Header */
@@ -1250,6 +1238,21 @@ img.musetic-logo {
     -webkit-transition: all .3s;
     -moz-transition: all .3s;
     transition: all .3s;
+}
+
+.submission-button-wrap .submission-button.invite-sent {
+    background: none;
+    border: none;
+    box-shadow: none;
+    color: #2bad67;
+    font-weight: 700;
+}
+.submission-button-wrap .submission-button.invite-sent:hover,
+.submission-button-wrap .submission-button.invite-sent:focus {
+    background: none;
+    color: #2bad67;
+    border: none;
+    box-shadow: none;
 }
 
 .submission-button-wrap .submission-button:hover,
@@ -1370,14 +1373,14 @@ img.musetic-logo {
     float: right;
     height: 50px;
     line-height: 50px;
-    margin-top: -50px;
+    margin-top: -30px;
 }
 #profile_mobile {
     display: block;
     float: right;
     height: 50px;
     line-height: 50px;
-    margin-top: -50px;
+    margin-top: -30px;
 }
 .profile-button {
     color: #222222;
@@ -1435,23 +1438,15 @@ img.musetic-logo {
 .profile a:focus {
     background: #eeeeee;
 }
-
-.invite-button {
-    float: right;
-    margin: 10px 0;
-    line-height: 30px;
-    color: #222222;
-    width: 35px;
-    text-align: center;
-}
-
+.settings,
+.invite-button,
 .logout {
     float: right;
     margin: 10px 0;
     line-height: 30px;
+    color: #222222;
     width: 35px;
     text-align: center;
-    color: #222222;
 }
 .logout:hover,
 .logout:focus {
@@ -1496,6 +1491,12 @@ img.musetic-logo {
     }
 }
 
+@media only screen and (min-width: 775px) {
+    .sidebar-button {
+        display: none;
+    }
+}
+
 @media only screen and (min-width: 800px) {
     #profile .profile-username {
         display: inline-block;
@@ -1503,24 +1504,8 @@ img.musetic-logo {
 }
 
 /** Main Menu */
-.main-menu {
-    position: fixed;
-    width: 250px;
-    height: 100%;
-    top: 0;
-    background: #ffffff;
-    padding-top: 70px;
-    z-index: 700;
-}
-.pushy-left {
-    -webkit-transform: translate3d(-250px,0,0);
-    -moz-transform: translate3d(-250px,0,0);
-    -ms-transform: translate3d(-250px,0,0);
-    -o-transform: translate3d(-250px,0,0);
-    transform: translate3d(-250px,0,0);
-}
 
-.pushy-open {
+.pushy-left {
     -webkit-transform: translate3d(0,0,0);
     -moz-transform: translate3d(0,0,0);
     -ms-transform: translate3d(0,0,0);
@@ -1528,7 +1513,15 @@ img.musetic-logo {
     transform: translate3d(0,0,0);
 }
 
-.pushy, .wrapper, .push {
+.pushy-open {
+    -webkit-transform: translate3d(250px,0,0);
+    -moz-transform: translate3d(250px,0,0);
+    -ms-transform: translate3d(250px,0,0);
+    -o-transform: translate3d(250px,0,0);
+    transform: translate3d(250px,0,0);
+}
+
+.pushy-left, .wrapper, .pushy-open {
     -webkit-transition: -webkit-transform .2s cubic-bezier(.16, .68, .43, .99);
     -moz-transition: -moz-transform .2s cubic-bezier(.16, .68, .43, .99);
     -o-transition: -o-transform .2s cubic-bezier(.16, .68, .43, .99);
@@ -1588,17 +1581,213 @@ img.musetic-logo {
         opacity: 1;
     }
 }
-@media only screen and (min-width: 800px) {
+
+/** Secondary Header
+ ***************************************************************/
+.header-secondary {
+    background: #ffffff;
+    border-bottom: 1px solid #dddddd;
+    margin-top: 50px;
+    position: fixed;
+    height: 40px;
+    width: 100%;
+    display: block;
+    z-index: 300;
+}
+.header-secondary h4 {
+    padding: 0 10px;
+    font-weight: 600;
+}
+.header-secondary .submission-filter-group {
+    list-style-type: none;
+    height: 32px;
 }
 
-@media only screen and (min-width: 1050px) {
-
+.header-secondary .category-text {
+    display: inline-block;
+    float: left;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 10px;
+    font-weight: 700;
 }
 
-@media only screen and (min-width: 1500px) {
+.header-secondary .filter-button {
+    float: left;
+    width: 50px;
+    margin: 4px 2px;
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    color: #222222;
+    background: none;
+    padding: 0;
+    border: 1px solid transparent;
+    border-radius: 4px;
 
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
 }
 
+.header-secondary .filter-button.active {
+    border: 1px solid rgba(0,0,0,0.1);
+    background: #000000;
+    color: #ffffff;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.2);
+}
+.header-secondary .filter-button.active,
+.header-secondary .filter-button:hover,
+.header-secondary .filter-button:focus {
+    border: 1px solid rgba(0,0,0,0.1);
+    background: #000000;
+    color: #ffffff;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.2);
+}
+
+/** Single Submissions */
+.header-secondary .submission-title {
+    height: 40px;
+    font-weight: 300;
+    line-height: 40px;
+    color: #222222;
+}
+.header-secondary .submission-title:hover,
+.header-secondary .submission-title:focus {
+    color: #58a8c2;
+}
+.header-secondary .submission-edit,
+.header-secondary .submission-report,
+.header-secondary .submission-delete {
+    position: absolute;
+    right: 10px;
+    top: 0;
+    display: inline-block;
+    margin: 4px auto;
+    height: 30px;
+    padding: 0 10px;
+    line-height: 30px;
+    float: right;
+    color: #222222;
+    background: #eeeeee;
+    border-radius: 4px;
+    border: none;
+    box-shadow: none;
+
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    transition: all .3s;
+}
+
+.header-secondary .submission-edit:hover,
+.header-secondary .submission-edit:focus,
+.header-secondary .submission-report:hover,
+.header-secondary .submission-report:focus{
+    background: #222222;
+    color: #ffffff;
+}
+
+.header-secondary .submission-delete:hover,
+.header-secondary .submission-delete:focus {
+    background: #d53a3a;
+    color: #ffffff;
+}
+
+@media only screen and (min-width: 775px) {
+    .header-secondary {
+        padding-left: 250px;
+    }
+}
+/** Sidebar
+ ***************************************************************/
+.sidebar .categories {
+    width: 250px;
+    border-bottom: 1px solid #dddddd;
+    height: 40px;
+    list-style-type: none;
+    padding: 0 5px;
+}
+.sidebar .categories li {
+    float: left;
+}
+.sidebar .categories li a {
+    display: block;
+    margin: 4px 2px;
+    padding: 0;
+    width: 36px;
+    line-height: 32px;
+    height: 32px;
+    text-align: center;
+    color: #222222;
+    border-radius: 4px;
+
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    transition: all .3s;
+}
+
+.sidebar .categories li a.active,
+.sidebar .categories li a:hover,
+.sidebar .categories li a:focus {
+    box-shadow: 0 1px 1px #bbbbbb;
+    background: #eeeeee;
+}
+
+/** Single Submissions */
+
+.sidebar .submission-time {
+    position: relative;
+    padding: 10px;
+    text-align: center;
+    margin: 0;
+    font-size: 14px;
+    font-weight: 700;
+    width: auto;
+    border-bottom: 1px solid #dddddd;
+}
+
+/** Submit Page */
+.sidebar .rules {
+    width: 230px;
+    padding: 10px;
+    text-align: center;
+    background: #2bad67;
+    color: #ffffff;
+    display: block;
+    border-radius: 4px;
+}
+.sidebar .rules:hover,
+.sidebar .rules:focus {
+    background: #098b45;
+    color: #ffffff;
+}
+
+.sidebar .footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+.sidebar .footer-links {
+    font-size: 12px;
+    text-align: center;
+    border-bottom: 1px solid #dddddd;
+}
+.sidebar .footer-links a {
+    display: inline-block;
+    padding: 10px 5px;
+    bottom: 10px;
+    color: #bbbbbb;
+}
+.sidebar .footer-links a:hover,
+.sidebar .footer-links a:focus {
+    color: #2a85a0;
+}
+.sidebar .copy {
+    text-align: center;
+    font-weight: 700;
+    font-size: 14px;
+    width: 100%;
+}
 
 /** Submissions
  ***************************************************************/
@@ -1606,7 +1795,7 @@ img.musetic-logo {
     position: relative;
     width: 100%;
     min-height: 100%;
-    padding: 0;
+    padding: 20px 0;
     margin: 0;
 }
 
@@ -1931,102 +2120,35 @@ img.musetic-logo {
 
 /** Submissions - Categories
  ***************************************************************/
-.submission-category {
-    width: 100%;
-    height: 50px;
-}
-.submission-category .category-icon {
-    z-index: 50;
-    display: block;
-    margin: 0 10px;
-    float: left !important;
-    width: auto;
-}
-.submission-category .category-icon .fa {
-    background: #ffffff;
-    width: 50px;
-    height: 50px;
-    line-height: 50px;
-    border-radius: 50%;
-    box-shadow: 0 1px 1px #bbbbbb;
-    margin: 0;
-}
-.submission-category .category-icon .category-text {
-    display: none;
+.submissions-category-list {
+    padding-top: 60px;
 }
 
-/** Filter Buttons */
-.submission-category .submission-filter-group {
-    list-style-type: none;
-    height: 30px;
-    left: 0;
-    z-index: 750;
-}
-
-.submission-category .filter-button {
-    float: left;
-    width: 50px;
-    margin: 10px 2px;
-    text-align: center;
-    height: 30px;
-    line-height: 30px;
-    color: #222222;
-    background: none;
-    padding: 0;
-    border: 1px solid transparent;
-    border-radius: 4px;
-
-    -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    transition: all 0.3s;
-}
-
-.submission-category .filter-button.active {
-    border: 1px solid rgba(0,0,0,0.1);
-    background: #000000;
-    color: #ffffff;
-    box-shadow: 0 1px 1px rgba(0,0,0,0.2);
-}
-.submission-category .filter-button:hover,
-.submission-category .filter-button:focus {
-    border: 1px solid rgba(0,0,0,0.1);
-    background: #000000;
-    color: #ffffff;
-    box-shadow: 0 1px 1px rgba(0,0,0,0.2);
-}
-
-@media only screen and (min-width: 525px) {
-    .submission-category .category-icon {
-        font-size: 22px;
-        font-weight: 700;
-    }
-    .submission-category .category-icon .category-text {
-        display: inline-block;
-    }
-}
 
 /** Submissions - Detail
  ***************************************************************/
-.single-wrapper {
-    width: 250px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+.submissions-single {
+    padding-top: 60px;
 }
 
 .submissions-single-item,
 .submissions-single-item .submissions-th,
 .submissions-single-item .submissions-th img {
     position: relative;
-    width: 250px;
+    width: 249px;
+    height: 249px;
+}
+
+.submissions-single-item {
     height: 250px;
+    border-bottom: 1px solid #dddddd;
 }
 
 .submissions-single-item .submissions-th {
     background: #222222;
 }
 
-.submissions-single .submissions-overlay {
+.submissions-single-item .submissions-overlay {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -2037,44 +2159,44 @@ img.musetic-logo {
     z-index: 10;
 }
 
-.submissions-single .submissions-overlay:hover,
-.submissions-single .submissions-overlay:focus {
+.submissions-single-item .submissions-overlay:hover,
+.submissions-single-item .submissions-overlay:focus {
     background: rgba(0, 0, 0, 1);
 }
-.submissions-single .submissions-title-area {
+.submissions-single-item .submissions-title-area {
     position: absolute;
     z-index: 15;
     font-size: 14px;
     top: 0;
     left: 0;
-    width: 250px;
-    height: 250px;
+    width: 249px;
+    height: 249px;
     padding: 70px 30px 0;
     text-align: center;
     font-weight: 700;
     color: #ffffff;
     overflow: hidden;
-    background: url(../img/mask-hexagon-light.png) no-repeat rgba(0, 0, 0, 0.3);
+    background: url(../img/mask-hexagon-white.png) no-repeat rgba(0, 0, 0, 0.3);
     background-size: 100%;
 
     -webkit-transition: background-color 0.3s;
     -moz-transition: background-color 0.3s;
     transition: background-color 0.3s;
 }
-.submissions-single .submissions-title-area:hover,
-.submissions-single .submissions-title-area:focus {
+.submissions-single-item .submissions-title-area:hover,
+.submissions-single-item .submissions-title-area:focus {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
 
-.submissions-single .submissions-category,
-.submissions-single .upvote-button {
+.submissions-single-item .submissions-category,
+.submissions-single-item .upvote-button {
     -webkit-transition: background-color 0.3s, color 0.3s;
     -moz-transition: background-color 0.3s, color 0.3s;
     transition: background-color 0.3s, color 0.3s;
 }
 
-.submissions-single .submissions-category {
+.submissions-single-item .submissions-category {
     position: absolute;
     top: 20px;
     right: 20px;
@@ -2089,29 +2211,22 @@ img.musetic-logo {
     box-shadow: 0 1px 1px #000000;
 }
 
-.submissions-single .submissions-category:hover,
+.submissions-single-item .submissions-category:hover,
 .submissions-single .submissions-category:focus {
     color: #ffffff;
     background: #000000;
 }
 
-.submissions-single .submissions-title {
-    line-height: 30px;
-    font-weight: 300;
-    color: #222222;
-    text-align: center;
-}
 .submissions-single .submissions-content {
     position: relative;
     display: block;
     width: 100%;
     height: 100px;
-    margin-top: -10px;
     top: 0;
     padding: 0;
 }
 
-.submissions-single .num-votes {
+.submissions-single-item .num-votes {
     position: absolute;
     left: 100px;
     bottom: 20px;
@@ -2125,7 +2240,7 @@ img.musetic-logo {
     font-weight: 700;
 }
 
-.submissions-single .upvote-button {
+.submissions-single-item .upvote-button {
     position: absolute;
     bottom: 10px;
     left: 55px;
@@ -2147,51 +2262,31 @@ img.musetic-logo {
     transition: background-color 0.3s, color 0.3s;
 }
 
-.submissions-single .upvote-button:hover {
+.submissions-single-item .upvote-button:hover {
     background: #000000;
 }
 
-.submissions-single .upvote-button.vote-disabled {
+.submissions-single-item .upvote-button.vote-disabled {
     color: #ffffff;
     background: #222222;
     cursor: default;
 }
 
-.submissions-single .vote-disabled:hover,
-.submissions-single .upvote-button.vote-disabled:focus {
+.submissions-single-item .vote-disabled:hover,
+.submissions-single-item .upvote-button.vote-disabled:focus {
     opacity: 0.8;
 }
 
-.submissions-single .upvote-button.voted {
+.submissions-single-item .upvote-button.voted {
     display: none;
 }
 
-.submissions-single .profile-info {
-    margin-top: 40px;
-    z-index: 500;
-}
-
-.submissions-single .submission-edit {
-    display: inline-block;
-    margin: 10px auto;
-}
 
 .submission-content-wrap {
     width: 100%;
     padding: 5px;
 }
 
-.submission-content-wrap .submissions-time {
-    position: relative;
-    float: right;
-    padding: 0 20px 0 0;
-    margin: 0;
-    font-size: 16px;
-    top: -20px;
-    font-weight: 700;
-    width: auto;
-    border: none;
-}
 .submission-content-meta {
     position: relative;
     display: block;
@@ -2207,8 +2302,6 @@ img.musetic-logo {
 }
 
 .submission-content-wrap .description-wrapper {
-    background: #ffffff;
-    border-radius: 4px;
     padding: 10px;
 }
 .description-wrapper .submissions-meta {
@@ -2235,7 +2328,7 @@ img.musetic-logo {
     border-bottom: 1px solid #eeeeee;
     padding: 5px
 }
-.submission-content-wrap .description-wrapper .discussion-count {
+.submission-content-wrap  .discussion-count {
     font-weight: 700;
     padding: 10px;
 }
@@ -2243,143 +2336,21 @@ img.musetic-logo {
 
 
 @media only screen and (min-width: 525px) {
-    .single-wrapper {
-        width: 300px;
-    }
-
-    .submissions-single-item,
-    .submissions-single-item .submissions-th,
-    .submissions-single-item .submissions-th img {
-        width: 300px;
-        height: 300px;
-    }
-
-    .submissions-single-item .submissions-title-area {
-        width: 300px;
-        height: 300px;
-        font-size: 18px;
-    }
-    .submissions-single .profile-info-wrapper {
-        width: 300px;
-    }
-    .submissions-single .profile-pic-wrapper {
-        height: 85px;
-        width: 85px;
-        top: -40px;
-        left: 20px;
-    }
-    .submissions-single .submissions-category {
-        top: 30px;
-        width: 50px;
-        height: 50px;
-        line-height: 50px;
-    }
-    .submissions-single .upvote-button {
-        left: 70px;
-        width: 50px;
-        height: 50px;
-        line-height: 55px;
-    }
-    .submissions-single .num-votes {
-        margin-left: 25px;
-    }
 
 }
 
 @media only screen and (min-width: 800px) {
-    .single-wrapper {
-        width: 250px;
-        float: left;
-    }
-    .submissions-single-item,
-    .submissions-single-item .submissions-th,
-    .submissions-single-item .submissions-th img {
-        width: 250px;
-        height: 250px;
-    }
 
-    .submissions-single .submissions-title-area {
-        width: 250px;
-        height: 250px;
-        font-size: 16px;
-    }
-
-    .submissions-single .submissions-category {
-        top: 20px;
-        width: 45px;
-        height: 45px;
-        line-height: 45px;
-    }
-    .submissions-single .num-votes {
-        margin-left: 0;
-    }
-    .submissions-single .upvote-button {
-        left: 55px;
-        width: 45px;
-        height: 45px;
-        line-height: 50px;
-    }
-    .submissions-single .submissions-title {
-        text-align: left;
-    }
-    .submissions-single .submission-content-wrap {
-        position: relative;
-        float: right;
-        width: 490px;
-    }
-    .submissions-single .description-wrapper {
-        background: #ffffff;
-        padding: 10px;
-    }
 
 }
 
 @media only screen and (min-width: 1050px) {
-    .submissions-single .submission-content-wrap {
-        width: 740px;
-    }
+
 
 }
 
 @media only screen and (min-width: 1500px) {
-    .single-wrapper {
-        width: 300px;
-    }
 
-    .submissions-single-item,
-    .submissions-single-item .submissions-th,
-    .submissions-single-item .submissions-th img {
-        width: 300px;
-        height: 300px;
-    }
-
-    .submissions-single-item .submissions-title-area {
-        width: 300px;
-        height: 300px;
-        font-size: 18px;
-    }
-    .submissions-single .submissions-time {
-        font-size: 14px;
-    }
-
-    .submissions-single .submission-content-wrap {
-        width: 890px;
-    }
-    .submissions-single .submissions-category {
-        top: 30px;
-        width: 50px;
-        height: 50px;
-        line-height: 50px;
-    }
-    .submissions-single .upvote-button {
-        left: 70px;
-        width: 50px;
-        height: 50px;
-        line-height: 55px;
-    }
-    .submissions-single .num-votes {
-        margin-left: 25px;
-    }
 
 }
 
@@ -2405,6 +2376,19 @@ img.musetic-logo {
     border-radius: 4px;
 }
 
+.submission-change-thumbnail {
+    padding-top: 60px;
+}
+.submission-change-thumbnail .submission-th img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.submission-change-thumbnail form {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 /** Submissions - Submit Page
  ***************************************************************/
 .submission-form-wrap {
@@ -2508,7 +2492,8 @@ label.error,
     position: relative;
 }
 .discussion-container textarea {
-    background: #f3f3f3;
+    background: #ffffff;
+    height: 150px;
     box-shadow: inset 0 1px 1px #bbbbbb;
 
 }
@@ -2518,17 +2503,16 @@ label.error,
     height: 50px;
     position: absolute;
     left: 0;
-    top: 15px;
+    top: 0;
 }
 .discussion-container .commenting-as {
     line-height: 50px;
     margin-left: 60px;
 }
 .discussion-form .submit {
-    float: right;
+    float: left;
     margin: 0;
 }
-
 
 .discussion {
     padding: 0;
@@ -2560,10 +2544,6 @@ label.error,
     -webkit-transition: background-color 0.3s, color 0.3s;
     -moz-transition: background-color 0.3s, color 0.3s;
     transition: background-color 0.3s, color 0.3s;
-}
-
-.discussion-wrap .disc-upvote-button.vote-disabled {
-
 }
 
 .discussion-wrap .disc-upvote-button.vote-disabled:hover,
@@ -2680,192 +2660,80 @@ label.error,
 }
 
 
-/** Profile Page
+/** Profile
  ***************************************************************/
 
-.profile-info-wrapper {
-    position: relative;
-    display: block;
-    margin-bottom: 50px;
-}
 .profile-info {
     width: 250px;
-    display: block;
     position: relative;
-    margin-top: 125px;
-    margin-left: auto;
-    margin-right: auto;
-    background: #ffffff;
-    border-radius: 4px;
-    box-shadow: 0 1px 1px #bbbbbb;
-}
-
-.profile-date-joined {
-    color: #222222;
-    background: #f3f3f3;
-    width: 130px;
-    height: 40px;
-    position: absolute;
-    top: -20px;
-    right: 10px;
-    text-align: center;
-    border-radius: 4px;
-    float: right;
-    box-shadow: 0 1px 1px #bbbbbb;
-}
-.profile-joined {
-    font-weight: 900;
-    font-size: 12px;
-    line-height: 20px;
-}
-.profile-date {
-    font-size: 10px;
-    line-height: 14px;
+    padding: 5px;
+    border-bottom: 1px solid #dddddd;
 }
 
 .profile-info .profile-score-wrap {
-    background: #eeeeee;
     color: #ffffff;
-    position: absolute;
-    width: 120px;
-    height: 30px;
-    top: 30px;
+    position: relative;
+    float: right;
+    margin-top: -60px;
+    width: 180px;
 
-    right: 15px;
-    border-radius: 4px;
-    box-shadow: 0 1px 1px #bbbbbb;
 }
 
 .profile-info .profile-score-wrap .submission-score {
-    width: 60px;
+    width: 90px;
     float: left;
     text-align: center;
     color: #222222;
     line-height: 30px;
-    border-right: 1px solid #000000;
+    border-right: 1px solid #dddddd;
     cursor: default;
+    font-weight: 700;
 }
 .profile-info .profile-score-wrap .discussion-score {
-    width: 60px;
+    width: 90px;
     float: right;
     text-align: center;
     color: #222222;
     line-height: 30px;
-    border-left: 1px solid #000000;
     cursor: default;
+    font-weight: 700;
+}
+.profile-info .profile-score-wrap .submission-score-desc,
+.profile-info .profile-score-wrap .discussion-score-desc {
+    font-size: 10px;
+    text-align: center;
 }
 
 .profile-pic-wrapper {
     position: relative;
-    left: 10px;
-    top: -45px;
     overflow: hidden;
     border-radius: 50%;
-    width: 90px;
-    height: 90px;
+    width: 60px;
+    height: 60px;
     box-shadow: 0 1px 1px #bbbbbb;
 }
 
 .profile-info .profile-username {
-    color: #222222;
-    position: absolute;
-    width: 250px;
-    background: #eeeeee;
-    top: 75px;
-    box-shadow: 0 1px 1px #bbbbbb;
-    padding: 10px;
-}
-
-.profile-info i.admin,
-.profile-info i.creator {
-    border-radius: 50%;
-    display: inline-block;
-    width: 25px;
-    height: 25px;
-    line-height: 25px;
-    text-align: center;
-    font-style: normal;
-    font-weight: 700;
-    color: #ffffff;
-    z-index: 10000;
-    font-size: 14px;
-    box-shadow: 0 1px 1px #bbbbbb;
-    cursor: default;
-}
-.profile-info i.admin {
-    background: #58a8c2;
-}
-
-.profile-info i.creator {
-    background: #2bad67;
+    color: #999999;
+    font-size: 12px;
+    padding: 5px 10px;
 }
 .profile-info .profile-name {
     color: #222222;
-    width: 100%;
-    font-size: 12px;
-    background: #eeeeee;
-    box-shadow: 0 1px 1px #bbbbbb;
-    padding: 10px;
+    font-weight: 700;
+    padding: 5px 10px;
 }
 .profile-info .profile-description {
     color: #222222;
-    padding: 10px;
-    margin-top: 35px;
-    background: #ffffff;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
+    padding: 5px 10px;
+    font-size: 14px;
+    font-weight: 300;
 }
 
 .profile-info .profile-edit {
     width: 240px;
     position: relative;
     bottom: -40px;
-}
-
-.submission-filter-group {
-    list-style: none;
-    width: 100%;
-    height: 45px;
-    top: -20px;
-    padding: 0 10px;
-    margin: 0 0 20px 0;
-    border: none;
-    box-shadow: none;
-}
-.submissions-profile .filter-button {
-    float: left;
-    margin: 6px 5px 0 0;
-    text-align: center;
-    height: 33px;
-    line-height: 33px;
-    color: #222222;
-    padding: 0 10px;
-    border-radius: 4px;
-    border: 1px solid transparent;
-
-    -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    transition: all 0.3s;
-}
-.submissions-profile .filter-type {
-    float: left;
-    line-height: 50px;
-    padding: 0 10px;
-    margin: 0 10px;
-    border-right: 1px solid #ffffff;
-}
-
-.submissions-profile .filter-button.active {
-    background: #ffffff;
-    border: 1px solid rgba(0,0,0,0.1);
-    box-shadow: 0 1px 1px rgba(0,0,0,0.2);
-}
-.submissions-profile .filter-button:hover,
-.submissions-profile .filter-button:focus {
-    background: #cccccc;
-    color: #222222;
-    border: 1px solid rgba(0,0,0,0.1);
-    box-shadow: 0 1px 1px rgba(0,0,0,0.2);
 }
 
 .submissions-time-profile {
@@ -2875,113 +2743,15 @@ label.error,
 .submissions-more-profile {
     border-top-right-radius: 4px;
 }
-.profile-edit-form {
-    padding: 20px;
-}
-@media only screen and (min-width: 525px) {
-    .profile-info {
-        width: 300px;
-    }
-    .profile-pic-wrapper {
-        width: 100px;
-        height: 100px;
-    }
-    .profile-info .profile-date-joined {
-        width: 170px;
-    }
-    .profile-info .profile-score-wrap {
-        width: 160px;
-    }
-    .profile-info .profile-score-wrap .submission-score,
-    .profile-info .profile-score-wrap .discussion-score {
-        width: 80px;
-    }
-    .profile-info .profile-username {
-        width: 300px;
-    }
-    .profile-info .profile-edit {
-        width: 290px;
-    }
-}
 
-@media only screen and (min-width: 800px) {
-    .profile-info-wrapper {
-        margin-bottom: 0;
-    }
-    .profile-info {
-        width: 250px;
-        margin-top: 50px;
-        float: left;
-    }
-    .profile-pic-wrapper {
-        width: 90px;
-        height: 90px;
-    }
-    .profile-info .profile-date-joined {
-        width: 130px;
-    }
-    .profile-info .profile-score-wrap {
-        width: 120px;
-    }
-    .profile-info .profile-score-wrap .submission-score,
-    .profile-info .profile-score-wrap .discussion-score {
-        width: 60px;
-    }
-    .profile-info .profile-username {
-        width: 250px;
-    }
-    .profile-info .profile-edit {
-        width: 240px;
-    }
-    .submissions-profile {
-        width: 500px;
-        float: right;
-    }
-
-}
-
-@media only screen and (min-width: 1050px) {
-    .submissions-profile {
-        width: 750px;
-        float: right;
-    }
-}
-
-@media only screen and (min-width: 1500px) {
-    .profile-info {
-        width: 300px;
-    }
-    .profile-pic-wrapper {
-        width: 100px;
-        height: 100px;
-    }
-    .profile-info .profile-date-joined {
-        width: 170px;
-    }
-    .profile-info .profile-score-wrap {
-        width: 160px;
-    }
-    .profile-info .profile-score-wrap .submission-score,
-    .profile-info .profile-score-wrap .discussion-score {
-        width: 80px;
-    }
-    .profile-info .profile-username {
-        width: 300px;
-    }
-    .profile-info .profile-edit {
-        width: 290px;
-    }
-    .submissions-profile {
-        width: 900px;
-    }
+.submissions-profile {
+    padding-top: 60px;
 }
 
 
 /** Invitations
  ***************************************************************/
-.invite-page {
 
-}
 .invite-page .page-header {
     font-size: 24px;
     text-align: center;
@@ -3051,6 +2821,64 @@ label.error,
 }
 
 
+
+/** Settings
+ ***************************************************************/
+.settings-wrapper {
+    position: relative;
+}
+
+.settings-menu .settings-category,
+.settings-menu .settings-option {
+    width: auto;
+    display: block;
+    padding: 10px;
+    margin: 0 10px;
+}
+.settings-menu .settings-category {
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 700;
+    /*border-bottom: 1px solid #d3d3d3;*/
+}
+.settings-menu .settings-option {
+    color: #58a8c2;
+    font-size: 14px;
+}
+.settings-menu .settings-option:hover,
+.settings-menu .settings-option:focus {
+    background: #eeeeee;
+}
+.settings-menu .settings-option.active {
+    font-weight: 700;
+    color: #3686a0;
+    background: #eeeeee;
+}
+.settings-content {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+}
+@media only screen and (min-width: 525px) {
+
+    .settings-content {
+    }
+}
+
+@media only screen and (min-width: 800px) {
+
+}
+
+@media only screen and (min-width: 1050px) {
+
+}
+
+@media only screen and (min-width: 1500px) {
+
+
+}
+
 /** Pagination
  ***************************************************************/
 .pagination {
@@ -3058,13 +2886,32 @@ label.error,
     margin-left: auto;
     margin-right: auto;
     width: 300px;
-    height: 30px;
+    height: 50px;
+    margin-bottom: 50px;
 }
 .prev {
     float: left;
+    margin-top: 10px;
+    width: 100px;
 }
 .next {
     float: right;
+    margin-top: -40px;
+    width: 100px;
+}
+.current {
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    font-weight: 700;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background: #222222;
+    color: #ffffff;
+    box-shadow: 0 1px 1px #000000;
+    border-radius: 50%;
 }
 
 
@@ -3223,58 +3070,59 @@ label.error,
 
 /** Footer
  ***************************************************************/
-.footer {
-    width: 100%;
-    display: block;
-    position: relative;
-    height: 50px !important;
-    padding: 0 20px;
-    color: #222222;
-    clear: both;
-    z-index: 800;
-}
-.footer .copy {
-    display: block;
-    width: 100%;
-    line-height: 50px;
-    text-align: center;
-}
-.footer .footer-links {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    float: none !important;
-    text-align: center;
-}
-.footer .footer-links a {
-    position: relative;
-    z-index: 1000;
-    line-height: 50px;
-    color: #222222;
-}
-.footer .footer-links a.button.admin {
-    line-height: 0;
-    margin: 0;
-    color: #ffffff;
-}
+/*.footer {*/
+    /*width: 100%;*/
+    /*display: block;*/
+    /*position: relative;*/
+    /*height: 50px !important;*/
+    /*padding: 0 20px;*/
+    /*color: #222222;*/
+    /*clear: both;*/
+    /*z-index: 800;*/
+    /*border-top: 1px solid #d3d3d3;*/
+/*}*/
+/*.footer .copy {*/
+    /*display: block;*/
+    /*width: 100%;*/
+    /*line-height: 50px;*/
+    /*text-align: center;*/
+/*}*/
+/*.footer .footer-links {*/
+    /*display: block;*/
+    /*margin-left: auto;*/
+    /*margin-right: auto;*/
+    /*float: none !important;*/
+    /*text-align: center;*/
+/*}*/
+/*.footer .footer-links a {*/
+    /*position: relative;*/
+    /*z-index: 1000;*/
+    /*line-height: 50px;*/
+    /*color: #222222;*/
+/*}*/
+/*.footer .footer-links a.button.admin {*/
+    /*line-height: 0;*/
+    /*margin: 0;*/
+    /*color: #ffffff;*/
+/*}*/
 
-.footer .footer-links a:hover,
-.footer .footer-links a:focus {
-    color: #58a8c2;
-}
+/*.footer .footer-links a:hover,*/
+/*.footer .footer-links a:focus {*/
+    /*color: #58a8c2;*/
+/*}*/
 
-@media only screen and (min-width: 525px) {
-    .footer {
-        height: 50px;
-    }
-    .footer .footer-links {
-        float: right !important;
-    }
-    .footer .copy {
-        width: 120px;
-        float: left !important;
-    }
-}
+/*@media only screen and (min-width: 525px) {*/
+    /*.footer {*/
+        /*height: 50px;*/
+    /*}*/
+    /*.footer .footer-links {*/
+        /*float: right !important;*/
+    /*}*/
+    /*.footer .copy {*/
+        /*width: 120px;*/
+        /*float: left !important;*/
+    /*}*/
+/*}*/
 
 
 /** Extras

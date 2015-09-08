@@ -2,10 +2,27 @@
 {% load static i18n humanize submission_tags avatar_tags crispy_forms_tags %}
 
 {% block title %}{{ submission.title }} | Musetic{% endblock %}
-{% block content %}
-<div class="submissions-single">
-    <div class="single-wrapper">
-        <div class="submissions-single-item">
+
+{% block headersecondary %}
+    <div class="header-secondary">
+        <h4>Edit this Submission</h4>
+        <button id="submission_delete" class="submission-delete m-trigger" data-modal="submission-delete">Delete</button>
+
+    </div>
+{% endblock %}
+
+{% block sidebar %}
+    <div class="sidebar pushy-left">
+        <ul class="categories">
+            <li><a class="{% if '/art/' in request.path %}active{% endif %}" href="{% url 'category' slug='art' %}" data-toggle="tooltip" data-placement="bottom" title="Art"><i class="fa fa-paint-brush"></i></a></li>
+            <li><a class="{% if '/design/' in request.path %}active{% endif %}" href="{% url 'category' slug='design' %}" data-toggle="tooltip" data-placement="bottom" title="Design"><i class="fa fa-desktop"></i></a></li>
+            <li><a class="{% if '/imagery/' in request.path %}active{% endif %}" href="{% url 'category' slug='imagery' %}" data-toggle="tooltip" data-placement="bottom" title="Imagery"><i class="fa fa-camera"></i></a></li>
+            <li><a class="{% if '/sound/' in request.path %}active{% endif %}" href="{% url 'category' slug='sound' %}" data-toggle="tooltip" data-placement="bottom" title="Sound"><i class="fa fa-headphones"></i></a></li>
+            <li><a class="{% if '/video/' in request.path %}active{% endif %}" href="{% url 'category' slug='video' %}" data-toggle="tooltip" data-placement="bottom" title="Video"><i class="fa fa-video-camera"></i></a></li>
+            <li><a class="{% if '/writing/' in request.path %}active{% endif %}" href="{% url 'category' slug='writing' %}" data-toggle="tooltip" data-placement="bottom" title="Writing"><i class="fa fa-pencil"></i></a></li>
+        </ul>
+
+    <div class="submissions-single-item">
 
             <div class="submissions-th">
                 {% if submission.thumbnail %}
@@ -15,17 +32,56 @@
             <div class="submissions-overlay"></div>
             <a class="submissions-title-area" rel="follow" href="{{ submission.url }}" target=_blank></a>
 
+            <form method="post" action="{% url 'vote' %}" class="vote-form">
+                {% csrf_token %}
+                <input type="hidden" id="id_submission" name="submission" class="hidden_id"
+                       value="{{ submission.id }}"/>
+                <input type="hidden" id="id_voter" name="voter" class="hidden_id"
+                       value="{{ user.id }}"/>
+                {% if not user.is_authenticated %}
+                    <button class="upvote-button vote-disabled" title="Login/Register to vote"><i
+                            class="fa fa-2x fa-angle-up"></i></button>
+                    <div class="num-votes vote-disabled">
+                        {{ submission.votes }}
+                    </div>
+                {% elif submission.id not in voted %}
+                    <button class="upvote-button unvoted"><i class="fa fa-2x fa-angle-up"></i></button>
+                    <div class="num-votes unvoted">
+                        {{ submission.votes }}
+                    </div>
+                {% else %}
+                    <button class="upvote-button voted"><i class="fa fa-2x fa-angle-up"></i></button>
+                    <div class="num-votes voted">
+                        {{ submission.votes }}
+                    </div>
+                {% endif %}
+            </form>
         </div>
 
         <a class="submission-edit button success" href="{% url 'submission_edit_thumbnail' slug=submission.submission_type uuid=submission.uuid %}">Edit Thumbnail</a>
-    </div>
 
+
+    <div class="footer">
+    	<div class="footer-links">
+			<a href="{% url 'about' %}">About&nbsp;</a>
+            <a href="http://blog.musetic.com">Blog&nbsp;</a>
+			<a href="{% url 'terms_of_use' %}">Terms&nbsp;</a>
+			<a href="{% url 'privacy_policy' %}">Privacy&nbsp;</a>
+		</div>
+    	<div class="copy left">
+			&copy; 2015 Musetic
+		</div>
+    </div>
+    </div>
+{% endblock %}
+{% block content %}
+<div class="submissions-single">
 
     <div class="submission-content-wrap">
     <form action="." method="post">
         {% csrf_token %}
 
-        <label for="id_submission_type" class="required">Submission Type<span class="asterisk">*</span></label>
+        <label for="id_submission_type" class="required">Submission Type</label>
         <select class="select" id="id_submission_type" name="submission_type">
             <option value="art">Art</option>
             <option value="design">Design</option>
@@ -35,19 +91,18 @@
             <option value="writing">Writing</option>
         </select>
 
-        <label for="id_title" class="required">Title<span class="asterisk">*</span></label>
+        <label for="id_title" class="required">Title</label>
         <input class="textinput textInput" id="id_title" maxlength="100" name="title" type="text" value="{{ submission.title }}" />
 
-        <label for="id_description" class="required"> Description<span class="asterisk">*</span></label>
+        <label for="id_description" class="required">Description</label>
         <textarea class="textarea" cols="40" id="id_description" name="description" rows="10">{{ submission.description }}</textarea>
 
-        <label for="id_url" class="required">Link<span class="asterisk">*</span></label>
+        <label for="id_url" class="required">URL</label>
         <input class="urlinput" id="id_url" maxlength="200" name="url" type="url" value="{{ submission.url }}"/>
 
-        <input type="submit" name="submit" value="Submit" class="btn btn-primary button" id="submit-id-submit" />
+        <input type="submit" name="submit" value="Save" class="btn btn-primary button" id="submit-id-submit" />
     </form>
 
-    <button id="submission_delete" class="submission-delete m-trigger" data-modal="submission-delete">Delete Submission</button>
 
     <div class="m-modal" id="submission-delete">
         <div class="m-content">

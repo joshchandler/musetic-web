@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load i18n crispy_forms_tags humanize static avatar_tags %}
+
+{% block title %}{{ user.username }} - Profile Info | Musetic{% endblock %}
+
+{% block sidebar %}{% include 'user/settings_menu.html' %}{% endblock %}
+{% block content %}
+
+<div class="settings-wrapper">
+
+    <div class="settings-content">
+        <h3>Profile Information</h3>
+        <form class="settings-profile-form" action="{% url 'settings_profile' %}" method="post">
+            {% csrf_token %}
+
+            <label for="id_first_name">First name</label>
+            <input class="textinput textInput" id="id_first_name" maxlength="30" name="first_name" type="text"
+                   value="{{ user.first_name }}"/>
+
+            <label for="id_last_name">Last name</label>
+            <input class="textinput textInput" id="id_last_name" maxlength="30" name="last_name" type="text"
+                   value="{{ user.last_name }}"/>
+
+            <label for="id_description">Write something about yourself! (300 words max)</label>
+            <textarea class="textarea" cols="40" maxlength=300 id="id_description" name="description"
+                      rows="10">{{ user.profile.description }}</textarea>
+
+            <input type="submit" name="submit" value="Save Settings" class="button success" id="submit-id-submit"/>
+        </form>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

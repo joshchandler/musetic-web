@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_full_width.html" %}
 {% load static i18n %}
 
 {% block title %}Login | Musetic{% endblock %}
@@ -25,8 +25,8 @@
        }(document, 'script', 'facebook-jssdk'));
     </script>
 {% endblock %}
-{% block header %}{% endblock %}
 
+{% block header %}{% endblock %}
 {% block content %}
 <div class="login">
     <a href="{% url 'index' %}"><img class="musetic-logo" src="{% static 'musetic/img/hexagon-black-logo-100.png' %}" /></a>

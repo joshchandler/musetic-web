@@ -2,28 +2,33 @@
 {% load i18n static %}
 
 {% block title %}Features | Musetic{% endblock %}
+
+{% block sidebar %}
+    {% include 'flatpages/sidebar_menu.html' %}
+{% endblock %}
+
 {% block content %}
     <div class="features">
         <h3>Upcoming Features:</h3>
 	    <ul>
             <li>Social Media Buttons for Creators</li>
             <li>Add Google-Plus Social Login (maybe)</li>
-		    <li>Markdown capabilities for submission descriptions</li>
-		    <li>Markdown capabilities for comments</li>
-            <li>A custom 404 page</li>
-            <li>Editing Comments</li>
+		    <li>Markdown capabilities for the description of submissions</li>
+		    <li>Markdown capabilities for commenting</li>
+            <li>A 404 page</li>
             <li>Threaded Comments (Replies)</li>
 		    <li>Comment Notifications</li>
             <li>Ordering Comments by New and Top (currently only Top)</li>
-	    	<li>Display list of comments on the profile page</li>
+	    	<li>Display Comments on the profile page</li>
 		    <li>NSFW (Not Safe For Work) Tags</li>
-		    <li>Other Notifications such as when one of your submissions reaches the front page</li>
-		    <li>Infinite Scrolling Option</li>
-            <li>Search capabilities</li>
-            <li>A Private messaging system</li>
+		    <li>Other Notifications such as when one of your submissions reaches the front page (it'd be better if we were a bit larger for this</li>
+		    <li>Infinite Scrolling for submissions</li>
+            <li>Search</li>
+            <li>Private/Direct messaging system</li>
 
 	    </ul>
 
+        <br/>
         <p>If you think of any features you think would be cool on the site! Email Joshua Chandler at <a href="mailto:joshua@musetic.com">joshua@musetic.com</a></p>
 	</div>
 {% endblock %}

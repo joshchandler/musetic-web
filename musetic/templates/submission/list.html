@@ -1,15 +1,56 @@
 {% extends "base.html" %}
-{% load i18n static humanize crispy_forms_tags submission_tags %}
+{% load i18n static humanize crispy_forms_tags submission_tags avatar_tags %}
 
 {% block title %}Musetic{% endblock %}
+
+
+{% block sidebar %}
+<div class="sidebar pushy-left">
+    <ul class="categories">
+        <li><a href="{% url 'category' slug='art' %}" data-toggle="tooltip" data-placement="bottom" title="Art"><i class="fa fa-paint-brush"></i></a></li>
+        <li><a href="{% url 'category' slug='design' %}" data-toggle="tooltip" data-placement="bottom" title="Design"><i class="fa fa-desktop"></i></a></li>
+        <li><a href="{% url 'category' slug='imagery' %}" data-toggle="tooltip" data-placement="bottom" title="Imagery"><i class="fa fa-camera"></i></a></li>
+        <li><a href="{% url 'category' slug='sound' %}" data-toggle="tooltip" data-placement="bottom" title="Sound"><i class="fa fa-headphones"></i></a></li>
+        <li><a href="{% url 'category' slug='video' %}" data-toggle="tooltip" data-placement="bottom" title="Video"><i class="fa fa-video-camera"></i></a></li>
+        <li><a href="{% url 'category' slug='writing' %}" data-toggle="tooltip" data-placement="bottom" title="Writing"><i class="fa fa-pencil"></i></a></li>
+    </ul>
+
+    {% if user.is_authenticated %}
+    <div class="profile-info">
+        <div class="profile-pic-wrapper">
+            <a href="{% url 'user_profile' user.username %}"><img src="{% avatar_url user.username 200 %}"/></a>
+        </div>
+
+        <div class="profile-score-wrap">
+            <div class="submission-score" title="{% if user.profile.score == 1 %}{{ user.profile.score }} Creator point{% else %}{{ user.profile.score }} Creator points{% endif %}">{{ user.profile.score }}
+                <div class="submission-score-desc">Creator {% if user.profile.score == 1 %}point{% else %}points{% endif %}</div></div>
+            <div class="discussion-score" title="{% if user.profile.discussion_score == 1 %}{{ user.profile.discussion_score }} Comment point{% else %}{{ user.profile.discussion_score }} Comment points{% endif %}">{{ user.profile.discussion_score }}
+                <div class="discussion-score-desc">Comment {% if user.profile.discussion_score == 1 %}point{% else %}points{% endif %}</div></div>
+        </div>
+
+    </div>
+    {% endif %}
+
+	<div class="footer">
+    	<div class="footer-links">
+			<a href="{% url 'about' %}">About&nbsp;</a>
+            <a href="http://blog.musetic.com">Blog&nbsp;</a>
+			<a href="{% url 'terms_of_use' %}">Terms&nbsp;</a>
+			<a href="{% url 'privacy_policy' %}">Privacy&nbsp;</a>
+		</div>
+    	<div class="copy left">
+			&copy; 2015 Musetic
+		</div>
+    </div>
+</div>
+
+{% endblock %}
+
 {% block content %}
-
-
     <div class="submissions-list">
         <ul class="hexagon clearfix">
             {% for submission in submissions %}
                 <li class="submissions-item">
-
                     <div class="submissions-th">
                         {% if submission.thumbnail %}
                             {% submission_image submission.url 500 %}
@@ -76,7 +117,7 @@
 
                             <div class="submissions-time">{{ submission.date_submitted|naturalday }}</div>
 
-                            <a class="submissions-more" href="{% url 'submission_detail' slug=submission.submission_type uuid=submission.uuid %}"><i class="fa fa-lg fa-comments-o"></i>&nbsp;&nbsp;{{ submission.comment_count }}</a>
+                            <a class="submissions-more" href="{% url 'submission_detail' slug=submission.submission_type uuid=submission.uuid %}"><i class="fa fa-lg fa-comments-o"></i>&nbsp;&nbsp;{{ submission.get_comment_count }}</a>
                         </div>
                 </li>
             {% empty %}
@@ -87,20 +128,25 @@
             {% endfor %}
         </ul>
     </div>
-    {% if pagination %}
-        <div class="pagination">
-            {% if pagination.previous %}
-            <a class="prev button" href="{{ pagination.previous }}">&laquo; Previous</a>
+    <div class="pagination">
+        <span class="step-links">
+            {% if submissions.has_previous %}
+                <a class="prev button" href="?page={{ submissions.previous_page_number }}">previous</a>
             {% endif %}
-            {% if pagination.next %}
-            <a class="next button" href="{{ pagination.next }}">Next &raquo;</a>
+
+            <span class="current">
+                {{ submissions.number }}
+            </span>
+
+            {% if submissions.has_next %}
+                <a class="next button" href="?page={{ submissions.next_page_number }}">next</a>
             {% endif %}
-        </div>
-    {% endif %}
+        </span>
+    </div>
 {% endblock %}
 
 {% block js %}
-    <script src="{% static 'musetic/js/vendor/modalEffects.js' %}"></script>
+{#    <script src="{% static 'musetic/js/vendor/modalEffects.js' %}"></script>#}
     <script src="{% static 'musetic/js/submissions.js' %}"></script>
 {% endblock %}
 

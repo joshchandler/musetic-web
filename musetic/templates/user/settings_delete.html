@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load i18n crispy_forms_tags humanize static avatar_tags %}
+
+{% block title %}{{ user.username }} - Delete This Account | Musetic{% endblock %}
+
+{% block sidebar %}{% include 'user/settings_menu.html' %}{% endblock %}
+{% block content %}
+
+<div class="settings-wrapper">
+
+    <div class="settings-content">
+        <h3>Delete Your Account?</h3>
+        <form action="{% url 'settings_delete' username=user.username %}" method="post">
+            {% csrf_token %}
+            <p>Are you sure you want to delete "{{ user.username }}"?</p>
+            <p><strong>This is NOT a reversible action!</strong>  If you have any Submissions or Comments, they will also be deleted</p>
+            <p>{{ user.user_submissions.count }} Submissions, {{ user.user_discussions.count }} Comments, {{ user.user_votes.count }} Upvotes, and {{ user.user_discussion_votes.count }} Comment Upvotes will also be deleted</p>
+            <br/>
+            <input class="button alert" type="submit" value="Delete My Account" />
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+{% endblock %}

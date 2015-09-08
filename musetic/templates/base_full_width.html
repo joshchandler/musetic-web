@@ -15,7 +15,7 @@
         {# Stylesheets #}
         <link rel="stylesheet" href="{% static 'musetic/css/normalize.css' %}">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="{% static 'musetic/css/main.css' %}?v=3">
+        <link rel="stylesheet" href="{% static 'musetic/css/main.css' %}">
     	{% block css %}{% endblock %}
 
 	{# Javascript #}
@@ -125,8 +125,7 @@
 {% block sidebar %}
 {% endblock %}
 
-<div class="container">
-    <div class="alpha">
+<div class="container_full_width">
 
         {% if messages %}
             {% for message in messages %}
@@ -156,7 +155,6 @@
 
         {% block content %}{% endblock %}
 
-    </div>
 </div>
 
 
@@ -164,7 +162,7 @@
 
 
 {% block feedback %}
-    {% if user.user_settings.show_feedback_tab != False %}
+    {% if user.user_settings.show_feedback_tab == False %}
         <a href="{% url 'user_feedback' %}?={{ request.path }}" class="feedback button success">Feedback</a>
     {% endif %}
 {% endblock %}
@@ -191,8 +189,8 @@
 <script language="javascript" type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.10.0/jquery.validate.min.js"></script>
 <script type="text/javascript" src="{% static 'musetic/js/vendor/classie.js' %}"></script>
 <script type="text/javascript" src="{% static 'musetic/js/vendor/plugin.js' %}"></script>
-<script type="text/javascript" src="{% static 'musetic/js/main.js' %}?v=3"></script>
-<script type="text/javascript" src="{% static 'musetic/js/main-menu.js' %}?v=3"></script>
+<script type="text/javascript" src="{% static 'musetic/js/main.js' %}"></script>
+<script type="text/javascript" src="{% static 'musetic/js/main-menu.js' %}"></script>
 
 <script type="text/javascript">
     $(function () {

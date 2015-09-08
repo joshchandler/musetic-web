@@ -2,15 +2,21 @@
 {% load i18n static %}
 
 {% block title %}About | Musetic{% endblock %}
+
+{% block sidebar %}
+    {% include 'flatpages/sidebar_menu.html' %}
+{% endblock %}
+
 {% block content %}
     <div>
         <h3>About Musetic</h3>
 	    <p>Musetic is a community/simple sharing platform made specifically for creators to share the things they've made (think Imgur, but for art in all its forms). Although anyone will be allowed to sign up and curate, only the original creators of the content will be allowed to submit.</p>
         <br />
+
         <h4>Musetic is in Beta.</h4>
 
-        <p>When using Musetic during the Beta testing phase, you may occasionally run into bugs. Things that worked one way yesterday may work differently today. A new feature may suddenly appear (we're releasing new features constantly). That's the fun of the Musetic Beta experience — participating as Musetic rolls out from the beginning.</p>
+        <p>When using Musetic during the Beta testing phase, you may occasionally run into bugs. A new feature may suddenly appear (we're trying to release new features constantly). That's the fun of the Musetic Beta experience — participating as Musetic rolls out from the beginning.</p>
 	</div>
 
-	<a href="{% url 'features' %}">Check out our Features List</a>
+	<a href="{% url 'features' %}">Check out our Upcoming Features List</a>
 {% endblock %}

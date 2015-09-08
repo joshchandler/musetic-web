@@ -54,6 +54,9 @@ REST_FRAMEWORK = {
 # }
 DATABASES['default'] = dj_database_url.config()
 
+# Enable Connection Pooling
+DATABASES['default']['ENGINE'] = 'django_postgrespool'
+
 # Queues
 BROKER_TRANSPORT = 'redis'
 BROKER_URL = get_env_variable('BROKER_URL', 'redis://localhost:6379/0')

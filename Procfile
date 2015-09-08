@@ -1,1 +1,1 @@
-web: gunicorn musetic.wsgi --log-file -
+web: newrelic-admin run-program gunicorn musetic.wsgi --log-file -

@@ -2,9 +2,10 @@ from __future__ import absolute_import
 import os
 from celery import Celery
 from django.conf import settings
+from musetic.settings.utils import get_env_variable
 
 # set the default Django settings module for the 'celery' program.
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'musetic.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', get_env_variable('DJANGO_SETTINGS_MODULE'))
 
 musetic_celery = Celery('musetic')
 

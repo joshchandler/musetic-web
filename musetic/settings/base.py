@@ -31,6 +31,7 @@ DJANGO_APPS = (
     'django.contrib.humanize',
     'django_extensions',
 )
+
 UNIVERSE_APPS = (
     # Third-party apps
     'djcelery',

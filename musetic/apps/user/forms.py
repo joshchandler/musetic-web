@@ -242,4 +242,3 @@ class SettingsGeneralForm(forms.ModelForm):
     class Meta:
         model = Settings
         exclude = ('user', 'mail_comment_notifications')
-

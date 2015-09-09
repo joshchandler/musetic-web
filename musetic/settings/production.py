@@ -51,7 +51,7 @@ DATABASES['default']['ENGINE'] = 'django_postgrespool'
 
 # Queues
 BROKER_TRANSPORT = 'redis'
-BROKER_URL = get_env_variable('REDIS_URL', 'redis://localhost:6379/0')
+BROKER_URL = get_env_variable('REDIS_URL')
 
 CELERY_DEFAULT_QUEUE = 'musetic-prod'
 CELERY_ALWAYS_EAGER = False

@@ -2,7 +2,7 @@
 *.db
 
 # Celery stuff
-celery.pid
+*.pid
 celerybeat-schedule
 
 media/

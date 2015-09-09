@@ -21,11 +21,11 @@ INSTALLED_APPS += (
 # Email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = 'joshchandler'
-EMAIL_HOST_PASSWORD = 'J6NDSOF0N3'
+EMAIL_HOST_USER = get_env_variable('SENDGRID_USERNAME')
+EMAIL_HOST_PASSWORD = get_env_variable('SENDGRID_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'noreply@musetic.com'
+DEFAULT_FROM_EMAIL = 'no-reply@musetic.com'
 
 # Caches
 CACHES = {
@@ -62,9 +62,9 @@ DEFAULT_FILE_STORAGE = 's3_folder_storage.s3.DefaultStorage'
 DEFAULT_S3_PATH = 'media'
 STATICFILES_STORAGE = 's3_folder_storage.s3.StaticStorage'
 STATIC_S3_PATH = 'static'
-AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
-AWS_SECRET_ACCESS_KEY  = os.environ['AWS_SECRET_ACCESS_KEY']
-AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
+AWS_ACCESS_KEY_ID = get_env_variable('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY  = get_env_variable('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = get_env_variable('AWS_STORAGE_BUCKET_NAME')
 
 MEDIA_ROOT = '/%s/' % DEFAULT_S3_PATH
 MEDIA_URL = '//s3.amazonaws.com/%s/media/' % AWS_STORAGE_BUCKET_NAME

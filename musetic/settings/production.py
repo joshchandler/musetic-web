@@ -1,6 +1,7 @@
 from .base import *
 from musetic.settings.utils import get_env_variable
 import dj_database_url
+import redis
 
 SECRET_KEY = get_env_variable('SECRET_KEY')
 
@@ -50,7 +51,7 @@ DATABASES['default']['ENGINE'] = 'django_postgrespool'
 
 # Queues
 BROKER_TRANSPORT = 'redis'
-BROKER_URL = get_env_variable('REDIS_URL', 'redis://localhost:6379/0')
+BROKER_URL = redis.from_url(get_env_variable('REDIS_URL'))
 
 CELERY_DEFAULT_QUEUE = 'musetic-prod'
 CELERY_ALWAYS_EAGER = False

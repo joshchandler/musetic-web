@@ -13,7 +13,6 @@ from musetic.settings.utils import get_env_variable
 from datetime import timedelta
 import os
 
-
 BASE_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 PROJECT_ROOT = os.path.abspath(os.path.dirname(BASE_DIR))
 

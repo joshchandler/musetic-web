@@ -9,7 +9,7 @@ from django.db import models
 from .forms import SubmissionForm, SubmissionEditForm, SubmissionEditThumbnailForm, VoteForm, FlagForm
 from .models import Submission, Vote, Flag
 from .reference import MediaTypes
-from .serializers import SubmissionSerializer, PaginatedSubmissionSerializer
+from .serializers import SubmissionSerializer
 from musetic.apps.user.models import Creator, User
 from musetic.apps.discussion.models import Discussion, DiscussionVote
 from musetic.apps.discussion.forms import DiscussionForm
@@ -23,7 +23,7 @@ class SubmissionBaseList(ListView):
 
     def paginate_submissions(self, queryset, paginate_by):
         """
-        Paginate the queryset, then serialize the submission data using a PaginationSerializer
+        Paginate the queryset
         """
         paginator = Paginator(queryset, paginate_by)
         page = self.request.GET.get('page')
@@ -34,18 +34,16 @@ class SubmissionBaseList(ListView):
         except EmptyPage:
             submissions = paginator.page(paginator.num_pages)
 
-        return PaginatedSubmissionSerializer(submissions, context={'request': self.request}).data
+        return submissions
 
     def get_context_data(self, **kwargs):
         context = super(SubmissionBaseList, self).get_context_data(**kwargs)
-        pagination = self.paginate_submissions(self.get_queryset(), self.paginate_by)
-        submissions = pagination.get("results")
+        submissions = self.paginate_submissions(self.get_queryset(), self.paginate_by)
         context["submissions"] = submissions
-        context["pagination"] = pagination
 
         if self.request.user.is_authenticated():
             submission_in_page = [submission.pk for submission in context["object_list"]]
-            context["voted"] = Vote.objects.filter(
+            context["voted"] = Vote.objects.select_related().filter(
                 voter=self.request.user
             ).filter(
                 submission_id__in=submission_in_page
@@ -57,15 +55,15 @@ class SubmissionBaseList(ListView):
 
 
 class SubmissionHotList(SubmissionBaseList):
-    queryset = Submission.by_votes.order_by('-score', '-votes', '-date_submitted')
+    queryset = Submission.by_votes.select_related().order_by('-score', '-votes', '-date_submitted')
 
 
 class SubmissionNewList(SubmissionBaseList):
-    queryset = Submission.objects.order_by('-date_submitted')
+    queryset = Submission.by_votes.select_related().order_by('-date_submitted')
 
 
 class SubmissionTopList(SubmissionBaseList):
-    queryset = Submission.by_votes.order_by('-votes', '-date_submitted')
+    queryset = Submission.by_votes.select_related().order_by('-votes', '-date_submitted')
 
 
 class SubmissionCategoryBaseList(SubmissionBaseList):
@@ -85,7 +83,7 @@ class SubmissionCategoryHotList(SubmissionCategoryBaseList):
 
     def get_queryset(self):
         if self.kwargs['slug'] in self.MEDIA_TYPES:
-            return super(SubmissionCategoryHotList, self).get_queryset().filter(
+            return super(SubmissionCategoryHotList, self).get_queryset().select_related().filter(
                 submission_type=self.kwargs['slug']
             ).order_by(
                 '-score', '-votes', '-date_submitted'
@@ -97,7 +95,7 @@ class SubmissionCategoryNewList(SubmissionCategoryBaseList):
 
     def get_queryset(self):
         if self.kwargs['slug'] in self.MEDIA_TYPES:
-            return super(SubmissionCategoryNewList, self).get_queryset().filter(
+            return super(SubmissionCategoryNewList, self).get_queryset().select_related().filter(
                 submission_type=self.kwargs['slug']
             ).order_by('-date_submitted')
         raise Http404
@@ -107,7 +105,7 @@ class SubmissionCategoryTopList(SubmissionCategoryBaseList):
 
     def get_queryset(self):
         if self.kwargs['slug'] in self.MEDIA_TYPES:
-            return super(SubmissionCategoryTopList, self).get_queryset().annotate(
+            return super(SubmissionCategoryTopList, self).get_queryset().select_related().annotate(
                 votes=models.Count('submission_votes')
             ).filter(
                 submission_type=self.kwargs['slug']
@@ -241,7 +239,7 @@ class SubmissionEditThumbnail(LoginRequiredMixin, UpdateView):
     def dispatch(self, request, *args, **kwargs):
         user = self.request.user
         submission = Submission.objects.get(uuid=self.kwargs['uuid'])
-        if user.username == submission.user.username:
+        if user.username == submission.user.username or user.is_staff:
             return super(SubmissionEditThumbnail, self).dispatch(request, *args, **kwargs)
         raise Http404
 

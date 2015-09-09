@@ -3,6 +3,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django import forms
 from django.forms.models import ModelForm, model_to_dict, fields_for_model
 from django.utils.translation import ugettext_lazy as _
+from django.core.urlresolvers import reverse
 
 from musetic.apps.user.models import Profile, Creator, Invite, Feedback, Settings
 
@@ -42,35 +43,6 @@ class MuseticAuthenticationForm(AuthenticationForm):
                            "Note that both fields are case-sensitive."),
         'inactive': _("This account is inactive."),
     }
-
-
-class ProfileEditForm(ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(ProfileEditForm, self).__init__(*args, **kwargs)
-        instance = kwargs.get('instance')
-        _fields = ('first_name', 'last_name',)
-        _initial = model_to_dict(instance.user, _fields) if instance is not None else {}
-        kwargs['initial'] = _initial
-        self.fields.update(fields_for_model(User, _fields))
-
-        self.helper = FormHelper()
-        self.helper.form_method = 'post'
-        self.helper.layout = Layout(
-            'first_name',
-            'last_name',
-            'description',
-        )
-
-    class Meta:
-        model = Profile
-        exclude = ('user', 'avatar', 'creator')
-
-    def save(self, *args, **kwargs):
-        u = self.instance.user
-        u.first_name = self.cleaned_data['first_name']
-        u.last_name = self.cleaned_data['last_name']
-        u.save()
-        return super(ProfileEditForm, self).save(*args, **kwargs)
 
 
 class CreatorRequestForm(forms.Form):
@@ -179,7 +151,95 @@ class FeedbackForm(forms.ModelForm):
         fields = ['email', 'subject', 'body', ]
 
 
-class SettingsForm(forms.ModelForm):
+class SettingsProfileForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(SettingsProfileForm, self).__init__(*args, **kwargs)
+        instance = kwargs.get('instance')
+        _fields = ('first_name', 'last_name',)
+        _initial = model_to_dict(instance.user, _fields) if instance is not None else {}
+        kwargs['initial'] = _initial
+        self.fields.update(fields_for_model(User, _fields))
+
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.form_action = reverse('settings_profile')
+        self.helper.form_class = 'settings-profile-form'
+        self.helper.layout = Layout(
+            'first_name',
+            'last_name',
+            'description',
+            ButtonHolder(
+                Submit('submit', 'Save', css_class='button success')
+            )
+        )
+
+    class Meta:
+        model = Profile
+        exclude = ('user', 'avatar', 'creator')
+
+    def save(self, *args, **kwargs):
+        u = self.instance.user
+        u.username = self.cleaned_data['username']
+        u.first_name = self.cleaned_data['first_name']
+        u.last_name = self.cleaned_data['last_name']
+        u.save()
+        return super(SettingsProfileForm, self).save(*args, **kwargs)
+
+
+class ChangeUsernameForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super(ChangeUsernameForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            'username',
+            ButtonHolder(
+                Submit('submit', 'Save', css_class='button success')
+            )
+        )
+
+    username = forms.RegexField(
+        regex=r'^[\w.+-]+$',
+        max_length=20,
+        label=_("Username"),
+        error_messages={'invalid': _("This value may contain only letters, numbers and ./+/-/_ characters.")}
+    )
+
+    def clean_username(self):
+        """
+        Validate that the username is alphanumeric and is not already
+        in use.
+        """
+        existing = User.objects.filter(username__iexact=self.cleaned_data['username'])
+        if existing.exists():
+            raise forms.ValidationError(_("Sorry, that username is already taken."))
+        else:
+            return self.cleaned_data['username']
+
+
+class ChangeEmailForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super(ChangeEmailForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.form_action = reverse('settings_email')
+        self.helper.form_class = 'settings-change-email-form'
+        self.helper.layout = Layout(
+            'email',
+            Submit('submit', 'Save', css_class='button success'),
+        )
+
+    email = forms.EmailField(label=_("Email Address"))
+
+    def clean_email(self):
+        existing = User.objects.filter(email__iexact=self.cleaned_data['email'])
+        if existing.exists():
+            raise forms.ValidationError(_("Sorry, that email address is associated with another account."))
+        else:
+            return self.cleaned_data['email']
+
+
+class SettingsGeneralForm(forms.ModelForm):
     class Meta:
         model = Settings
-        exclude = ('user',)
+        exclude = ('user', 'mail_comment_notifications')
+

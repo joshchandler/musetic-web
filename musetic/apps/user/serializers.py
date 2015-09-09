@@ -6,7 +6,7 @@ from musetic.apps.user.models import Profile, User, Creator
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'first_name', 'last_name', 'email', 'date_joined', 'is_staff', 'profile')
+        fields = ('id', 'username', 'first_name', 'last_name', 'email', 'date_joined', 'is_staff')
 
 
 class ProfileSerializer(serializers.ModelSerializer):

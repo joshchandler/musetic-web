@@ -1,15 +1,11 @@
-from django.core.urlresolvers import reverse
-from django.views.generic import DetailView, UpdateView
+from django.views.generic import DetailView
 from django.http import Http404
 from django.contrib.auth.models import User
-
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 from musetic.apps.user.models import Profile
-from musetic.apps.user.forms import ProfileEditForm
-from musetic.apps.user.serializers import ProfileSerializer
+
 from musetic.apps.submission.models import Submission, Vote
-from musetic.apps.submission.forms import FlagForm
-from musetic.apps.submission.serializers import SubmissionSerializer
 
 
 class ProfileBaseDetailView(DetailView):
@@ -17,16 +13,22 @@ class ProfileBaseDetailView(DetailView):
     template_name = 'user/profile.html'
     slug_field = 'user__username'
     slug_url_kwarg = 'username'
+    context_object_name = 'profile'
 
-    def get_context_data(self, **kwargs):
-        context = super(ProfileBaseDetailView, self).get_context_data(**kwargs)
-        profile = Profile.objects.get(user__username=self.kwargs['username'])
-        context["profile"] = ProfileSerializer(
-            profile, context={'request': self.request}
-        ).data
-        context["flag_form"] = FlagForm()
+    def paginate_submissions(self, queryset, paginate_by):
+        """
+        Paginate the queryset
+        """
+        paginator = Paginator(queryset, paginate_by)
+        page = self.request.GET.get('page')
+        try:
+            submissions = paginator.page(page)
+        except PageNotAnInteger:
+            submissions = paginator.page(1)
+        except EmptyPage:
+            submissions = paginator.page(paginator.num_pages)
 
-        return context
+        return submissions
 
     def dispatch(self, request, *args, **kwargs):
         """
@@ -41,15 +43,14 @@ class ProfileBaseDetailView(DetailView):
 class ProfileNewDetailView(ProfileBaseDetailView):
     def get_context_data(self, **kwargs):
         context = super(ProfileNewDetailView, self).get_context_data(**kwargs)
-        submissions = Submission.objects.filter(
-            user__username=self.kwargs['username']
-        ).order_by('-date_submitted')
-        context["submissions"] = SubmissionSerializer(
-            submissions, many=True, context={'request': self.request}
-        ).data
+        context["submissions"] = self.paginate_submissions(
+            Submission.by_votes.select_related().filter(
+                user__username=self.kwargs['username']
+            ).order_by('-date_submitted'), paginate_by=12)
+
         if self.request.user.is_authenticated():
-            submission_in_page = [submission.pk for submission in submissions]
-            context["voted"] = Vote.objects.filter(
+            submission_in_page = [submission.pk for submission in context["submissions"]]
+            context["voted"] = Vote.objects.select_related().filter(
                 voter=self.request.user
             ).filter(
                 submission_id__in=submission_in_page
@@ -62,46 +63,18 @@ class ProfileNewDetailView(ProfileBaseDetailView):
 class ProfileTopDetailView(ProfileBaseDetailView):
     def get_context_data(self, **kwargs):
         context = super(ProfileTopDetailView, self).get_context_data(**kwargs)
-        submissions = Submission.by_votes.filter(
-            user__username=self.kwargs['username']
-        ).order_by('-votes', '-date_submitted')
-        context["submissions"] = SubmissionSerializer(
-            submissions, many=True, context={'request': self.request}
-        ).data
+        context["submissions"] = self.paginate_submissions(
+            Submission.by_votes.select_related().filter(
+                user__username=self.kwargs['username']
+            ).order_by('-votes', '-date_submitted'), paginate_by=12)
 
         if self.request.user.is_authenticated():
-            submission_in_page = [submission.pk for submission in submissions]
-            context["voted"] = Vote.objects.filter(
+            submission_in_page = [submission.pk for submission in context["submissions"]]
+            context["voted"] = Vote.objects.select_related().filter(
                 voter=self.request.user
             ).filter(
                 submission_id__in=submission_in_page
             ).values_list(
                 'submission_id', flat=True
             )
-        return context
-
-
-class ProfileEdit(UpdateView):
-    model = Profile
-    form_class = ProfileEditForm
-    template_name = 'user/profile_edit.html'
-    slug_field = 'user__username'
-    slug_url_kwarg = 'username'
-
-    def dispatch(self, request, *args, **kwargs):
-        """
-        The edit profile page is not visible unless the user is activated
-        """
-        user = User.objects.get(username=self.kwargs['username'])
-        if request.user.username == self.kwargs['username']:
-            if user.is_active:
-                return super(ProfileEdit, self).dispatch(request, *args, **kwargs)
-        raise Http404
-
-    def get_success_url(self):
-        return reverse('user_profile', kwargs={'username': self.kwargs['username']})
-
-    def get_context_data(self, **kwargs):
-        context = super(ProfileEdit, self).get_context_data(**kwargs)
-        context["edit_profile_form"] = ProfileEditForm()
         return context

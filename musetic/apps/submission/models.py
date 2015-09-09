@@ -100,25 +100,19 @@ class Submission(models.Model):
         ])
 
     def get_votes(self):
-        """
-        Returns the number of votes associated with a particular submission
-        :return: int
-        """
         return self.submission_votes.count()
 
     def get_flags(self):
-        """
-        Return the number of flags associated with a particular submission
-        :return: int
-        """
         return self.submission_flags.count()
 
     def get_comment_count(self):
-        """
-        Return the number of comments associated with a particular submission
-        :return: int
-        """
         return self.submission_discussions.count()
+
+    def get_profile_score(self):
+        return self.user.profile.score()
+
+    def get_profile_discussion_score(self):
+        return self.user.profile.discussion_score()
 
     def calculate_score(self):
         """

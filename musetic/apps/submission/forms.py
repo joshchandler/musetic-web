@@ -101,7 +101,6 @@ class SubmissionEditThumbnailForm(ModelForm):
 class VoteForm(ModelForm):
     class Meta:
         model = Vote
-        exclude = ()
 
 
 class FlagForm(ModelForm):

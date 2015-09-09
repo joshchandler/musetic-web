@@ -2,53 +2,55 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-import django.utils.timezone
 from django.conf import settings
+import django.utils.timezone
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('submission', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        ('submission', '__first__'),
     ]
 
     operations = [
         migrations.CreateModel(
             name='Discussion',
             fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', serialize=False, auto_created=True)),
+                ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
                 ('comment', models.TextField(max_length=3000, verbose_name='comment')),
-                ('date_submitted', models.DateTimeField(verbose_name='date/time submitted', default=django.utils.timezone.now)),
-                ('date_updated', models.DateTimeField(auto_now=True, verbose_name='date/time updated', null=True)),
+                ('date_submitted', models.DateTimeField(default=django.utils.timezone.now, verbose_name='date/time submitted')),
+                ('date_updated', models.DateTimeField(null=True, auto_now=True, verbose_name='date/time updated')),
                 ('is_deleted', models.BooleanField(help_text='Check this box to delete the comment', verbose_name='is deleted', default=False)),
-                ('submission', models.ForeignKey(to='submission.Submission', verbose_name='submission', related_name='submission_discussions')),
-                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL, verbose_name='user', related_name='user_discussions')),
+                ('submission', models.ForeignKey(related_name='submission_discussions', to='submission.Submission', verbose_name='submission')),
+                ('user', models.ForeignKey(related_name='user_discussions', to=settings.AUTH_USER_MODEL, verbose_name='user')),
             ],
             options={
                 'verbose_name': 'Discussion',
                 'verbose_name_plural': 'Discussions',
             },
+            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name='DiscussionFlag',
             fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', serialize=False, auto_created=True)),
+                ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
                 ('reason', models.CharField(max_length=300, verbose_name='reason', db_index=True)),
-                ('date_flagged', models.DateTimeField(verbose_name='date', default=django.utils.timezone.now)),
-                ('discussion', models.ForeignKey(to='discussion.Discussion', verbose_name='discussion', related_name='flags')),
-                ('flagger', models.ForeignKey(to=settings.AUTH_USER_MODEL, verbose_name='flagger', related_name='discussion_flags')),
+                ('date_flagged', models.DateTimeField(default=django.utils.timezone.now, verbose_name='date')),
+                ('discussion', models.ForeignKey(related_name='flags', to='discussion.Discussion', verbose_name='discussion')),
+                ('flagger', models.ForeignKey(related_name='discussion_flags', to=settings.AUTH_USER_MODEL, verbose_name='flagger')),
             ],
             options={
+                'verbose_name_plural': 'discussion flags',
                 'verbose_name': 'discussion flag',
                 'db_table': 'discussion_flag',
-                'verbose_name_plural': 'discussion flags',
             },
+            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name='DiscussionVote',
             fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', serialize=False, auto_created=True)),
+                ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
                 ('vote_type', models.BooleanField(default=True)),
                 ('discussion', models.ForeignKey(related_name='discussion_votes', to='discussion.Discussion')),
                 ('voter', models.ForeignKey(related_name='user_discussion_votes', to=settings.AUTH_USER_MODEL)),
@@ -56,6 +58,7 @@ class Migration(migrations.Migration):
             options={
                 'db_table': 'discussion_vote',
             },
+            bases=(models.Model,),
         ),
         migrations.AlterUniqueTogether(
             name='discussionvote',

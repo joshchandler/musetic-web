@@ -4,7 +4,7 @@ from . import models
 
 
 class SubmissionAdmin(ModelAdmin):
-    list_display = ['submission_type', 'title', 'score', 'flagged', 'user', 'date_submitted']
+    list_display = ['title', 'submission_type', 'score', 'user', 'date_submitted']
     list_filter = ['submission_type', 'flagged', 'score']
     search_fields = ['title', 'description', 'user', 'date_submitted']
 

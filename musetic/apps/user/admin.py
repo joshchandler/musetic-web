@@ -1,8 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.models import User
 
-from .models import Profile, Creator, Invite, Feedback
+from .models import User, Profile, Creator, Invite, Feedback
 
 
 class ProfileInline(admin.StackedInline):
@@ -12,18 +11,20 @@ class ProfileInline(admin.StackedInline):
 
 
 class UsersAdmin(UserAdmin):
-        inlines = (ProfileInline,)
+    inlines = (ProfileInline,)
 
 
 class CreatorInline(admin.ModelAdmin):
     model = Creator
+    list_display = ['user', 'url', 'is_creator']
     can_delete = True
     verbose_name = 'creator'
     verbose_name_plural = 'creators'
 
 
 class InviteInline(admin.ModelAdmin):
-    model = Invite
+    list_display = ['inviter', 'invitee', 'accepted', 'date_invited']
+    list_filter = ['inviter', 'accepted']
     can_delete = True
     verbose_name = 'invite'
     verbose_name_plural = 'invites'
@@ -31,7 +32,7 @@ class InviteInline(admin.ModelAdmin):
 
 class FeedbackInline(admin.ModelAdmin):
     model = Feedback
-    list_display = ['first_name', 'last_name', 'email', 'subject', 'body']
+    list_display = ['email', 'subject', 'body']
     can_delete = True
     verbose_name = 'feedback'
     verbose_name_plural = 'feedback'

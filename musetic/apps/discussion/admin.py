@@ -12,7 +12,7 @@ class DiscussionAdmin(admin.ModelAdmin):
          {'fields': ('date_submitted', 'is_deleted')}),
     )
 
-    list_display = ('user', 'date_submitted', 'is_deleted')
+    list_display = ('user', 'comment', 'date_submitted', 'is_deleted')
     list_filter = ('date_submitted', 'is_deleted')
     date_hierarchy = 'date_submitted'
     ordering = ('-date_submitted',)

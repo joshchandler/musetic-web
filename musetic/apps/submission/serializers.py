@@ -12,14 +12,23 @@ class SubmissionSerializer(serializers.ModelSerializer):
     comment_count = serializers.SerializerMethodField('get_comment_count')
     uuid = serializers.SerializerMethodField('submission_uuid')
 
+    profile_score = serializers.SerializerMethodField('get_profile_score')
+    profile_discussion_score = serializers.SerializerMethodField('get_profile_discussion_score')
+
     class Meta:
         model = Submission
         fields = ('id', 'uuid', 'submission_type', 'title',
-                  'url', 'description', 'user', 'thumbnail',
-                  'date_submitted', 'score', 'votes', 'flags',
+                  'url', 'description', 'user', 'profile_score', 'profile_discussion_score',
+                  'thumbnail', 'date_submitted', 'score', 'votes', 'flags',
                   'comment_count')
 
     user = UserSerializer()
+
+    def get_profile_score(self, obj):
+        return obj.get_profile_score()
+
+    def get_profile_discussion_score(self, obj):
+        return obj.get_profile_discussion_score()
 
     def get_votes(self, obj):
         return obj.get_votes()

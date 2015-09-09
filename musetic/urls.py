@@ -5,6 +5,8 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required as auth
 from django.contrib.flatpages.views import flatpage
 
+from musetic.apps.avatar.views import add as avatar_add, change as avatar_change, delete as avatar_delete
+
 from musetic.apps.discussion.views import (
     DiscussionFormView, DiscussionDelete, DiscussionVoteFormView, DiscussionFlagFormView,
     DiscussionEdit
@@ -15,7 +17,8 @@ from musetic.apps.user.views import anonymous_required
 from musetic.apps.user.views.auth import (
     RegistrationViewUniqueEmail,
     login as auth_login,
-    ActivationRedirect
+    ActivationRedirect,
+    password_change,
 )
 from musetic.apps.user.views.creator import (
     CreatorRequestView,
@@ -33,10 +36,13 @@ from musetic.apps.user.views.invite import (
 from musetic.apps.user.views.profile import (
     ProfileNewDetailView,
     ProfileTopDetailView,
-    ProfileEdit
 )
 from musetic.apps.user.views.settings import (
-    UserSettingsView
+    SettingsProfile,
+    SettingsChangeUsername,
+    SettingsChangeEmail,
+    SettingsDeleteAccount,
+    SettingsGeneral,
 )
 
 from musetic.apps.submission.views import (
@@ -54,15 +60,16 @@ admin.autodiscover()
 
 urlpatterns = patterns(
     '',
+
     url(r'^admin/', include(admin.site.urls)),
 
-    # The API
+    # API ##############################################################################################################
     url(r'^api/$', api_root),
     url(r'^api/submission/$', SubmissionAPIList.as_view(), name='submission-list'),
     url(r'^api/submission/(?P<pk>\d+)/$', SubmissionAPIDetail.as_view, name='submission-detail'),
     url(r'^api/vote/$', VoteAPIList.as_view(), name='vote-list'),
 
-    # REGISTRATION #####################################################################################################
+    # AUTH AND REGISTRATION ############################################################################################
     url(r'^login/$',
         anonymous_required(auth_login), name='auth_login'),
     url(r'^logout/$',
@@ -78,17 +85,27 @@ urlpatterns = patterns(
     url(r'^', include('registration.backends.default.urls')),
 
     # SOCIAL ###########################################################################################################
-    url('', include('social.apps.django_app.urls', namespace='social')),
+    url(r'^', include('social.apps.django_app.urls', namespace='social')),
 
     # USER #############################################################################################################
     url(r'^muser/(?P<username>[\w.+-]+)/$',
         ProfileNewDetailView.as_view(), name='user_profile'),
     url(r'^muser/(?P<username>[\w.+-]+)/top/$',
         ProfileTopDetailView.as_view(), name='user_profile_top'),
-    url(r'^muser/(?P<username>[\w.+-]+)/edit/$',
-        auth(ProfileEdit.as_view()), name='edit_profile'),
-    url(r'^muser/(?P<username>[\w.+-]+)/settings/$',
-        auth(UserSettingsView.as_view()), name='user_settings'),
+
+    # Settings
+    url(r'^settings/profile/$',
+        auth(SettingsProfile.as_view()), name='settings_profile'),
+    url(r'^settings/username/$',
+        auth(SettingsChangeUsername.as_view()), name='settings_username'),
+    url(r'^settings/email/$',
+        auth(SettingsChangeEmail.as_view()), name='settings_email'),
+    url(r'^settings/(?P<username>[\w.+-]+)/delete/$',
+        auth(SettingsDeleteAccount.as_view()), name='settings_delete'),
+    url(r'^settings/password/$',
+        auth(password_change), name='settings_password_change'),
+    url(r'^settings/general/$',
+        auth(SettingsGeneral.as_view()), name='settings_general'),
 
     # Invites
     url(r'^invite/$',
@@ -115,6 +132,9 @@ urlpatterns = patterns(
     # url('^inbox/notifications/', include(notification.urls)),
 
     # AVATAR ###########################################################################################################
+    url(r'^settings/avatar/$', avatar_change, name='settings_avatar'),
+    url(r'^settings/avatar/add/$', avatar_add, name='settings_avatar_add'),
+    url(r'^settings/avatar/delete/$', avatar_delete, name='settings_avatar_delete'),
     url(r'^avatar/', include('musetic.apps.avatar.urls')),
 
     # DISCUSSION #######################################################################################################

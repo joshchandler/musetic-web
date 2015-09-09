@@ -190,12 +190,11 @@ CELERY_SEND_TASK_SENT_EVENT = True
 
 # make `.delay()` behave like `.run()` when this is True.
 CELERY_ALWAYS_EAGER = bool(get_env_variable('CELERY_ALWAYS_EAGER', True))
-CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 
 CELERYBEAT_SCHEDULE = {
     'rank-all-submissions': {
         'task': 'musetic.apps.submission.tasks.RankAllSubmissionsTask',
-        'schedule': timedelta(minutes=1),
+        'schedule': timedelta(seconds=900),
     },
 }
 

@@ -195,7 +195,7 @@ CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 CELERYBEAT_SCHEDULE = {
     'rank-all-submissions': {
         'task': 'musetic.apps.submission.tasks.RankAllSubmissionsTask',
-        'schedule': timedelta(minutes=1),
+        'schedule': timedelta(minutes=5),
     },
 }
 

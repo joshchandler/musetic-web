@@ -1,2 +1,2 @@
 web: newrelic-admin run-program gunicorn musetic.wsgi --log-file -
-worker: celery worker --musetic:musetic.submission.tasks
+worker: celery worker -A musetic -l info

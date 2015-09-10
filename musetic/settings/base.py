@@ -1,13 +1,3 @@
-"""
-Django settings for musetic project.
-
-For more information on this file, see
-https://docs.djangoproject.com/en/1.7/topics/settings/
-
-For the full list of settings and their values, see
-https://docs.djangoproject.com/en/1.7/ref/settings/
-"""
-
 from .logging import *
 from musetic.settings.utils import get_env_variable
 from datetime import timedelta
@@ -15,9 +5,9 @@ import os
 
 BASE_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 PROJECT_ROOT = os.path.abspath(os.path.dirname(BASE_DIR))
+PUBLIC_DIR = os.path.join(PROJECT_ROOT, 'public')
 
 # INSTALLED APPS
-
 DJANGO_APPS = (
     'suit',
     'django.contrib.admin',
@@ -32,8 +22,8 @@ DJANGO_APPS = (
     'django_extensions',
 )
 
+# Third-party apps
 UNIVERSAL_APPS = (
-    # Third-party apps
     'celery',
     'rest_framework',
     'rest_framework.authtoken',
@@ -42,7 +32,7 @@ UNIVERSAL_APPS = (
     'crispy_forms',
     'crispy_forms_foundation',
     'appconf',
-    'markdown_deux',
+    'markdown_deux'
 )
 
 PROJECT_APPS = (
@@ -50,8 +40,7 @@ PROJECT_APPS = (
     'musetic.apps.avatar',
     'musetic.apps.discussion',
     'musetic.apps.submission',
-    'musetic.apps.user',
-
+    'musetic.apps.user'
 )
 
 INSTALLED_APPS = DJANGO_APPS + UNIVERSAL_APPS + PROJECT_APPS
@@ -108,7 +97,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, 'templates'),
+    os.path.join(PROJECT_ROOT, 'templates'),
 )
 
 
@@ -117,11 +106,11 @@ TEMPLATE_DIRS = (
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
-MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
+STATIC_ROOT = os.path.join(PUBLIC_DIR, 'static')
+MEDIA_ROOT = os.path.join(PUBLIC_DIR, 'media')
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(PROJECT_ROOT, 'static'),
 )
 
 

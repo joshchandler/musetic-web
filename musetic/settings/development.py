@@ -51,7 +51,7 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 
 # STATIC AND MEDIA
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(PUBLIC_PATH, 'static')
+STATIC_ROOT = os.path.join(PUBLIC_DIR, 'static')
 
 STATICFILES_DIRS = (
     os.path.join(PROJECT_ROOT, 'static'),

@@ -5,11 +5,7 @@ import os
 
 BASE_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 PROJECT_ROOT = os.path.abspath(os.path.dirname(BASE_DIR))
-<<<<<<< HEAD
-PUBLIC_PATH = os.path.join(PROJECT_ROOT, 'public')
-=======
 PUBLIC_DIR = os.path.join(PROJECT_ROOT, 'public')
->>>>>>> eafceee8915fba796626e663e49db4fbf60b9e00
 
 # INSTALLED APPS
 DJANGO_APPS = (

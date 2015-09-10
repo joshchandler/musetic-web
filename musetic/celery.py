@@ -15,12 +15,10 @@ musetic_celery.config_from_object('django.conf:settings')
 musetic_celery.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 musetic_celery.conf.update(
     BROKER_TRANSPORT='amqp',
-    BROKER_URL=get_env_variable('CLOUDAMQP_URL', 'amqp://'),
     BROKER_TRANSPORT_OPTIONS={
         'fanout_prefix': True
     },
     CELERY_DEFAULT_QUEUE='musetic',
-    CELERY_RESULT_BACKEND=get_env_variable('REDIS_URL', 'redis://localhost:6379/0'),
     CELERY_SEND_EVENTS=True,
     CELERY_SEND_TASK_SENT_EVENT=True,
     CELERY_ALWAYS_EAGER=bool(get_env_variable('CELERY_ALWAYS_EAGER', True)),

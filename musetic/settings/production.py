@@ -50,6 +50,10 @@ DATABASES['default'] = dj_database_url.config()
 # Enable Connection Pooling
 DATABASES['default']['ENGINE'] = 'django_postgrespool'
 
+# CELERY
+BROKER_URL=get_env_variable('CLOUDAMQP_URL')
+CELERY_RESULT_BACKEND=get_env_variable('REDIS_URL')
+
 
 # STATIC AND MEDIA
 

@@ -32,9 +32,8 @@ DJANGO_APPS = (
     'django_extensions',
 )
 
-UNIVERSE_APPS = (
+UNIVERSAL_APPS = (
     # Third-party apps
-    'djcelery',
     'celery',
     'rest_framework',
     'rest_framework.authtoken',
@@ -55,7 +54,7 @@ PROJECT_APPS = (
 
 )
 
-INSTALLED_APPS = DJANGO_APPS + UNIVERSE_APPS + PROJECT_APPS
+INSTALLED_APPS = DJANGO_APPS + UNIVERSAL_APPS + PROJECT_APPS
 
 
 MIDDLEWARE_CLASSES = (
@@ -170,34 +169,3 @@ SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '911284089968-86bdqh47c9lqoke5daut8oit65r7odru.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'TS2L7U1BwCjfAYnWnWZECfM_'
-
-
-# CELERY
-
-# Broker
-BROKER_TRANSPORT = 'redis'
-BROKER_URL = get_env_variable('BROKER_URL', 'redis://localhost:6379/0')
-BROKER_TRANSPORT_OPTIONS = {
-    'fanout_prefix': True
-}
-# Queues
-CELERY_DEFAULT_QUEUE = 'musetic-dev'
-# Results
-CELERY_RESULT_BACKEND = BROKER_URL
-# Events
-CELERY_SEND_EVENTS = True
-CELERY_SEND_TASK_SENT_EVENT = True
-
-# make `.delay()` behave like `.run()` when this is True.
-CELERY_ALWAYS_EAGER = bool(get_env_variable('CELERY_ALWAYS_EAGER', True))
-
-CELERYBEAT_SCHEDULE = {
-    'rank-all-submissions': {
-        'task': 'musetic.apps.submission.tasks.RankAllSubmissionsTask',
-        'schedule': timedelta(minutes=5),
-    },
-}
-
-CELERY_TIMEZONE = 'UTC'
-
-DEFAULT_FROM_EMAIL = 'noreply@musetic.com'

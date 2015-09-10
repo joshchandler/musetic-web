@@ -14,6 +14,6 @@ class Command(BaseCommand):
 
     def show_all(self):
         print("\n".join(
-            ["{0}: {1}".format(s.title, s.calculate_score()) for s in Submission.objects.all()]
+            ["{0}".format(s.calculate_score()) for s in Submission.objects.all()]
         ))
         print("---"*15 + "\n\n")

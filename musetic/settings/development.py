@@ -11,6 +11,8 @@ TEMPLATE_DEBUG = DEBUG
 SITE_ID = 1
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'no-reply@musetic.com'
+
 
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (

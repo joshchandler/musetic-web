@@ -1,33 +1,34 @@
 from .base import *
 from musetic.settings.utils import get_env_variable
 import dj_database_url
-import redis
 
 SECRET_KEY = get_env_variable('SECRET_KEY')
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
+# SITE SETTINGS
 SITE_ID = 1
-
 ALLOWED_HOSTS = ['*']
+PREPEND_WWW = True
 
-# Production Apps
+# PRODUCTION APPS
 INSTALLED_APPS += (
     'storages',
     's3_folder_storage',
 )
 
-# Email
+# EMAIL
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_HOST_USER = get_env_variable('SENDGRID_USERNAME')
 EMAIL_HOST_PASSWORD = get_env_variable('SENDGRID_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
 DEFAULT_FROM_EMAIL = 'no-reply@musetic.com'
 
-# Caches
+# CACHES
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
@@ -35,28 +36,22 @@ CACHES = {
     }
 }
 
-# Rest Framework
+# REST FRAMEWORK
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
     ),
 }
 
-# Databases
+# DATABASES
 DATABASES = {}
 DATABASES['default'] = dj_database_url.config()
 
 # Enable Connection Pooling
 DATABASES['default']['ENGINE'] = 'django_postgrespool'
 
-# Queues
-BROKER_TRANSPORT = 'redis'
-BROKER_URL = get_env_variable('REDIS_URL')
 
-CELERY_DEFAULT_QUEUE = 'musetic-prod'
-CELERY_ALWAYS_EAGER = False
-
-# Static and Media
+# STATIC AND MEDIA
 
 DEFAULT_FILE_STORAGE = 's3_folder_storage.s3.DefaultStorage'
 DEFAULT_S3_PATH = 'media'

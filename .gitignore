@@ -6,8 +6,10 @@
 celerybeat-schedule
 
 media/
-static/
-!musetic/static/
+public/*
+
+# Environment Variables
+envvars
 
 # Compiled python files
 *.pyc

@@ -49,6 +49,22 @@ DATABASES = {
 BROKER_URL = 'amqp://'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.6/howto/static-files/
+# STATIC AND MEDIA
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(PUBLIC_PATH, 'static')
+
+STATICFILES_DIRS = (
+    os.path.join(PROJECT_ROOT, 'static'),
+)
+
+DEFAULT_FILE_STORAGE = 's3_folder_storage.s3.DefaultStorage'
+DEFAULT_S3_PATH = 'media'
+AWS_ACCESS_KEY_ID = get_env_variable('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY  = get_env_variable('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = get_env_variable('AWS_STORAGE_BUCKET_NAME')
+
+MEDIA_URL = '//s3.amazonaws.com/%s/media/' % AWS_STORAGE_BUCKET_NAME
+MEDIA_ROOT = '/%s/' % DEFAULT_S3_PATH
+ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
+
+

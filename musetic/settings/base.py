@@ -15,6 +15,7 @@ import os
 
 BASE_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 PROJECT_ROOT = os.path.abspath(os.path.dirname(BASE_DIR))
+PUBLIC_PATH = os.path.join(PROJECT_ROOT, 'public')
 
 # INSTALLED APPS
 
@@ -108,22 +109,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, 'templates'),
+    os.path.join(PROJECT_ROOT, 'templates'),
 )
-
-
-# STATIC/MEDIA
-
-STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
-
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
-MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
-
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
-
 
 # AUTHENTICATION
 
@@ -137,7 +124,6 @@ REGISTRATION_AUTO_LOGIN = True
 # SOCIAL AUTH
 
 SOCIAL_AUTH_PIPELINE = (
-
     'social.pipeline.social_auth.social_details',
     'social.pipeline.social_auth.social_uid',
     'social.pipeline.social_auth.auth_allowed',

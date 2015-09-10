@@ -59,3 +59,6 @@ fabfile/
 
 # Bower
 bower_components/
+
+# Cloud9
+.c9

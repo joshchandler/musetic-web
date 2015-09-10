@@ -1,9 +1,11 @@
 from .base import *
-from musetic.settings.utils import get_env_variable
 import dj_database_url
 
+
+# SECRET KEY
 SECRET_KEY = get_env_variable('SECRET_KEY')
 
+# DEBUG MODE
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
@@ -28,7 +30,7 @@ EMAIL_USE_TLS = True
 
 DEFAULT_FROM_EMAIL = 'no-reply@musetic.com'
 
-# CACHES
+# CACHING
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
@@ -43,20 +45,16 @@ REST_FRAMEWORK = {
     ),
 }
 
-# DATABASES
+# DATABASE
 DATABASES = {}
 DATABASES['default'] = dj_database_url.config()
-
-# Enable Connection Pooling
 DATABASES['default']['ENGINE'] = 'django_postgrespool'
 
 # CELERY
 BROKER_URL=get_env_variable('CLOUDAMQP_URL')
 CELERY_RESULT_BACKEND=get_env_variable('REDIS_URL')
 
-
 # STATIC AND MEDIA
-
 DEFAULT_FILE_STORAGE = 's3_folder_storage.s3.DefaultStorage'
 DEFAULT_S3_PATH = 'media'
 STATICFILES_STORAGE = 's3_folder_storage.s3.StaticStorage'

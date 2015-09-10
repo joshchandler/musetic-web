@@ -3,12 +3,14 @@ from musetic.settings.utils import get_env_variable
 from datetime import timedelta
 import os
 
+# CONSTANTS
 BASE_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 PROJECT_ROOT = os.path.abspath(os.path.dirname(BASE_DIR))
 PUBLIC_DIR = os.path.join(PROJECT_ROOT, 'public')
 
 # INSTALLED APPS
-DJANGO_APPS = (
+INSTALLED_APPS = (
+    # Django apps
     'suit',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -20,10 +22,8 @@ DJANGO_APPS = (
     'django.contrib.flatpages',
     'django.contrib.humanize',
     'django_extensions',
-)
-
-# Third-party apps
-UNIVERSAL_APPS = (
+    
+    # Third-party apps
     'celery',
     'rest_framework',
     'rest_framework.authtoken',
@@ -32,20 +32,16 @@ UNIVERSAL_APPS = (
     'crispy_forms',
     'crispy_forms_foundation',
     'appconf',
-    'markdown_deux'
-)
-
-PROJECT_APPS = (
+    'markdown_deux',
+    
     # Musetic apps
     'musetic.apps.avatar',
     'musetic.apps.discussion',
     'musetic.apps.submission',
-    'musetic.apps.user'
+    'musetic.apps.user',
 )
 
-INSTALLED_APPS = DJANGO_APPS + UNIVERSAL_APPS + PROJECT_APPS
-
-
+# MIDDLEWARE
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -62,12 +58,10 @@ WSGI_APPLICATION = 'musetic.wsgi.application'
 
 CRISPY_TEMPLATE_PACK = 'foundation-5'
 
-# Testing
+# TESTING
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 # INTERNATIONALIZATION
-# https://docs.djangoproject.com/en/1.7/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'America/New_York'
@@ -77,12 +71,10 @@ USE_TZ = True
 
 
 # COMMENTS
-
 COMMENTS_APP = 'musetic.apps.discussion'
 
 
 # TEMPLATES
-
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.contrib.messages.context_processors.messages',
@@ -101,7 +93,6 @@ TEMPLATE_DIRS = (
 )
 
 # AUTHENTICATION
-
 LOGIN_URL = '/login/'
 LOGOUT_URL = '/logout/'
 LOGIN_REDIRECT_URL = '/'

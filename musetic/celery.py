@@ -7,6 +7,7 @@ from musetic.settings.utils import get_env_variable
 
 
 musetic_celery = Celery('musetic')
+    
 
 # Using a string here means the worker will not have to
 # pickle the object when using Windows.
@@ -30,11 +31,6 @@ musetic_celery.conf.update(
         'rank-all-submissions': {
             'task': 'musetic.apps.submission.tasks.RankAllSubmissionsTask',
             'schedule': timedelta(minutes=1),
-        },
-        'add-every-30-seconds': {
-            'task': 'musetic.celery.add',
-            'schedule': timedelta(seconds=30),
-            'args': (16, 16)
         }
     }
 )

@@ -55,8 +55,7 @@ class UserRegistrationViewTests(TestCase):
                                            kwargs={'username': 'bob'}))
         self.assertEqual(404, response.status_code)
 
-        response = self.client.get(reverse('edit_profile',
-                                           kwargs={'username': 'bob'}))
+        response = self.client.get(reverse('settings_profile'))
         self.assertEqual(302, response.status_code)
 
 
@@ -106,24 +105,13 @@ class UserViewTests(MuseticTestCase):
         response = self.client.get('/muser/foo/')
         self.assertTrue(b'foo' in response.content)
 
-    def test_anonymous_users_cannot_edit_profiles(self):
-
-        self.client.logout()
-        # Make sure no user is signed in
-        response = self.client.get('/')
-        self.assertTrue(b'Login' in response.content)
-
-        # Try to edit user's profile, but redirect to the login page
-        response = self.client.get('/muser/foo/edit/')
-        self.assertEquals(response.status_code, 302)
-
     def test_superuser_can_view_profile_without_activation(self):
         response = self.client.get(reverse('user_profile',
                                            kwargs={'username': self.username}))
         self.assertTrue(b'foo' in response.content)
 
     def test_user_can_edit_profile(self):
-        self.client.post(reverse('edit_profile', kwargs={'username': self.username}),
+        self.client.post(reverse('settings_profile'),
                          {'description': 'This is my description',
                           'first_name': 'Admin',
                           'last_name': 'User'})

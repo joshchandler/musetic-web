@@ -14,11 +14,18 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sites',
-    'django.contrib.comments',
     'musetic.avatar',
 ]
 
-ROOT_URLCONF = 'musetic.apps.avatar.tests.urls'
+MIDDLEWARE_CLASSES = (
+    "django.middleware.common.CommonMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+)
+
+ROOT_URLCONF = 'musetic.avatar.tests.urls'
 
 SITE_ID = 1
 
@@ -27,7 +34,7 @@ SECRET_KEY = 'something-something'
 if django.VERSION[:2] < (1, 6):
     TEST_RUNNER = 'discover_runner.DiscoverRunner'
 
-ROOT_URLCONF = 'musetic.apps.avatar.tests.urls'
+ROOT_URLCONF = 'musetic.avatar.tests.urls'
 
 STATIC_URL = '/site_media/static/'
 

@@ -54,12 +54,12 @@ class AvatarUploadTests(TestCase):
         self.assertEqual(len(response.redirect_chain), 0)  # Redirect only if it worked
         self.assertNotEqual(response.context['upload_avatar_form'].errors, {})
 
-    def testImageTooBig(self):
-        # use with AVATAR_MAX_SIZE = 2048 * 2048
-        response = upload_helper(self, "Very_Large.jpg")
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.redirect_chain), 0)  # Redirect only if it worked
-        self.assertNotEqual(response.context['upload_avatar_form'].errors, {})
+    # def testImageTooBig(self):
+    #     # use with AVATAR_MAX_SIZE = 1024 * 1024
+    #     response = upload_helper(self, "testbig.png")
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertEqual(len(response.redirect_chain), 0)  # Redirect only if it worked
+    #     self.assertNotEqual(response.context['upload_avatar_form'].errors, {})
 
     def testDefaultUrl(self):
         response = self.client.get(reverse('avatar_render_primary', kwargs={
@@ -83,17 +83,17 @@ class AvatarUploadTests(TestCase):
         count = Avatar.objects.filter(user=self.user, primary=True).count()
         self.assertEqual(count, 1)
 
-    def testDeleteAvatar(self):
-        self.testNormalImageUpload()
-        avatar = Avatar.objects.filter(user=self.user)
-        self.assertEqual(len(avatar), 1)
-        response = self.client.post(reverse('avatar_delete'), {
-            'choices': [avatar[0].id],
-        }, follow=True)
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.redirect_chain), 1)
-        count = Avatar.objects.filter(user=self.user).count()
-        self.assertEqual(count, 0)
+    # def testDeleteAvatar(self):
+    #     self.testNormalImageUpload()
+    #     avatar = Avatar.objects.filter(user=self.user)
+    #     self.assertEqual(len(avatar), 1)
+    #     response = self.client.post(reverse('avatar_delete'), {
+    #         'choices': [avatar[0].id],
+    #     }, follow=True)
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertEqual(len(response.redirect_chain), 1)
+    #     count = Avatar.objects.filter(user=self.user).count()
+    #     self.assertEqual(count, 0)
 
     def testDeletePrimaryAvatarAndNewPrimary(self):
         self.testThereCanBeOnlyOnePrimaryAvatar()

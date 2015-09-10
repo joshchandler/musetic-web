@@ -1,4 +1,5 @@
--r base.txt
+# Main libraries
+-r ./base.txt
 
 # Code analysis
 flake8==2.2.3

@@ -1,4 +1,5 @@
 from .base import *
+import dj_database_url
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
@@ -32,18 +33,9 @@ INSTALLED_APPS += (
     'debug_toolbar',
 )
 
-# Database
-# https://docs.djangoproject.com/en/1.6/ref/settings/#databases
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': get_env_variable('DB_NAME'),
-        'USER': get_env_variable('DB_USER'),
-        'PASSWORD': get_env_variable('DB_PASS'),
-        'HOST': get_env_variable('DB_HOST'),
-        'PORT': '5432',
-    }
-}
+# DATABASE
+DATABASES = {}
+DATABASES['default'] = dj_database_url.config()
 
 # CELERY
 BROKER_URL = 'amqp://'

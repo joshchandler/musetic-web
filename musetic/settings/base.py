@@ -35,10 +35,10 @@ INSTALLED_APPS = (
     'markdown_deux',
     
     # Musetic apps
-    'musetic.apps.avatar',
-    'musetic.apps.discussion',
-    'musetic.apps.submission',
-    'musetic.apps.user',
+    'musetic.avatar',
+    'musetic.discussion',
+    'musetic.submission',
+    'musetic.user',
 )
 
 # MIDDLEWARE
@@ -71,7 +71,7 @@ USE_TZ = True
 
 
 # COMMENTS
-COMMENTS_APP = 'musetic.apps.discussion'
+COMMENTS_APP = 'musetic.discussion'
 
 
 # TEMPLATES
@@ -100,8 +100,7 @@ ACCOUNT_ACTIVATION_DAYS = 7
 REGISTRATION_AUTO_LOGIN = True
 
 
-# SOCIAL AUTH
-
+# SOCIAL AUTHENTICATION
 SOCIAL_AUTH_PIPELINE = (
     'social.pipeline.social_auth.social_details',
     'social.pipeline.social_auth.social_uid',

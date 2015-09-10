@@ -5,39 +5,39 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required as auth
 from django.contrib.flatpages.views import flatpage
 
-from musetic.apps.avatar.views import add as avatar_add, change as avatar_change, delete as avatar_delete
+from musetic.avatar.views import add as avatar_add, change as avatar_change, delete as avatar_delete
 
-from musetic.apps.discussion.views import (
+from musetic.discussion.views import (
     DiscussionFormView, DiscussionDelete, DiscussionVoteFormView, DiscussionFlagFormView,
     DiscussionEdit
 )
 
-# from musetic.apps import notification
-from musetic.apps.user.views import anonymous_required
-from musetic.apps.user.views.auth import (
+# from musetic import notification
+from musetic.user.views import anonymous_required
+from musetic.user.views.auth import (
     RegistrationViewUniqueEmail,
     login as auth_login,
     ActivationRedirect,
     password_change,
 )
-from musetic.apps.user.views.creator import (
+from musetic.user.views.creator import (
     CreatorRequestView,
     CreatorRequestSentView,
     CreatorAcceptView,
     CreatorActivatedView
 )
-from musetic.apps.user.views.feedback import (
+from musetic.user.views.feedback import (
     FeedbackView
 )
-from musetic.apps.user.views.invite import (
+from musetic.user.views.invite import (
     InviteFormView,
     AcceptInvitationView
 )
-from musetic.apps.user.views.profile import (
+from musetic.user.views.profile import (
     ProfileNewDetailView,
     ProfileTopDetailView,
 )
-from musetic.apps.user.views.settings import (
+from musetic.user.views.settings import (
     SettingsProfile,
     SettingsChangeUsername,
     SettingsChangeEmail,
@@ -45,13 +45,13 @@ from musetic.apps.user.views.settings import (
     SettingsGeneral,
 )
 
-from musetic.apps.submission.views import (
+from musetic.submission.views import (
     SubmissionCreate, SubmissionHotList, SubmissionNewList, SubmissionTopList,
     SubmissionCategoryHotList, SubmissionCategoryNewList, SubmissionCategoryTopList, SubmissionDetail, SubmissionEdit,
     SubmissionDelete, SubmissionEditThumbnail, VoteFormView, FlagFormView
 )
 
-from musetic.apps.submission.api import api_root, SubmissionAPIList, SubmissionAPIDetail, VoteAPIList
+from musetic.submission.api import api_root, SubmissionAPIList, SubmissionAPIDetail, VoteAPIList
 
 from rest_framework.urlpatterns import format_suffix_patterns
 
@@ -135,7 +135,7 @@ urlpatterns = patterns(
     url(r'^settings/avatar/$', avatar_change, name='settings_avatar'),
     url(r'^settings/avatar/add/$', avatar_add, name='settings_avatar_add'),
     url(r'^settings/avatar/delete/$', avatar_delete, name='settings_avatar_delete'),
-    url(r'^avatar/', include('musetic.apps.avatar.urls')),
+    url(r'^avatar/', include('musetic.avatar.urls')),
 
     # DISCUSSION #######################################################################################################
     url(r'^(?P<slug>[\w-]+)/(?P<uuid>[^/]+)/discussion/$', DiscussionFormView.as_view(), name='discussion_form'),

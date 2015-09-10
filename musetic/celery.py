@@ -7,7 +7,7 @@ from musetic.settings.utils import get_env_variable
 
 
 musetic_celery = Celery('musetic')
-    
+
 
 # Using a string here means the worker will not have to
 # pickle the object when using Windows.

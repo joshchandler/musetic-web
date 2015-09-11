@@ -17,6 +17,7 @@ django-dynamic-fixture==1.8.5
 django-extensions==1.4.0
 django-manager-utils==0.6.2
 django-markdown-deux==1.0.5
+django-redis-cache==1.6.0
 django-registration-redux==1.2
 django-s3-folder-storage==0.2
 django-suit==0.2.14

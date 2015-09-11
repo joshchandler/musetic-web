@@ -27,7 +27,7 @@ musetic_celery.conf.update(
     CELERYBEAT_SCHEDULER='celery.beat:PersistentScheduler',
     CELERYBEAT_SCHEDULE={
         'rank-all-submissions': {
-            'task': 'musetic.apps.submission.tasks.RankAllSubmissionsTask',
+            'task': 'musetic.submission.tasks.RankAllSubmissionsTask',
             'schedule': timedelta(minutes=1),
         }
     }

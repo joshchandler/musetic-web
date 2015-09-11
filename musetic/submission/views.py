@@ -55,7 +55,9 @@ class SubmissionBaseList(ListView):
 
 
 class SubmissionHotList(SubmissionBaseList):
-    queryset = Submission.by_votes.select_related().order_by('-score', '-votes', '-date_submitted')
+    queryset = Submission.objects.all().annotate(
+        votes=models.Count('submission_votes')
+    ).select_related().order_by('-score', '-votes', '-date_submitted')
 
 
 class SubmissionNewList(SubmissionBaseList):
@@ -63,7 +65,9 @@ class SubmissionNewList(SubmissionBaseList):
 
 
 class SubmissionTopList(SubmissionBaseList):
-    queryset = Submission.by_votes.select_related().order_by('-votes', '-date_submitted')
+    queryset = Submission.objects.all().annotate(
+        votes=models.Count('submission_votes')
+    ).select_related().order_by('-votes', '-date_submitted')
 
 
 class SubmissionCategoryBaseList(SubmissionBaseList):

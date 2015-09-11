@@ -17,6 +17,7 @@ from django.utils.encoding import force_bytes
 
 from .conf import settings
 from .reference import MediaTypes
+from .managers import VoteCountManager
 
 from uuidfield import UUIDField
 
@@ -59,13 +60,6 @@ def find_extension(format):
         format = 'jpg'
 
     return format
-
-
-class VoteCountManager(models.Manager):
-    def get_query_set(self):
-        return super(VoteCountManager, self).get_query_set().annotate(
-            votes=models.Count('submission_votes')
-        )
 
 
 class Submission(models.Model):

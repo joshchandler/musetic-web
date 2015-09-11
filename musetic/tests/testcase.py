@@ -1,6 +1,7 @@
 from django.test import TestCase
 
-from musetic.user.models import User, Creator
+from django.auth.models import User
+from musetic.user.models import Creator
 from musetic.submission.models import Submission, Vote
 
 from django_dynamic_fixture import G

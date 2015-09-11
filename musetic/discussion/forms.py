@@ -44,6 +44,7 @@ class DiscussionEditForm(ModelForm):
 class DiscussionVoteForm(ModelForm):
     class Meta:
         model = DiscussionVote
+        exclude = ()
 
 
 class DiscussionFlagForm(ModelForm):

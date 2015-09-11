@@ -13,27 +13,6 @@ from crispy_forms.layout import Layout, ButtonHolder, Submit
 
 
 class SubmissionForm(ModelForm):
-    # def __init__(self, *args, **kwargs):
-    #     super(SubmissionForm, self).__init__(*args, **kwargs)
-    #     self.helper = FormHelper()
-    #     self.helper.form_method = 'post'
-    #     self.helper.form_action = '.'
-    #     self.helper.layout = Layout(
-    #         Field('submission_type', id='selection'),
-    #         'title',
-    #         'description',
-    #         'thumbnail',
-    #         'url',
-    #         ButtonHolder(
-    #             Submit('submit', 'Submit', css_class='button')
-    #         ),
-    #         Field('next', type='hidden'),
-    #     )
-    #
-    # submission_type = forms.ChoiceField(label='Project Type',
-    #                                     choices=[(media.value, media.name) for media in MediaTypes])
-    # title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Title'}))
-
     class Meta:
         model = Submission
         fields = ['submission_type', 'title', 'description', 'thumbnail', 'url', ]
@@ -101,6 +80,7 @@ class SubmissionEditThumbnailForm(ModelForm):
 class VoteForm(ModelForm):
     class Meta:
         model = Vote
+        exclude = ()
 
 
 class FlagForm(ModelForm):

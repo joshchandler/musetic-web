@@ -48,6 +48,10 @@ DATABASES = {
         'PASSWORD': get_env_variable('DB_PASS'),
         'HOST': get_env_variable('DB_HOST'),
         'PORT': '5432',
+    },
+    'test': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'musetic_test_sqlite3',
     }
 }
 

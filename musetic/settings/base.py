@@ -24,6 +24,7 @@ INSTALLED_APPS = (
     'django_extensions',
     
     # Third-party apps
+    'debug_toolbar',
     'celery',
     'rest_framework',
     'rest_framework.authtoken',
@@ -43,6 +44,7 @@ INSTALLED_APPS = (
 
 # MIDDLEWARE
 MIDDLEWARE_CLASSES = (
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',

@@ -16,7 +16,6 @@ SITE_ID = 1
 INSTALLED_APPS += (
     'storages',
     's3_folder_storage',
-    'debug_toolbar',
 )
 
 # EMAIL
@@ -48,10 +47,10 @@ DATABASES = {
         'PASSWORD': get_env_variable('DB_PASS'),
         'HOST': get_env_variable('DB_HOST'),
         'PORT': '5432',
-    },
-    'test': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'musetic_test_sqlite3',
+        'TEST': {
+            'NAME': 'musetic_test',
+            'USER': 'musetic_test',
+        }
     }
 }
 

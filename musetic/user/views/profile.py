@@ -2,6 +2,7 @@ from django.views.generic import DetailView
 from django.http import Http404
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.db import models
 
 from musetic.user.models import Profile
 
@@ -44,7 +45,9 @@ class ProfileNewDetailView(ProfileBaseDetailView):
     def get_context_data(self, **kwargs):
         context = super(ProfileNewDetailView, self).get_context_data(**kwargs)
         context["submissions"] = self.paginate_submissions(
-            Submission.by_votes.select_related().filter(
+            Submission.objects.all().annotate(
+                votes=models.Count('submission_votes')
+            ).select_related().filter(
                 user__username=self.kwargs['username']
             ).order_by('-date_submitted'), paginate_by=12)
 
@@ -64,7 +67,9 @@ class ProfileTopDetailView(ProfileBaseDetailView):
     def get_context_data(self, **kwargs):
         context = super(ProfileTopDetailView, self).get_context_data(**kwargs)
         context["submissions"] = self.paginate_submissions(
-            Submission.by_votes.select_related().filter(
+            Submission.objects.all().annotate(
+                votes=models.Count('submission_votes')
+            ).select_related().filter(
                 user__username=self.kwargs['username']
             ).order_by('-votes', '-date_submitted'), paginate_by=12)
 

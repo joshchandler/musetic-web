@@ -61,7 +61,9 @@ class SubmissionHotList(SubmissionBaseList):
 
 
 class SubmissionNewList(SubmissionBaseList):
-    queryset = Submission.by_votes.select_related().order_by('-date_submitted')
+    queryset = Submission.objects.all().annotate(
+        votes=models.Count('submission_votes')
+    ).select_related().order_by('-date_submitted')
 
 
 class SubmissionTopList(SubmissionBaseList):
@@ -87,7 +89,9 @@ class SubmissionCategoryHotList(SubmissionCategoryBaseList):
 
     def get_queryset(self):
         if self.kwargs['slug'] in self.MEDIA_TYPES:
-            return super(SubmissionCategoryHotList, self).get_queryset().select_related().filter(
+            return super(SubmissionCategoryHotList, self).get_queryset().annotate(
+                votes=models.Count('submission_votes')
+            ).select_related().filter(
                 submission_type=self.kwargs['slug']
             ).order_by(
                 '-score', '-votes', '-date_submitted'
@@ -99,7 +103,9 @@ class SubmissionCategoryNewList(SubmissionCategoryBaseList):
 
     def get_queryset(self):
         if self.kwargs['slug'] in self.MEDIA_TYPES:
-            return super(SubmissionCategoryNewList, self).get_queryset().select_related().filter(
+            return super(SubmissionCategoryNewList, self).get_queryset().annotate(
+                votes=models.Count('submission_votes')
+            ).select_related().filter(
                 submission_type=self.kwargs['slug']
             ).order_by('-date_submitted')
         raise Http404

@@ -13,38 +13,27 @@ from musetic.discussion.views import (
 )
 
 # from musetic import notification
-from musetic.user.views import anonymous_required
-from musetic.user.views.auth import (
+from musetic.user.utils import anonymous_required
+from musetic.user.views import (
     RegistrationViewUniqueEmail,
     login as auth_login,
     ActivationRedirect,
     password_change,
-)
-from musetic.user.views.creator import (
     CreatorRequestView,
     CreatorRequestSentView,
     CreatorAcceptView,
-    CreatorActivatedView
-)
-from musetic.user.views.feedback import (
-    FeedbackView
-)
-from musetic.user.views.invite import (
+    CreatorActivatedView,
+    FeedbackView,
     InviteFormView,
-    AcceptInvitationView
-)
-from musetic.user.views.profile import (
+    AcceptInvitationView,
     ProfileNewDetailView,
     ProfileTopDetailView,
-)
-from musetic.user.views.settings import (
     SettingsProfile,
     SettingsChangeUsername,
     SettingsChangeEmail,
     SettingsDeleteAccount,
     SettingsGeneral,
 )
-
 from musetic.submission.views import (
     SubmissionCreate, SubmissionHotList, SubmissionNewList, SubmissionTopList,
     SubmissionCategoryHotList, SubmissionCategoryNewList, SubmissionCategoryTopList, SubmissionDetail, SubmissionEdit,

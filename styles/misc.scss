@@ -1,0 +1,91 @@
+/** Creator Requests
+ ***************************************************************/
+.creator-request h4 {
+    text-align: center;
+    font-weight: 700;
+}
+.creator-request label {
+    font-weight: 600;
+    padding-left: 15px;
+}
+.creator-request input {
+    background: #ffffff;
+    border: none;
+    box-shadow: none;
+    color: #222222;
+    padding: 0 15px;
+    height: 45px;
+    font-size: 16px;
+    font-weight: 500;
+    width: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+.creator-request input:hover,
+.creator-request input:focus {
+    border: none;
+    box-shadow: none;
+    background: #ffffff;
+}
+
+.creator-request input[type='submit'] {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 16px;
+    width: 200px;
+    float: left;
+    margin-left: 15px;
+    position: relative;
+    background: #2bad67;
+    border-radius: 4px;
+}
+
+.creator-request input[type='submit']:hover,
+.creator-request input[type='submit']:focus {
+    background: #098b45;
+}
+
+
+/** Extras
+ ***************************************************************/
+.admin-button {
+    position: fixed;
+    background: #58a8c2;
+    text-align: center;
+    bottom: 40px;
+    right: 10px;
+    margin: 0 0 0 -20px;
+    cursor: pointer;
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 50%;
+    font-weight: 700;
+    z-index: 1100;
+    -webkit-transition: color .3s, background .3s, border .3s;
+    -moz-transition: color .3s, background .3s, border .3s;
+    transition: color .3s, background .3s, border .3s;
+}
+
+.admin-button:hover {
+    color: #fff;
+    background: #3686a0;
+    -webkit-transition: color .3s, background .3s, border .3s;
+    -moz-transition: color .3s, background .3s, border .3s;
+    transition: color .3s, background .3s, border .3s;
+}
+
+.feedback {
+    position: fixed;
+    right: -50px;
+    height: 50px;
+    z-index: 700;
+    top: 200px;
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}

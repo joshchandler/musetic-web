@@ -1,0 +1,34 @@
+/** Pagination
+ ***************************************************************/
+.pagination {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+    height: 50px;
+    margin-bottom: 50px;
+}
+.prev {
+    float: left;
+    margin-top: 10px;
+    width: 100px;
+}
+.next {
+    float: right;
+    margin-top: -40px;
+    width: 100px;
+}
+.current {
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    font-weight: 700;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background: #222222;
+    color: #ffffff;
+    box-shadow: 0 1px 1px #000000;
+    border-radius: 50%;
+}

@@ -57,7 +57,8 @@ tmp/
 # Fabfile
 fabfile/
 
-# Bower
+# JS
 bower_components/
+node_modules/
 
 certs/

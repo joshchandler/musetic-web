@@ -1,0 +1,70 @@
+.wrapper {
+	min-height: 100% !important;
+	margin: 0 auto; /* the bottom margin is the negative value of the footer's height */
+
+}
+.container {
+    display: block;
+    margin: 0 auto;
+    padding-top: 50px;
+}
+.container_full_width {
+    display: block;
+    margin: 0 auto;
+
+}
+.sidebar {
+    position: fixed;
+    left: -250px;
+    background: #ffffff;
+    width: 250px;
+    z-index: 50;
+    height: 100% !important;
+    display: block;
+    padding: 50px 0 0;
+    border-right: 1px solid #dddddd;
+    overflow-y: scroll;
+}
+@media only screen and (min-width: 525px) {
+    .container {
+        width: 500px;
+    }
+}
+
+@media only screen and (min-width: 775px) {
+    .container {
+        width: 1px;
+        margin: auto;
+        overflow: visible;
+    }
+    .alpha {
+        width: 500px;
+        margin-left: -125px;
+    }
+    .sidebar {
+        left: 0;
+        overflow: hidden;
+    }
+}
+
+@media only screen and (min-width: 1025px) {
+    .alpha {
+        width: 750px;
+        margin-left: -250px;
+    }
+}
+
+@media only screen and (min-width: 1275px) {
+    .alpha {
+        width: 1000px;
+        margin-left: -375px;
+    }
+}
+
+@media only screen and (min-width: 1500px) {
+    .alpha {
+        width: 1200px;
+        margin-left: -475px;
+    }
+}
+

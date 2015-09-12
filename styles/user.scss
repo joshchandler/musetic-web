@@ -1,0 +1,215 @@
+.profile-info {
+    width: 250px;
+    position: relative;
+    padding: 5px;
+    border-bottom: 1px solid #dddddd;
+}
+
+.profile-info .profile-score-wrap {
+    color: #ffffff;
+    position: relative;
+    float: right;
+    margin-top: -60px;
+    width: 180px;
+
+}
+
+.profile-info .profile-score-wrap .submission-score {
+    width: 90px;
+    float: left;
+    text-align: center;
+    color: #222222;
+    line-height: 30px;
+    border-right: 1px solid #dddddd;
+    cursor: default;
+    font-weight: 700;
+}
+.profile-info .profile-score-wrap .discussion-score {
+    width: 90px;
+    float: right;
+    text-align: center;
+    color: #222222;
+    line-height: 30px;
+    cursor: default;
+    font-weight: 700;
+}
+.profile-info .profile-score-wrap .submission-score-desc,
+.profile-info .profile-score-wrap .discussion-score-desc {
+    font-size: 10px;
+    text-align: center;
+}
+
+.profile-pic-wrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    box-shadow: 0 1px 1px #bbbbbb;
+}
+
+.profile-info .profile-username {
+    color: #999999;
+    font-size: 12px;
+    padding: 5px 10px;
+}
+.profile-info .profile-name {
+    color: #222222;
+    font-weight: 700;
+    padding: 5px 10px;
+}
+.profile-info .profile-description {
+    color: #222222;
+    padding: 5px 10px;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.profile-info .profile-edit {
+    width: 240px;
+    position: relative;
+    bottom: -40px;
+}
+
+.submissions-time-profile {
+    border-top: 1px solid #ffffff;
+    border-top-left-radius: 4px;
+}
+.submissions-more-profile {
+    border-top-right-radius: 4px;
+}
+
+.submissions-profile {
+    padding-top: 60px;
+}
+
+
+/** Invitations
+ ***************************************************************/
+
+.invite-page .page-header {
+    font-size: 24px;
+    text-align: center;
+    width: 100%;
+    padding: 10px;
+}
+.invite-page .invite-form {
+    max-width: 600px !important;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background: #ffffff;
+    padding: 25px;
+}
+.invite-page .invite-form input[type="email"] {
+    background: #f3f3f3;
+}
+.invite-page .not-accepted,
+.invite-page .accepted {
+    max-width: 600px !important;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.invite-page .not-accepted .title,
+.invite-page .accepted .title {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    color: #333333;
+}
+
+.invite-page .not-accepted .invitee-email {
+    max-width: 590px;
+    background: #ffffff;
+    margin: 5px;
+    padding: 10px;
+}
+.invite-page .accepted .invitee-email {
+    width: 590px;
+    background: #ffffff;
+    margin: 5px;
+    padding: 10px;
+}
+.invite-page .accepted .invitee-email a {
+    float: right;
+    margin: 0;
+}
+
+@media only screen and (min-width: 525px) {
+
+
+}
+
+@media only screen and (min-width: 800px) {
+
+}
+
+@media only screen and (min-width: 1050px) {
+
+
+}
+
+@media only screen and (min-width: 1500px) {
+
+}
+
+
+
+/** Settings
+ ***************************************************************/
+.settings-wrapper {
+    position: relative;
+}
+
+.settings-menu .settings-category,
+.settings-menu .settings-option {
+    width: auto;
+    display: block;
+    padding: 10px;
+    margin: 0 10px;
+}
+.settings-menu .settings-category {
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 700;
+    /*border-bottom: 1px solid #d3d3d3;*/
+}
+.settings-menu .settings-option {
+    color: #58a8c2;
+    font-size: 14px;
+}
+.settings-menu .settings-option:hover,
+.settings-menu .settings-option:focus {
+    background: #eeeeee;
+}
+.settings-menu .settings-option.active {
+    font-weight: 700;
+    color: #3686a0;
+    background: #eeeeee;
+}
+.settings-content {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+}
+@media only screen and (min-width: 525px) {
+
+    .settings-content {
+    }
+}
+
+@media only screen and (min-width: 800px) {
+
+}
+
+@media only screen and (min-width: 1050px) {
+
+}
+
+@media only screen and (min-width: 1500px) {
+
+
+}

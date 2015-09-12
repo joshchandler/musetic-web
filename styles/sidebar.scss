@@ -1,0 +1,88 @@
+.sidebar .categories {
+    width: 250px;
+    border-bottom: 1px solid #dddddd;
+    height: 40px;
+    list-style-type: none;
+    padding: 0 5px;
+}
+.sidebar .categories li {
+    float: left;
+}
+.sidebar .categories li a {
+    display: block;
+    margin: 4px 2px;
+    padding: 0;
+    width: 36px;
+    line-height: 32px;
+    height: 32px;
+    text-align: center;
+    color: #222222;
+    border-radius: 4px;
+
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    transition: all .3s;
+}
+
+.sidebar .categories li a.active,
+.sidebar .categories li a:hover,
+.sidebar .categories li a:focus {
+    box-shadow: 0 1px 1px #bbbbbb;
+    background: #eeeeee;
+}
+
+/** Single Submissions */
+
+.sidebar .submission-time {
+    position: relative;
+    padding: 10px;
+    text-align: center;
+    margin: 0;
+    font-size: 14px;
+    font-weight: 700;
+    width: auto;
+    border-bottom: 1px solid #dddddd;
+}
+
+/** Submit Page */
+.sidebar .rules {
+    width: 230px;
+    padding: 10px;
+    text-align: center;
+    background: #2bad67;
+    color: #ffffff;
+    display: block;
+    border-radius: 4px;
+}
+.sidebar .rules:hover,
+.sidebar .rules:focus {
+    background: #098b45;
+    color: #ffffff;
+}
+
+.sidebar .footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+.sidebar .footer-links {
+    font-size: 12px;
+    text-align: center;
+    border-bottom: 1px solid #dddddd;
+}
+.sidebar .footer-links a {
+    display: inline-block;
+    padding: 10px 5px;
+    bottom: 10px;
+    color: #bbbbbb;
+}
+.sidebar .footer-links a:hover,
+.sidebar .footer-links a:focus {
+    color: #2a85a0;
+}
+.sidebar .copy {
+    text-align: center;
+    font-weight: 700;
+    font-size: 14px;
+    width: 100%;
+}

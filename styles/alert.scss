@@ -1,0 +1,96 @@
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+.alert h4 {
+    margin-top: 0;
+    color: inherit;
+}
+.alert .alert-link {
+    font-weight: bold;
+}
+.alert > p,
+.alert > ul {
+    margin-bottom: 0;
+}
+.alert > p + p {
+  margin-top: 5px;
+}
+.alert-dismissable,
+.alert-dismissible {
+    padding-right: 35px;
+}
+.alert-dismissable button.close,
+.alert-dismissible button.close {
+    position: relative !important;
+    background-color: transparent;
+    border: none;
+    top: -2px !important;
+    right: -21px !important;
+    float: right;
+    box-shadow: none;
+    color: inherit;
+
+    -webkit-transition: background 0.3s;
+    -moz-transition: background 0.3s;
+    transition: background 0.3s;
+}
+.alert-dismissable.alert-success button.close:hover,
+.alert-dismissable.alert-success button.close:focus {
+    background: #089b45;
+}
+.alert-dismissable.alert-warning button.close:hover,
+.alert-dismissable.alert-warning button.close:focus {
+    background: #dac146;
+}
+.alert-dismissable.alert-danger button.close:hover,
+.alert-dismissable.alert-danger button.close:focus {
+    background: #b31818;
+}
+
+.alert-success {
+    color: #ffffff;
+    background-color: #2bad67;
+    border-color: #089b45;
+}
+.alert-success hr {
+    border-top-color: #c9e2b3;
+}
+.alert-success .alert-link {
+    color: #2b542c;
+}
+.alert-info {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+.alert-info hr {
+    border-top-color: #a6e1ec;
+}
+.alert-info .alert-link {
+    color: #245269;
+}
+.alert-warning {
+    color: #222222;
+    background-color: #fce368;
+    border-color: #dac146;
+}
+.alert-warning hr {
+    border-top-color: #f7e1b5;
+}
+.alert-warning .alert-link {
+    color: #66512c;
+}
+.alert-danger {
+    color: #ffffff;
+    background-color: #d53a3a;
+    border-color: #b31818;
+}
+.alert-danger hr {
+    border-top-color: #e4b9c0;
+}
+.alert-danger .alert-link {
+    color: #843534;
+}

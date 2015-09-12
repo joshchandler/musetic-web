@@ -1,0 +1,196 @@
+.auth-page {
+    padding-top: 25px;
+}
+.auth-page img.musetic-logo {
+    position: absolute;
+    height: 100px;
+    top: 0;
+    left: 50%;
+    margin-left: -50px;
+}
+
+.auth-page h4 {
+    font-weight: 700;
+}
+
+.button-facebook {
+    background: #3b5998;
+    border: 1px solid #193776;
+    margin: 0 30px 10px;
+    width: 260px;
+    height: 40px;
+    line-height: 40px;
+}
+.button-facebook:hover,
+.button-facebook:focus {
+    background: #193776;
+    border: 1px solid #071554;
+}
+.button-google {
+    background: #d34836;
+    border: 1px solid #b13614;
+    margin: 0 30px 10px;
+    width: 260px;
+    height: 40px;
+    line-height: 40px;
+}
+.button-google:hover,
+.button-google:focus {
+    background: #b13614;
+    border: 1px solid #901402;
+}
+.or-login {
+    width: 100%;
+    text-align: center;
+    font-weight: 700;
+    height: 40px;
+    line-height: 40px;
+}
+.login,
+.register {
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 120px 0 0;
+    width: 320px;
+    height: 320px;
+}
+.login-wrap,
+.register-wrap {
+    display: block;
+}
+
+.login .password-login-wrap .password-reset {
+    position: absolute;
+    bottom: 14px;
+    right: 20px;
+    color: #222222;
+    font-size: 14px;
+    font-weight: 600;
+}
+.login .password-reset:hover {
+    color: #666666;
+}
+
+.asterisk,
+label {
+    display: none;
+}
+
+.auth-page input {
+    border-radius: 4px;
+    color: #222222;
+    font-size: 16px;
+    font-weight: 500;
+    width: 300px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.auth-page input[type='submit'] {
+    width: 125px;
+    float: left;
+    margin: 30px 0 0 50px;
+    position: relative;
+    border-radius: 4px;
+}
+
+.auth-page input.register-submit {
+    margin: 20px 0 0 50px;
+}
+
+.terms {
+    color: #222222;
+    position: relative;
+    bottom: 0;
+    height: 10px;
+    font-size: 12px;
+    width: 100%;
+    text-align: center;
+}
+.login-link,
+.register-link {
+    color: #222222;
+    position: relative;
+    text-align: center;
+    float: left;
+    line-height: 40px;
+    font-weight: 600;
+    margin: 15px 0 0 10px;
+}
+.register-link {
+    margin: 25px 0 0 10px;
+}
+.login-link a,
+.register-link a,
+.terms a {
+    font-weight: 600;
+    color: #2bad67;
+}
+.login-link a:hover,
+.login-link a:focus,
+.register-link a:hover,
+.register-link a:focus {
+    color: #098b45;
+}
+
+
+/** Password Reset Form */
+.password-reset-form h4 {
+    font-weight: 700;
+    font-size: 18px;
+    text-align: center;
+}
+.password-reset-form p {
+    text-align: center;
+}
+
+.password-reset-retry {
+    position: relative;
+    background: #2bad67;
+    padding: 10px;
+    width: 120px;
+    text-align: center;
+    border-radius: 4px;
+    color: #fff;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+    -webkit-transition: background .3s;
+    -moz-transition: background .3s;
+    transition: background .3s;
+}
+.password-reset-retry:hover,
+.password-reset-retry:focus {
+    background: #089b45;
+    color: #ffffff;
+}
+
+
+img.musetic-logo {
+    position: absolute;
+    height: 100px;
+    top: 0;
+    left: 50%;
+    margin-left: -50px;
+}
+.login,
+.register {
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 120px 0 0;
+    width: 320px;
+    height: 320px;
+}
+.register .invite-email {
+    width: 100%;
+    display: block;
+    border-bottom: 1px solid #b9b9b9;
+    padding: 10px;
+    color: #222222;
+}

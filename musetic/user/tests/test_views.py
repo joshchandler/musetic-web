@@ -16,12 +16,10 @@ class UserRegistrationViewTests(TestCase):
     created for the sending of activation emails; details on these
     templates and their contexts may be found in the documentation for
     the default backend.
-
     """
     def test_user_profile_page(self):
         """
         Test user has a profile page upon activation
-
         """
         response = self.client.post(reverse('registration_register'),
                                     {'username': 'bob',
@@ -62,9 +60,7 @@ class UserRegistrationViewTests(TestCase):
 class UserViewTests(MuseticTestCase):
     """
     Test the users that are registered already.
-
     """
-
     def test_login(self):
         self.client.logout()
         # Go to the login page

@@ -42,7 +42,7 @@ class MuseticApiTestCase(MuseticTestCase):
     client_class = APIClient
 
 
-class MuseticSubmissionTestMixin(object):
+class SubmissionTestMixin(object):
 
     def setUp(self):
         self.reg_user = User.objects.create_user(username='test_user', email='test@example.com', password='password')

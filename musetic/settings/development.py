@@ -19,7 +19,8 @@ INSTALLED_APPS += (
 )
 
 # EMAIL
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = os.path.join(PROJECT_ROOT, 'tmp')
 DEFAULT_FROM_EMAIL = 'no-reply@musetic.com'
 
 # REST FRAMEWORK

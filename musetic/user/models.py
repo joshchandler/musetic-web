@@ -82,6 +82,11 @@ class Creator(models.Model):
         This email must contain the user information, the url in this model, and the
         site's domain name.
         """
+        admins = User.objects.all().filter(is_staff=True)
+        admin_email_list = []
+        for admin in admins:
+            admin_email_list.append(admin.email)
+            
         context_dict = {}
         if request is not None:
             context_dict = RequestContext(request, context_dict)
@@ -95,7 +100,7 @@ class Creator(models.Model):
         subject = ''.join(subject.splitlines())
 
         message_txt = render_to_string('email/user/creator_request.txt', context_dict)
-        email_message = EmailMultiAlternatives(subject, message_txt, settings.DEFAULT_FROM_EMAIL, ['join@musetic.com'])
+        email_message = EmailMultiAlternatives(subject, message_txt, settings.DEFAULT_FROM_EMAIL, admin_email_list)
 
         email_message.send()
 
@@ -141,7 +146,7 @@ class Invite(models.Model):
     def send_invitation_email(self, site, request=None):
         ctx_dict = {}
         if request is not None:
-            ctx_dict = RequestContext(request, ctx_dict)
+            ctx_dict = RequestContext(request, ctx_dict)  # pragma: no cover
         ctx_dict.update({
             'inviter': self.inviter,
             'activation_key': self.activation_key,
@@ -159,7 +164,7 @@ class Invite(models.Model):
     def send_invite_accepted_email(self, new_user, site, request=None):
         ctx_dict = {}
         if request is not None:
-            ctx_dict = RequestContext(request, ctx_dict)
+            ctx_dict = RequestContext(request, ctx_dict)  # pragma: no cover
         ctx_dict.update({
             'inviter': self.inviter,
             'new_user': new_user,

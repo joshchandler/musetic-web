@@ -1,8 +1,8 @@
-from musetic.tests.testcase import MuseticTestCase, MuseticSubmissionTestMixin
+from musetic.tests.testcase import MuseticTestCase, SubmissionTestMixin
 from musetic.submission.utils import rank_all
 
 
-class SubmissionModelTests(MuseticSubmissionTestMixin, MuseticTestCase):
+class SubmissionModelTests(SubmissionTestMixin, MuseticTestCase):
 
     def test_submission_and_vote_creation(self):
         """

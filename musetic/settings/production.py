@@ -28,7 +28,7 @@ EMAIL_HOST_PASSWORD = get_env_variable('SENDGRID_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-DEFAULT_FROM_EMAIL = 'no-reply@musetic.com'
+DEFAULT_FROM_EMAIL = 'Musetic <no_reply@musetic.com>'
 
 # CACHING
 CACHES = {

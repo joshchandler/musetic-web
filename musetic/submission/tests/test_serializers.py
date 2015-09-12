@@ -1,8 +1,8 @@
-from musetic.tests.testcase import MuseticSubmissionTestMixin, MuseticTestCase
+from musetic.tests.testcase import SubmissionTestMixin, MuseticTestCase
 from musetic.submission.serializers import SubmissionSerializer, VoteSerializer
 
 
-class SubmissionSerializerTests(MuseticSubmissionTestMixin, MuseticTestCase):
+class SubmissionSerializerTests(SubmissionTestMixin, MuseticTestCase):
 
     def test_submission_serialized_data(self):
         data = SubmissionSerializer(self.submission).data
@@ -20,7 +20,7 @@ class SubmissionSerializerTests(MuseticSubmissionTestMixin, MuseticTestCase):
         self.assertEquals(2, data.get_votes(self.submission))
 
 
-class VoteSerializerTests(MuseticSubmissionTestMixin, MuseticTestCase):
+class VoteSerializerTests(SubmissionTestMixin, MuseticTestCase):
 
     def test_vote_serialized_data(self):
         data = VoteSerializer(self.vote2).data

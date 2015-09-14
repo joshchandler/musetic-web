@@ -42,7 +42,7 @@ gulp.task('styles', function () {
         .pipe($.csscomb())
         .pipe($.concat('main.css'))
         .pipe($.minifyCss())
-        .pipe(gulp.dest(staticRoot + '/css/'))
+        .pipe(gulp.dest(staticRoot + '/musetic/css/'))
         .pipe($.size({title: 'styles'}));
 });
 

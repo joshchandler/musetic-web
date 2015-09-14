@@ -31,7 +31,6 @@ INSTALLED_APPS = (
     'registration',
     'social.apps.django_app.default',
     'crispy_forms',
-    'crispy_forms_foundation',
     'appconf',
     'markdown_deux',
     
@@ -57,8 +56,6 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'musetic.urls'
 
 WSGI_APPLICATION = 'musetic.wsgi.application'
-
-CRISPY_TEMPLATE_PACK = 'foundation-5'
 
 # TESTING
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'

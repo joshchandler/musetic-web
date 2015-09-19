@@ -62,5 +62,3 @@ AWS_STORAGE_BUCKET_NAME = get_env_variable('AWS_STORAGE_BUCKET_NAME')
 MEDIA_URL = '//s3.amazonaws.com/%s/media/' % AWS_STORAGE_BUCKET_NAME
 MEDIA_ROOT = '/%s/' % DEFAULT_S3_PATH
 ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
-
-

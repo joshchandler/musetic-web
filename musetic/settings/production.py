@@ -51,7 +51,7 @@ DATABASES['default'] = dj_database_url.config()
 DATABASES['default']['ENGINE'] = 'django_postgrespool'
 
 # CELERY
-BROKER_URL=get_env_variable('CLOUDAMQP_URL')
+BROKER_URL=get_env_variable('REDIS_URL')
 CELERY_RESULT_BACKEND=get_env_variable('REDIS_URL')
 
 # STATIC AND MEDIA
